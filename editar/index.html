@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editar Tipologia — Book</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="container header-inner">
+    <div class="logo">
+      <span class="logo-dot"></span>
+      Book de Tipologias
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a href="../index.html">Tipologias</a>
+    <span>/</span>
+    <a id="bc-ficha" href="#">—</a>
+    <span>/</span>
+    <span>Editar</span>
+  </nav>
+
+  <!-- Redireciona para nova/index.html?id=... mantendo a mesma lógica -->
+  <div id="form-container">
+    <div class="loading"><div class="spinner"></div> Carregando tipologia…</div>
+  </div>
+
+</main>
+
+<div id="toast"></div>
+
+<script src="../../config.js"></script>
+<script src="../../supabase.js"></script>
+<script>
+  // A página de edição reutiliza exatamente o mesmo formulário de nova/index.html
+  // apenas com o parâmetro ?id= na URL. Redirecionamos para lá para não duplicar código.
+  const params = new URLSearchParams(location.search);
+  const id     = params.get('id');
+
+  if (!id) {
+    document.getElementById('form-container').innerHTML =
+      '<div class="empty"><p>ID não informado. <a href="../index.html">Voltar</a></p></div>';
+  } else {
+    // Atualiza breadcrumb e redireciona para o formulário compartilhado
+    buscarTipologia(id).then(t => {
+      if (t) {
+        document.getElementById('bc-ficha').textContent = t.nome;
+        document.getElementById('bc-ficha').href = `../tipologia/index.html?id=${id}`;
+        document.title = `Editar ${t.nome} — Book`;
+      }
+      // Reusa a página nova/ passando o id
+      window.location.replace(`../nova/index.html?id=${id}`);
+    }).catch(() => {
+      window.location.replace(`../nova/index.html?id=${id}`);
+    });
+  }
+</script>
+</body>
+</html>

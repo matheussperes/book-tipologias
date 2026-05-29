@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tipologia — Book</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="container header-inner">
+    <div class="logo">
+      <span class="logo-dot"></span>
+      Book de Tipologias
+    </div>
+    <a href="../nova/index.html" class="btn btn-primary btn-sm">+ Nova tipologia</a>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a href="../index.html">Tipologias</a>
+    <span>/</span>
+    <span id="bc-nome">Carregando…</span>
+  </nav>
+
+  <!-- Conteúdo dinâmico -->
+  <div id="conteudo">
+    <div class="loading"><div class="spinner"></div> Carregando ficha…</div>
+  </div>
+
+</main>
+
+<!-- Modal de confirmação de exclusão -->
+<div class="modal-overlay" id="modal-excluir">
+  <div class="modal">
+    <h3>Excluir tipologia?</h3>
+    <p>Esta ação é permanente e não pode ser desfeita. Todos os dados, imagens e documentos serão removidos.</p>
+    <div class="modal-acoes">
+      <button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>
+      <button class="btn btn-danger" id="btn-confirmar-excluir">Excluir</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script src="../../config.js"></script>
+<script src="../../supabase.js"></script>
+<script>
+  const params = new URLSearchParams(location.search);
+  const id     = params.get('id');
+  let   tipologiaAtual = null;
+
+  if (!id) {
+    document.getElementById('conteudo').innerHTML =
+      '<div class="empty"><p>ID de tipologia não informado.</p></div>';
+  } else {
+    inicializar();
+  }
+
+  async function inicializar() {
+    try {
+      const [tip, imgs, docs] = await Promise.all([
+        buscarTipologia(id),
+        listarImagens(id),
+        listarDocumentos(id)
+      ]);
+
+      if (!tip) {
+        document.getElementById('conteudo').innerHTML =
+          '<div class="empty"><p>Tipologia não encontrada.</p></div>';
+        return;
+      }
+
+      tipologiaAtual = tip;
+      document.getElementById('bc-nome').textContent = tip.nome;
+      document.title = `${tip.nome} — Book de Tipologias`;
+
+      renderFicha(tip, imgs, docs);
+    } catch (e) {
+      document.getElementById('conteudo').innerHTML =
+        `<div class="empty"><p>Erro: ${e.message}</p></div>`;
+    }
+  }
+
+  function renderFicha(t, imgs, docs) {
+    const cidades   = (t.cidades_elegiveis  || []).map(c => `<span class="tag">${c}</span>`).join('');
+    const projetos  = (t.projetos_aplicados || []).map(p => `<span class="tag">${p}</span>`).join('');
+    const galeria   = imgs.map(i => `
+      <div class="galeria-item">
+        <img src="${i.url}" alt="${i.descricao || 'Imagem'}" loading="lazy"
+             onclick="abrirImagem('${i.url}')" />
+      </div>`).join('') || '<p style="color:var(--muted);font-size:13px">Nenhuma imagem cadastrada.</p>';
+
+    const listaDoc = docs.map(d => `
+      <div class="doc-item">
+        <span class="doc-nome">📄 ${d.nome}</span>
+        <span class="doc-tipo">${d.tipo}</span>
+        <a href="${d.url}" target="_blank" download class="btn btn-outline btn-sm">Baixar</a>
+      </div>`).join('') || '<p style="color:var(--muted);font-size:13px">Nenhum documento cadastrado.</p>';
+
+    document.getElementById('conteudo').innerHTML = `
+      <div class="ficha-header">
+        <div>
+          <span class="badge badge-${t.tipo_torre.toLowerCase()}">${t.tipo_torre}</span>
+          <h1 class="ficha-titulo">${t.nome}</h1>
+        </div>
+        <div class="ficha-acoes">
+          <a href="../editar/index.html?id=${t.id}" class="btn btn-outline">✏️ Editar</a>
+          <button class="btn btn-danger" onclick="abrirModal()">🗑 Excluir</button>
+        </div>
+      </div>
+
+      <div class="ficha-grid">
+
+        <!-- Coluna principal -->
+        <div>
+          <!-- Galeria -->
+          <div class="ficha-section">
+            <div class="ficha-section-titulo">Plantas e imagens</div>
+            <div class="galeria">${galeria}</div>
+          </div>
+
+          <!-- Diferenciais -->
+          ${t.diferenciais ? `
+          <div class="ficha-section">
+            <div class="ficha-section-titulo">Diferenciais</div>
+            <p style="font-size:14px;line-height:1.7">${t.diferenciais}</p>
+          </div>` : ''}
+
+          <!-- Observações -->
+          ${t.observacoes ? `
+          <div class="ficha-section">
+            <div class="ficha-section-titulo">Observações</div>
+            <p style="font-size:14px;line-height:1.7;color:var(--muted)">${t.observacoes}</p>
+          </div>` : ''}
+        </div>
+
+        <!-- Coluna lateral -->
+        <div>
+          <!-- Dados técnicos -->
+          <div class="ficha-section">
+            <div class="ficha-section-titulo">Dados técnicos</div>
+            <div class="dados-grid">
+              ${t.area_privada ? `<div class="dado-item"><label>Área privada</label><span>${t.area_privada} m²</span></div>` : ''}
+              ${t.area_total   ? `<div class="dado-item"><label>Área total</label><span>${t.area_total} m²</span></div>` : ''}
+              ${t.dormitorios  ? `<div class="dado-item"><label>Dormitórios</label><span>${t.dormitorios}</span></div>` : ''}
+              ${t.suites       ? `<div class="dado-item"><label>Suítes</label><span>${t.suites}</span></div>` : ''}
+              ${t.vagas        ? `<div class="dado-item"><label>Vagas</label><span>${t.vagas}</span></div>` : ''}
+            </div>
+          </div>
+
+          <!-- Cidades elegíveis -->
+          ${cidades ? `
+          <div class="ficha-section">
+            <div class="ficha-section-titulo">Cidades elegíveis</div>
+            <div class="tags">${cidades}</div>
+          </div>` : ''}
+
+          <!-- Projetos aplicados -->
+          ${projetos ? `
+          <div class="ficha-section">
+            <div class="ficha-section-titulo">Projetos aplicados</div>
+            <div class="tags">${projetos}</div>
+          </div>` : ''}
+
+          <!-- Documentos -->
+          <div class="ficha-section">
+            <div class="ficha-section-titulo">Documentos</div>
+            <div class="doc-lista">${listaDoc}</div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // ── Modal de exclusão ──────────────────────────────
+  function abrirModal() {
+    document.getElementById('modal-excluir').classList.add('aberto');
+  }
+  function fecharModal() {
+    document.getElementById('modal-excluir').classList.remove('aberto');
+  }
+  document.getElementById('btn-confirmar-excluir').addEventListener('click', async () => {
+    try {
+      await excluirTipologia(id);
+      mostrarToast('Tipologia excluída com sucesso.');
+      setTimeout(() => { window.location.href = '../index.html'; }, 1200);
+    } catch (e) {
+      mostrarToast(`Erro ao excluir: ${e.message}`, true);
+    }
+    fecharModal();
+  });
+
+  // ── Lightbox simples ────────────────────────────────
+  function abrirImagem(url) {
+    window.open(url, '_blank');
+  }
+
+  // ── Toast ───────────────────────────────────────────
+  function mostrarToast(msg, erro = false) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className   = erro ? 'erro show' : 'show';
+    setTimeout(() => { t.classList.remove('show', 'erro'); }, 3000);
+  }
+</script>
+</body>
+</html>

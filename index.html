@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book de Tipologias</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="container header-inner">
+    <div class="logo">
+      <span class="logo-dot"></span>
+      Book de Tipologias
+    </div>
+    <a href="nova/index.html" class="btn btn-primary btn-sm">
+      + Nova tipologia
+    </a>
+  </div>
+</header>
+
+<!-- Conteúdo principal -->
+<main class="container">
+
+  <!-- Filtros por tipo de torre -->
+  <div class="filtros">
+    <button class="btn-filtro ativo" data-tipo="">Todas</button>
+    <button class="btn-filtro slim"    data-tipo="Slim">Slim</button>
+    <button class="btn-filtro compact" data-tipo="Compact">Compact</button>
+    <button class="btn-filtro plus"    data-tipo="Plus">Plus</button>
+  </div>
+
+  <!-- Grid de cards -->
+  <div class="grid" id="grid">
+    <div class="loading"><div class="spinner"></div> Carregando tipologias…</div>
+  </div>
+
+</main>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script src="../config.js"></script>
+<script src="../supabase.js"></script>
+<script>
+  let filtroAtivo = '';
+  const grid = document.getElementById('grid');
+
+  // ── Renderizar cards ──────────────────────────────
+  function renderCards(tipologias) {
+    if (!tipologias.length) {
+      grid.innerHTML = `
+        <div class="empty" style="grid-column:1/-1">
+          <div class="empty-icon">📐</div>
+          <p>Nenhuma tipologia encontrada.</p>
+        </div>`;
+      return;
+    }
+
+    grid.innerHTML = tipologias.map(t => {
+      const cidades = (t.cidades_elegiveis || []).slice(0, 3).join(', ')
+                    + (t.cidades_elegiveis?.length > 3 ? ` +${t.cidades_elegiveis.length - 3}` : '');
+      return `
+      <article class="card" onclick="irParaFicha('${t.id}')">
+        <div class="card-img">
+          <div class="card-img-placeholder" id="img-${t.id}">Carregando imagem…</div>
+        </div>
+        <div class="card-body">
+          <span class="badge badge-${t.tipo_torre.toLowerCase()}">${t.tipo_torre}</span>
+          <div class="card-nome">${t.nome}</div>
+          <div class="card-meta">
+            ${t.area_privada  ? `<span class="card-stat"><strong>${t.area_privada}m²</strong> privado</span>` : ''}
+            ${t.dormitorios   ? `<span class="card-stat"><strong>${t.dormitorios}</strong> dorm.</span>` : ''}
+            ${t.suites        ? `<span class="card-stat"><strong>${t.suites}</strong> suíte${t.suites > 1 ? 's' : ''}</span>` : ''}
+            ${t.vagas         ? `<span class="card-stat"><strong>${t.vagas}</strong> vaga${t.vagas > 1 ? 's' : ''}</span>` : ''}
+          </div>
+          ${cidades ? `<div class="card-cidades">📍 ${cidades}</div>` : ''}
+        </div>
+      </article>`;
+    }).join('');
+
+    // Carregar primeira imagem de cada tipologia
+    tipologias.forEach(t => carregarThumb(t.id));
+  }
+
+  async function carregarThumb(tipologiaId) {
+    try {
+      const imgs = await listarImagens(tipologiaId);
+      const el   = document.getElementById(`img-${tipologiaId}`);
+      if (!el) return;
+      if (imgs.length) {
+        const card = el.closest('.card-img');
+        card.innerHTML = `<img src="${imgs[0].url}" alt="Imagem da tipologia" loading="lazy" />`;
+      } else {
+        el.textContent = 'Sem imagem';
+      }
+    } catch (_) { /* silencioso */ }
+  }
+
+  // ── Carregar tipologias ───────────────────────────
+  async function carregar() {
+    grid.innerHTML = '<div class="loading"><div class="spinner"></div> Carregando…</div>';
+    try {
+      const lista = await listarTipologias(filtroAtivo || null);
+      renderCards(lista);
+    } catch (e) {
+      grid.innerHTML = `<div class="empty" style="grid-column:1/-1"><p>Erro ao carregar: ${e.message}</p></div>`;
+    }
+  }
+
+  // ── Filtros ───────────────────────────────────────
+  document.querySelectorAll('.btn-filtro').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.btn-filtro').forEach(b => b.classList.remove('ativo'));
+      btn.classList.add('ativo');
+      filtroAtivo = btn.dataset.tipo;
+      carregar();
+    });
+  });
+
+  function irParaFicha(id) {
+    window.location.href = `tipologia/index.html?id=${id}`;
+  }
+
+  carregar();
+</script>
+</body>
+</html>

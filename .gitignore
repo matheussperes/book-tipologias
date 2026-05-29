@@ -1,0 +1,10 @@
+# Credenciais — NUNCA commitar no GitHub público
+config.js
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
