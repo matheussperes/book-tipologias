@@ -48,6 +48,80 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-900);f
 .btn-admin-hdr{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:var(--radius-xs);border:1px solid var(--border-mid);background:var(--white);color:var(--text-500);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all var(--t);}
 .btn-admin-hdr:hover{border-color:var(--green);color:var(--green);}
 
+/* ══ ADMIN MODE — badge no header ═══════════════════════════ */
+.admin-mode-bar{display:none;align-items:center;gap:10px;padding:5px 16px;background:var(--green-pale);border:1px solid #B6D9C4;border-radius:var(--radius-xs);font-size:11px;font-weight:600;color:var(--green);}
+.admin-mode-bar.visible{display:flex;}
+.btn-save-exit{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:var(--radius-xs);border:none;background:var(--green);color:var(--white);font-family:'Inter',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all var(--t);white-space:nowrap;}
+.btn-save-exit:hover{background:var(--green-mid);}
+
+/* Cards da sidebar direita clicáveis no admin */
+body.is-admin .rs-section{cursor:pointer;transition:background var(--t);}
+body.is-admin .rs-section:hover{background:var(--green-pale);}
+body.is-admin .rs-section:hover .rs-title::after{content:' ✎';font-size:10px;color:var(--green-mid);}
+/* Planta clicável no admin */
+body.is-admin .planta-col{cursor:pointer;}
+body.is-admin .planta-col:hover .planta-viewer{outline:2px dashed var(--green-mid);outline-offset:-2px;}
+/* Hint de edição na col esquerda */
+.adm-edit-hint{display:none;font-size:9px;font-weight:500;color:var(--green-mid);margin-bottom:6px;letter-spacing:.03em;}
+body.is-admin .adm-edit-hint{display:block;}
+body.is-admin .tipo-nome{cursor:pointer;transition:color var(--t);}
+body.is-admin .tipo-nome:hover{color:var(--green);}
+/* Ícones lápis/lixo na sidebar */
+.linha-adm-actions{display:none;gap:2px;margin-left:auto;flex-shrink:0;}
+body.is-admin .linha-adm-actions{display:flex;}
+.btn-adm-sm{width:24px;height:24px;border-radius:5px;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-400);transition:all var(--t);}
+.btn-adm-sm:hover{background:var(--green-pale);color:var(--green);}
+.btn-adm-sm.del:hover{background:#FEE2E2;color:#DC2626;}
+.btn-add-produto{display:none;align-items:center;gap:7px;margin:4px 4px 8px;padding:8px 10px;border-radius:var(--radius-sm);border:1.5px dashed #B6D9C4;background:transparent;color:var(--green-mid);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all var(--t);width:calc(100% - 8px);}
+.btn-add-produto:hover{background:var(--green-pale);border-color:var(--green);}
+body.is-admin .btn-add-produto{display:flex;}
+/* Botão adicionar tipologia dentro do accordion (admin) */
+.btn-add-tipologia{display:none;align-items:center;gap:5px;padding:5px 8px 5px 24px;border:none;background:transparent;color:var(--green-mid);font-family:'Inter',sans-serif;font-size:11px;cursor:pointer;transition:all var(--t);}
+.btn-add-tipologia:hover{color:var(--green);}
+body.is-admin .btn-add-tipologia{display:flex;}
+/* Inline edit panel — desliza de baixo */
+.inline-edit-overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.3);backdrop-filter:blur(2px);align-items:flex-end;}
+.inline-edit-overlay.open{display:flex;}
+.inline-edit-box{background:var(--white);border-radius:var(--radius) var(--radius) 0 0;width:100%;max-height:78vh;overflow-y:auto;padding:22px 28px 32px;box-shadow:0 -8px 40px rgba(0,0,0,.15);animation:slideUp .24s cubic-bezier(.4,0,.2,1);}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.ieb-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.ieb-title{font-size:16px;font-weight:700;color:var(--text-900);}
+.ieb-close{width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:var(--bg);color:var(--text-500);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all var(--t);}
+.ieb-close:hover{border-color:var(--green);color:var(--green);}
+.ieb-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.ieb-grid-3{grid-template-columns:1fr 1fr 1fr;}
+.ieb-field{display:flex;flex-direction:column;gap:5px;}
+.ieb-field.full{grid-column:1/-1;}
+.ieb-label{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-500);}
+.ieb-input,.ieb-textarea{padding:9px 12px;border-radius:var(--radius-xs);border:1.5px solid var(--border);background:var(--bg);color:var(--text-900);font-family:'Inter',sans-serif;font-size:13px;outline:none;transition:border-color var(--t);}
+.ieb-input:focus,.ieb-textarea:focus{border-color:var(--green);}
+.ieb-textarea{resize:vertical;min-height:80px;line-height:1.6;}
+.ieb-section-hdr{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green-mid);padding:12px 0 8px;border-top:1px solid var(--border);margin-top:4px;}
+.ieb-actions{display:flex;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);}
+.btn-ieb-save{flex:1;padding:11px;border-radius:var(--radius-sm);border:none;background:var(--green);color:var(--white);font-family:'Inter',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all var(--t);}
+.btn-ieb-save:hover{background:var(--green-mid);}
+.btn-ieb-cancel{padding:11px 20px;border-radius:var(--radius-sm);border:1.5px solid var(--border-mid);background:transparent;color:var(--text-500);font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;transition:all var(--t);}
+.btn-ieb-cancel:hover{color:var(--text-700);}
+/* Upload zone no ieb */
+.ieb-upload{border:2px dashed var(--border-mid);border-radius:var(--radius-sm);padding:14px;text-align:center;cursor:pointer;transition:all var(--t);margin-top:4px;}
+.ieb-upload:hover{border-color:var(--green-mid);background:var(--green-pale);}
+.ieb-upload input{display:none;}
+.ieb-upload-lbl{font-size:12px;color:var(--text-500);line-height:1.7;}
+.ieb-upload-lbl strong{color:var(--green);}
+.ieb-upload-prev{width:100%;max-height:100px;object-fit:contain;border-radius:var(--radius-xs);margin-bottom:6px;display:none;}
+.ieb-upload-prog{height:3px;background:var(--border);border-radius:2px;margin-top:6px;overflow:hidden;display:none;}
+.ieb-upload-fill{height:100%;background:var(--green-light);width:0%;transition:width .3s ease;}
+.ieb-upload-status{font-size:10px;color:var(--text-500);margin-top:4px;display:none;}
+/* Lista editável */
+.ieb-list{display:flex;flex-direction:column;gap:4px;margin-bottom:8px;}
+.ieb-list-row{display:flex;align-items:center;gap:6px;}
+.ieb-list-input{flex:1;padding:7px 10px;border-radius:var(--radius-xs);border:1.5px solid var(--border);background:var(--bg);color:var(--text-900);font-family:'Inter',sans-serif;font-size:12px;outline:none;transition:border-color var(--t);}
+.ieb-list-input:focus{border-color:var(--green);}
+.btn-ieb-rm{width:24px;height:24px;border-radius:50%;border:1px solid var(--border-mid);background:var(--white);color:var(--text-400);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:all var(--t);}
+.btn-ieb-rm:hover{border-color:#DC2626;color:#DC2626;background:#FEE2E2;}
+.btn-ieb-add-row{display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:var(--radius-xs);border:1.5px dashed var(--border-mid);background:transparent;color:var(--text-500);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all var(--t);}
+.btn-ieb-add-row:hover{border-color:var(--green);color:var(--green);background:var(--green-pale);}
+
 /* ══ APP BODY (header + content) ════════════════════════════ */
 .app-body{display:flex;flex:1;overflow:hidden;}
 
@@ -328,10 +402,19 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-900);f
       <div class="hb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
       <div><div class="hb-label">Tipologias</div><div class="hb-value big" id="totalTip">—</div></div>
     </div>
-    <button class="btn-admin-hdr" onclick="abrirLogin()">
+    <button class="btn-admin-hdr" id="btnAdminHdr" onclick="abrirLogin()">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       Admin
     </button>
+    <!-- Badge modo admin -->
+    <div class="admin-mode-bar" id="adminModeBadge">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      Modo Administrador
+      <button class="btn-save-exit" onclick="admSalvarESair()">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Salvar e Sair
+      </button>
+    </div>
   </div>
 </header>
 
@@ -339,9 +422,13 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-900);f
 <div class="app-body">
 
   <!-- SIDEBAR LINHAS -->
-  <nav class="linhas-sidebar">
+  <nav class="linhas-sidebar" id="linhasSidebar">
     <div class="linhas-sidebar-label">Linha de Produtos</div>
     <div id="linhaTabs"></div>
+    <button class="btn-add-produto" onclick="admNovaLinha()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Adicionar Produto
+    </button>
   </nav>
 
   <!-- CONTEÚDO PRINCIPAL -->
@@ -352,8 +439,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-900);f
 
       <!-- Col info esquerda -->
       <div class="tipo-col">
+        <div class="adm-edit-hint">✎ Clique no nome para editar</div>
         <div class="tipo-kicker">Tipologia</div>
-        <div class="tipo-nome" id="tipoNome">—</div>
+        <div class="tipo-nome" id="tipoNome" onclick="admEditarTipologia()">—</div>
         <div class="tipo-sub" id="tipoSub">—</div>
         <div class="tipo-sep"></div>
         <div class="tipo-selector-label">Versão</div>
@@ -429,20 +517,20 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-900);f
     <div class="right-sidebar">
 
       <!-- Ficha Técnica -->
-      <div class="rs-section">
+      <div class="rs-section" onclick="admEditarFicha()">
         <div class="rs-title">Ficha Técnica</div>
         <div style="font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-500);margin-bottom:6px;">Áreas Privativas</div>
         <div class="areas-grid" id="areasGrid"></div>
       </div>
 
       <!-- Config pavimento -->
-      <div class="rs-section">
+      <div class="rs-section" onclick="admEditarPavimento()">
         <div class="rs-title">Configuração do Pavimento</div>
         <div class="pav-list" id="pavList"></div>
       </div>
 
       <!-- Aplicações -->
-      <div class="rs-section" style="flex:1;overflow:hidden;display:flex;flex-direction:column;gap:0;">
+      <div class="rs-section" onclick="admEditarAplicacoes()" style="flex:1;overflow:hidden;display:flex;flex-direction:column;gap:0;">
         <div class="rs-aplicacoes-label">Aplicações</div>
 
         <div style="margin-bottom:8px;">
@@ -495,53 +583,32 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-900);f
   </div>
 </div>
 
-<!-- ADMIN -->
-<div class="admin-overlay" id="adminOverlay">
-  <div class="login-box" id="loginBox">
-    <img class="login-logo" src="icons/Arbore_logo.jpeg" alt="Árbore">
-    <div class="login-title">Acesso Administrativo</div>
-    <div class="login-sub">Área restrita — equipe Árbore</div>
-    <input class="login-input" type="email" id="emailInput" placeholder="E-mail de acesso"
-           onkeydown="if(event.key==='Enter')document.getElementById('senhaInput').focus()">
-    <input class="login-input" type="password" id="senhaInput" placeholder="Senha"
-           onkeydown="if(event.key==='Enter')verificarLogin()">
-    <div class="login-error" id="loginErro"></div>
-    <button class="btn-green" onclick="verificarLogin()">Entrar</button>
-    <button class="btn-ghost" onclick="fecharAdmin()">Cancelar</button>
+<!-- LOGIN MODAL (light, sobre o painel) -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal-img-box" style="max-width:380px;width:100%;">
+    <div style="padding:36px 36px 28px;text-align:center;">
+      <img src="icons/Arbore_logo.jpeg" alt="Árbore" style="height:32px;margin-bottom:20px;display:block;margin-left:auto;margin-right:auto;">
+      <div style="font-size:18px;font-weight:700;color:var(--text-900);margin-bottom:4px;">Acesso Administrativo</div>
+      <div style="font-size:12px;color:var(--text-500);margin-bottom:22px;">Área restrita — equipe Árbore</div>
+      <input class="login-input" type="email" id="emailInput" placeholder="E-mail de acesso"
+             onkeydown="if(event.key==='Enter')document.getElementById('senhaInput').focus()">
+      <input class="login-input" type="password" id="senhaInput" placeholder="Senha"
+             onkeydown="if(event.key==='Enter')verificarLogin()" style="margin-top:8px;">
+      <div class="login-error" id="loginErro" style="margin:8px 0 10px;text-align:left;"></div>
+      <button class="btn-green" onclick="verificarLogin()" style="width:100%;padding:11px;border-radius:var(--radius-sm);border:none;background:var(--green);color:var(--white);font-family:'Inter',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">Entrar</button>
+      <button onclick="fecharLogin()" style="width:100%;padding:9px;border-radius:var(--radius-sm);border:1px solid var(--border);background:transparent;color:var(--text-500);font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;margin-top:8px;">Cancelar</button>
+    </div>
   </div>
+</div>
 
-  <div class="admin-panel" id="adminPanel" style="display:none;">
-    <div class="adm-topbar">
-      <div class="adm-page-title">Painel <span>Administrativo</span></div>
-      <div style="display:flex;gap:8px;">
-        <button class="btn-close-adm" onclick="logout()">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-          Sair da Conta
-        </button>
-        <button class="btn-close-adm" onclick="fecharAdmin()">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          Fechar
-        </button>
-      </div>
+<!-- INLINE EDIT OVERLAY (desliza de baixo) -->
+<div class="inline-edit-overlay" id="inlineEditOverlay" onclick="iebFecharFora(event)">
+  <div class="inline-edit-box" id="inlineEditBox">
+    <div class="ieb-hdr">
+      <div class="ieb-title" id="iebTitle">Editar</div>
+      <button class="ieb-close" onclick="iebFechar()">✕</button>
     </div>
-    <div class="sb-bar">
-      <span class="sb-label">Supabase</span>
-      <span style="font-size:11px;color:rgba(76,175,114,.8);font-weight:600;">✓ Conectado</span>
-      <input class="sb-input" id="sbBucket" placeholder="bucket de imagens (ex: plantas)" style="max-width:240px;">
-      <button class="btn-save-cfg" onclick="salvarSb()">Salvar</button>
-    </div>
-    <div class="adm-linha-tabs" id="admLinhaTabs"></div>
-    <div class="adm-card">
-      <div class="adm-card-label">Descrição da Linha</div>
-      <input class="adm-input" id="admLinhaDesc" placeholder="Descrição curta...">
-      <button class="btn-save-desc" onclick="salvarDescLinha()">Salvar</button>
-    </div>
-    <div class="versoes-grid" id="versoesGrid"></div>
-    <button class="btn-add-v" onclick="novaVersao()">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      Adicionar Versão
-    </button>
-    <div id="editFormWrap"></div>
+    <div id="iebContent"></div>
   </div>
 </div>
 
@@ -649,10 +716,21 @@ const ICONS_LINHA={
 };
 
 function renderLinhas(){
+  const ICO_PEN=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
+  const ICO_DEL=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>`;
+  const ICO_ADD=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
   document.getElementById("linhaTabs").innerHTML = P.linhas.map(l=>
-    `<button class="linha-tab ${l.id===linhaId?"active":""}" onclick="selLinha('${l.id}')">
-      ${ICONS_LINHA[l.id]||ICONS_LINHA.Compact} ${l.nome}
-    </button>`
+    `<div style="display:flex;align-items:center;gap:0;border-radius:var(--radius-sm);overflow:hidden;">
+      <button class="linha-tab ${l.id===linhaId?"active":""}" style="flex:1;" onclick="selLinha('${l.id}')">
+        ${ICONS_LINHA[l.id]||ICONS_LINHA.Compact} ${l.nome}
+      </button>
+      <div class="linha-adm-actions">
+        <button class="btn-adm-sm" title="Renomear" onclick="event.stopPropagation();admRenomearLinha('${l.id}')">${ICO_PEN}</button>
+        <button class="btn-adm-sm del" title="Excluir" onclick="event.stopPropagation();admExcluirLinha('${l.id}')">${ICO_DEL}</button>
+      </div>
+    </div>
+    ${modoAdmin?`<button class="btn-add-tipologia" onclick="admNovaTipologia('${l.id}')">${ICO_ADD} Nova tipologia</button>`:""}
+    `
   ).join("");
 }
 function selLinha(id){ linhaId=id; const l=getLinha(); tipoId=l.versoes[0]?.id||""; finalIdx=0; carrosselOffset=0; renderAll(); }
@@ -939,7 +1017,7 @@ function abrirPdfViewer(){
 // Fechar modais
 document.getElementById("modalImg").onclick=e=>{ if(e.target===document.getElementById("modalImg")) document.getElementById("modalImg").classList.remove("open"); };
 document.getElementById("modalPdf").onclick=e=>{ if(e.target===document.getElementById("modalPdf")) document.getElementById("modalPdf").classList.remove("open"); };
-document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ document.getElementById("modalImg").classList.remove("open"); document.getElementById("modalPdf").classList.remove("open"); document.getElementById("adminOverlay").classList.remove("open"); } });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ document.getElementById("modalImg").classList.remove("open"); document.getElementById("modalPdf").classList.remove("open"); document.getElementById("loginModal")?.classList.remove("open"); iebFechar(); } });
 
 // ═══════════════════════════════════════════════════════════
 // RENDER ALL
@@ -951,31 +1029,22 @@ function renderConteudo(){
 function renderAll(){ renderLinhas(); renderConteudo(); updateMeta(); }
 
 // ═══════════════════════════════════════════════════════════
-// ADMIN
 // ═══════════════════════════════════════════════════════════
+// ADMIN — LOGIN / MODO
+// ═══════════════════════════════════════════════════════════
+let modoAdmin = false;
+
 async function abrirLogin(){
   const {data:{session}}=await supa.auth.getSession();
-  if(session){
-    document.getElementById("adminOverlay").classList.add("open");
-    document.getElementById("loginBox").style.display="none";
-    document.getElementById("adminPanel").style.display="";
-    admLinhaId=P.linhas[0]?.id||''; carregarSb(); renderAdm();
-    return;
-  }
-  document.getElementById("adminOverlay").classList.add("open");
-  document.getElementById("loginBox").style.display="";
-  document.getElementById("adminPanel").style.display="none";
+  if(session){ ativarModoAdmin(); return; }
+  document.getElementById("loginModal").classList.add("open");
   document.getElementById("emailInput").value="";
   document.getElementById("senhaInput").value="";
   document.getElementById("loginErro").textContent="";
   setTimeout(()=>document.getElementById("emailInput").focus(),120);
 }
-function fecharAdmin(){ document.getElementById("adminOverlay").classList.remove("open"); }
-async function logout(){
-  await supa.auth.signOut();
-  fecharAdmin();
-  toast("Sessão encerrada.");
-}
+function fecharLogin(){ document.getElementById("loginModal").classList.remove("open"); }
+
 async function verificarLogin(){
   const email=document.getElementById("emailInput").value.trim();
   const senha=document.getElementById("senhaInput").value;
@@ -986,18 +1055,38 @@ async function verificarLogin(){
     document.getElementById("senhaInput").value="";
     return;
   }
-  document.getElementById("loginBox").style.display="none";
-  document.getElementById("adminPanel").style.display="";
-  admLinhaId=P.linhas[0]?.id||''; carregarSb(); renderAdm();
+  fecharLogin();
+  ativarModoAdmin();
 }
 
-function carregarSb(){
-  document.getElementById("sbBucket").value=SB.bucket||"plantas";
+function ativarModoAdmin(){
+  modoAdmin=true;
+  document.body.classList.add("is-admin");
+  document.getElementById("adminModeBadge").classList.add("visible");
+  document.getElementById("btnAdminHdr").style.display="none";
+  renderLinhas(); // re-renderiza sidebar com ícones de edição
+  toast("Modo Admin ativado",true);
 }
-function salvarSb(){
-  SB={bucket:document.getElementById("sbBucket").value.trim()||"plantas"};
-  localStorage.setItem(LS_SB,JSON.stringify(SB)); toast("Bucket salvo ✓",true);
+
+async function admSalvarESair(){
+  toast("Salvando...");
+  try{
+    for(const l of P.linhas){
+      await upsertLinha(l);
+      for(const v of l.versoes) await upsertTip(l.id,v);
+    }
+    salvarLocal();
+  }catch(e){ toast("Erro ao salvar: "+e.message); return; }
+  modoAdmin=false;
+  document.body.classList.remove("is-admin");
+  document.getElementById("adminModeBadge").classList.remove("visible");
+  document.getElementById("btnAdminHdr").style.display="";
+  iebFechar();
+  await supa.auth.signOut();
+  renderLinhas();
+  toast("Salvo e saído do Admin ✓",true);
 }
+
 async function uploadSB(file,path){
   const bucket=SB.bucket||'plantas';
   const {error:upErr}=await supa.storage.from(bucket).upload(path,file,{upsert:true});
@@ -1006,242 +1095,286 @@ async function uploadSB(file,path){
   return publicUrl;
 }
 
-function renderAdm(){
-  document.getElementById("admLinhaTabs").innerHTML=
-    P.linhas.map(l=>`<button class="adm-tab ${l.id===admLinhaId?"active":""}" onclick="selAdmL('${l.id}')">${l.nome}</button>`).join("")+
-    `<button class="btn-add-linha" onclick="novaLinha()">+ Nova</button>`;
-  const al=getAdmL();
-  document.getElementById("admLinhaDesc").value=al.descricao||"";
-  document.getElementById("versoesGrid").innerHTML=al.versoes.map(v=>
-    `<div class="v-card">
-      <div class="v-card-id">${v.id}</div>
-      <div class="v-card-nome">${v.nome}</div>
-      <div class="v-card-info">A:${v.areas?.tipo_a_m2||"—"}m² · ${(v.finais||[]).length} finais</div>
-      <div class="v-card-actions">
-        <button class="btn-edit-v" onclick="editarV('${v.id}')">Editar</button>
-        <button class="btn-del-v" onclick="excluirV('${v.id}')">✕</button>
-      </div>
-    </div>`
-  ).join("");
-  document.getElementById("editFormWrap").innerHTML="";
-  editandoId=null;
+// ═══════════════════════════════════════════════════════════
+// INLINE EDIT OVERLAY
+// ═══════════════════════════════════════════════════════════
+function iebAbrir(titulo, html){
+  document.getElementById("iebTitle").textContent=titulo;
+  document.getElementById("iebContent").innerHTML=html;
+  document.getElementById("inlineEditOverlay").classList.add("open");
 }
-function selAdmL(id){ admLinhaId=id; renderAdm(); }
-async function salvarDescLinha(){
-  const al=getAdmL(); al.descricao=document.getElementById("admLinhaDesc").value;
-  try{ await upsertLinha(al); salvarLocal(); renderAll(); toast("Salvo ✓",true); }
-  catch(e){ toast("Erro: "+e.message); }
-}
-async function novaLinha(){
-  const nome=prompt("Nome da nova linha:"); if(!nome?.trim()) return;
-  const id=nome.trim().replace(/\s+/g,"_");
-  if(P.linhas.find(l=>l.id===id)){ alert("Já existe."); return; }
-  const novaL={id,nome:nome.trim(),descricao:"",versoes:[]};
-  try{
-    await upsertLinha(novaL);
-    P.linhas.push(novaL); admLinhaId=id;
-    salvarLocal(); renderAll(); renderAdm(); toast(`Linha '${nome.trim()}' criada ✓`,true);
-  } catch(e){ toast("Erro: "+e.message); }
-}
-async function novaVersao(){
-  const al=getAdmL(); const n=al.versoes.length+1; const id="T"+n;
-  const v={id,nome:id,imagem:"",finais:[],areas:{tipo_a_m2:0,tipo_b_m2:0,tipo_c_m2:null},config_pav:{unidades_pav:0,finais_pav:0,finais_diferentes:0,torre:"",varanda:""},ficha_tecnica:{dormitorios_qtd:0,pavimentos:""},meta:{planta_tipo:"Planta padrão",versao_label:"Versão "+String(n).padStart(2,"0"),finais:""},cidades:[],projetos:[],pdf_url:"#",dwg_url:"#"};
-  try{
-    await upsertTipologia(al.id,v);
-    al.versoes.push(v); salvarLocal(); renderAdm(); editarV(id);
-  } catch(e){ toast("Erro: "+e.message); }
-}
-async function excluirV(id){
-  if(!confirm(`Excluir ${id}?`)) return;
-  const al=getAdmL();
-  try{
-    await deleteTipologia(al.id,id);
-    al.versoes=al.versoes.filter(v=>v.id!==id);
-    salvarLocal(); renderAll(); renderAdm(); toast("Excluído.");
-  } catch(e){ toast("Erro: "+e.message); }
-}
+function iebFechar(){ document.getElementById("inlineEditOverlay").classList.remove("open"); }
+function iebFecharFora(e){ if(e.target===document.getElementById("inlineEditOverlay")) iebFechar(); }
 
-function buildUploadField(fieldId, labelText, currentUrl, folder){
-  return `<div>
-    <label class="form-label">${labelText}</label>
-    <div class="upload-zone" onclick="document.getElementById('${fieldId}_file').click()" style="margin-top:4px;">
-      <input type="file" id="${fieldId}_file" accept="image/*" onchange="doUpload(event,'${fieldId}','${folder}')">
-      <img class="up-preview" id="${fieldId}_prev" ${currentUrl&&currentUrl!="#"?`src="${currentUrl}" style="display:block"`:""}/>
-      <div class="up-zone-lbl" id="${fieldId}_lbl">${currentUrl&&currentUrl!="#"?"Clique para trocar":"<strong>Clique</strong> para upload"}</div>
-      <div class="up-prog-wrap" id="${fieldId}_pw"><div class="up-prog-fill" id="${fieldId}_pf"></div></div>
-      <div class="up-status" id="${fieldId}_st"></div>
-      <div class="up-url" id="${fieldId}_url">${currentUrl&&currentUrl!="#"?"URL: "+currentUrl:""}</div>
+// Upload helper
+function iebBuildUpload(id, label, url, folder){
+  const hasUrl = url && url !== "#";
+  return `<div class="ieb-field full">
+    <label class="ieb-label">${label}</label>
+    <div class="ieb-upload" onclick="document.getElementById('${id}_f').click()">
+      <input type="file" id="${id}_f" accept="image/*,application/pdf" onchange="iebDoUpload(event,'${id}','${folder}')">
+      <img class="ieb-upload-prev" id="${id}_prev" ${hasUrl?`src="${url}" style="display:block"`:""}/>
+      <div class="ieb-upload-lbl" id="${id}_lbl">${hasUrl?"Clique para trocar":"<strong>Clique</strong> para fazer upload"}</div>
+      <div class="ieb-upload-prog" id="${id}_prog"><div class="ieb-upload-fill" id="${id}_fill"></div></div>
+      <div class="ieb-upload-status" id="${id}_status"></div>
     </div>
-    <input type="hidden" id="${fieldId}" value="${currentUrl||""}">
+    <input type="hidden" id="${id}" value="${url||""}">
   </div>`;
 }
-
-async function doUpload(e,fieldId,folder){
+async function iebDoUpload(e, id, folder){
   const file=e.target.files[0]; if(!file) return;
-  const prev=document.getElementById(fieldId+"_prev");
-  const lbl=document.getElementById(fieldId+"_lbl");
-  const pw=document.getElementById(fieldId+"_pw");
-  const pf=document.getElementById(fieldId+"_pf");
-  const st=document.getElementById(fieldId+"_st");
-  const ul=document.getElementById(fieldId+"_url");
-  const hidden=document.getElementById(fieldId);
-
-  prev.src=URL.createObjectURL(file); prev.style.display="block";
-  lbl.innerHTML=file.name;
-  pw.style.display=""; st.style.display=""; st.textContent="Enviando...";
-  let p=0; const iv=setInterval(()=>{ p=Math.min(p+10,80); pf.style.width=p+"%"; },200);
+  const prev=document.getElementById(id+"_prev");
+  const lbl=document.getElementById(id+"_lbl");
+  const prog=document.getElementById(id+"_prog");
+  const fill=document.getElementById(id+"_fill");
+  const status=document.getElementById(id+"_status");
+  const hidden=document.getElementById(id);
+  if(file.type.startsWith("image/")){ prev.src=URL.createObjectURL(file); prev.style.display="block"; }
+  lbl.innerHTML=file.name; prog.style.display=""; status.style.display=""; status.textContent="Enviando...";
+  let p=0; const iv=setInterval(()=>{ p=Math.min(p+10,80); fill.style.width=p+"%"; },200);
   try{
     const ext=file.name.split(".").pop();
-    const path=`${folder}/${fieldId}_${Date.now()}.${ext}`;
-    const url=await uploadSB(file,path);
-    clearInterval(iv); pf.style.width="100%"; st.textContent="✓ Concluído";
-    ul.textContent="URL: "+url; hidden.value=url;
-    setTimeout(()=>{ pw.style.display="none"; st.style.display="none"; },2000);
+    const url=await uploadSB(file,`${folder}/${id}_${Date.now()}.${ext}`);
+    clearInterval(iv); fill.style.width="100%"; status.textContent="✓ Concluído";
+    hidden.value=url;
+    setTimeout(()=>{ prog.style.display="none"; status.style.display="none"; },2000);
     toast("Upload concluído ✓",true);
-  } catch(err){
-    clearInterval(iv); pw.style.display="none";
-    st.textContent="Erro: "+err.message; toast("Erro: "+err.message);
-  }
+  }catch(err){ clearInterval(iv); prog.style.display="none"; status.textContent="Erro: "+err.message; toast("Erro: "+err.message); }
 }
 
-function editarV(id){
-  const al=getAdmL(); const v=al.versoes.find(x=>x.id===id); if(!v) return;
-  editandoId=id;
-  const a=v.areas||{}; const cp=v.config_pav||{}; const ft=v.ficha_tecnica||{}; const m=v.meta||{};
-  const folder=`${admLinhaId}/${id}`;
-  const finaisRows=(v.finais||[]).map((f,i)=>`
-    <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:10px;margin-bottom:8px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-        <span style="font-size:11px;font-weight:700;color:#4CAF72;">${f.id}</span>
-        <button onclick="excluirFinal(${i})" style="background:transparent;border:none;color:rgba(220,38,38,.6);cursor:pointer;font-size:13px;">✕</button>
-      </div>
-      <div class="form-grid form-grid-3" style="margin-bottom:8px;">
-        <div class="form-field"><label class="form-label">ID</label><input class="form-input" id="f_fid_${i}" value="${f.id}"></div>
-        <div class="form-field"><label class="form-label">Tipo</label><input class="form-input" id="f_ftipo_${i}" value="${f.tipo||""}"></div>
-        <div class="form-field"><label class="form-label">m²</label><input class="form-input" id="f_fm2_${i}" type="number" step="0.1" value="${f.m2||""}"></div>
-      </div>
-      ${buildUploadField(`f_fimg_${i}`, "Imagem do Final", f.imagem, folder)}
-      <div class="form-grid" style="margin-top:8px;">
-        <div class="form-field"><label class="form-label">PDF específico</label><input class="form-input" id="f_fpdf_${i}" value="${f.pdf_url||"#"}"></div>
-        <div class="form-field"><label class="form-label">DWG específico</label><input class="form-input" id="f_fdwg_${i}" value="${f.dwg_url||"#"}"></div>
-      </div>
-    </div>`).join("");
-
-  document.getElementById("editFormWrap").innerHTML=`<div class="edit-form-card">
-    <div class="efc-title">Editando — ${al.nome} · ${v.id}</div>
-    <div class="form-grid">
-      <div class="form-field"><label class="form-label">ID (ex: T1)</label><input class="form-input" id="f_id" value="${v.id}"></div>
-      <div class="form-field"><label class="form-label">Nome</label><input class="form-input" id="f_nome" value="${v.nome}"></div>
-    </div>
-
-    <div class="form-section">Imagem Principal (Planta Geral)</div>
-    ${buildUploadField("f_imagem","Imagem da planta geral",v.imagem,folder)}
-
-    <div class="form-section">Áreas Privativas (m²)</div>
-    <div class="form-grid form-grid-3">
-      <div class="form-field"><label class="form-label">Tipo A m²</label><input class="form-input" id="f_ta" type="number" step="0.1" value="${a.tipo_a_m2||""}"></div>
-      <div class="form-field"><label class="form-label">Tipo B m²</label><input class="form-input" id="f_tb" type="number" step="0.1" value="${a.tipo_b_m2||""}"></div>
-      <div class="form-field"><label class="form-label">Tipo C m² (opcional)</label><input class="form-input" id="f_tc" type="number" step="0.1" value="${a.tipo_c_m2||""}"></div>
-    </div>
-
-    <div class="form-section">Configuração do Pavimento</div>
-    <div class="form-grid form-grid-4">
-      <div class="form-field"><label class="form-label">Unidades/Pav.</label><input class="form-input" id="f_unid" type="number" value="${cp.unidades_pav||0}"></div>
-      <div class="form-field"><label class="form-label">Finais/Pav.</label><input class="form-input" id="f_finais" type="number" value="${cp.finais_pav||0}"></div>
-      <div class="form-field"><label class="form-label">Finais Diferentes</label><input class="form-input" id="f_fdif" type="number" value="${cp.finais_diferentes||0}"></div>
-      <div class="form-field"><label class="form-label">Dormitórios</label><input class="form-input" id="f_dorms" type="number" value="${ft.dormitorios_qtd||0}"></div>
-      <div class="form-field full"><label class="form-label">Torre</label><input class="form-input" id="f_torre" value="${cp.torre||""}"></div>
-      <div class="form-field full"><label class="form-label">Varanda</label><input class="form-input" id="f_var" value="${cp.varanda||""}"></div>
-      <div class="form-field full"><label class="form-label">Pavimentos</label><input class="form-input" id="f_pav" value="${ft.pavimentos||""}"></div>
-    </div>
-
-    <div class="form-section">Metadados</div>
-    <div class="form-grid form-grid-3">
-      <div class="form-field"><label class="form-label">Tipo de Planta</label><input class="form-input" id="f_mplanta" value="${m.planta_tipo||"Planta padrão"}"></div>
-      <div class="form-field"><label class="form-label">Rótulo da Versão</label><input class="form-input" id="f_mversao" value="${m.versao_label||""}"></div>
-      <div class="form-field"><label class="form-label">Finais</label><input class="form-input" id="f_mfinais" value="${m.finais||""}"></div>
-    </div>
-
-    <div class="form-section">Downloads do Projeto Geral</div>
-    <div class="form-grid">
-      <div class="form-field"><label class="form-label">Link PDF Geral</label><input class="form-input" id="f_pdf" value="${v.pdf_url||"#"}"></div>
-      <div class="form-field"><label class="form-label">Link DWG Geral</label><input class="form-input" id="f_dwg" value="${v.dwg_url||"#"}"></div>
-    </div>
-
-    <div class="form-section">Finais (Unidades Individuais)</div>
-    <div id="finaisContainer">${finaisRows}</div>
-    <button onclick="adicionarFinal()" style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;border:1px dashed rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.5);font-family:'Inter',sans-serif;font-size:11px;cursor:pointer;margin-bottom:12px;transition:all var(--t);"
-            onmouseover="this.style.color='rgba(255,255,255,.8)'" onmouseout="this.style.color='rgba(255,255,255,.5)'">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      Adicionar Final
-    </button>
-
-    <div class="form-section">Cidades e Empreendimentos</div>
-    <div class="form-grid">
-      <div class="form-field"><label class="form-label">Cidades (uma por linha)</label><textarea class="form-textarea" id="f_cidades">${(v.cidades||[]).join("\n")}</textarea></div>
-      <div class="form-field"><label class="form-label">Empreendimentos (um por linha)</label><textarea class="form-textarea" id="f_projs">${(v.projetos||[]).join("\n")}</textarea></div>
-    </div>
-
-    <div class="form-actions">
-      <button class="btn-save-form" onclick="salvarV()">Salvar Alterações</button>
-      <button class="btn-cancel-form" onclick="cancelarEd()">Cancelar</button>
-    </div>
-  </div>`;
-  document.getElementById("editFormWrap").scrollIntoView({behavior:"smooth",block:"start"});
+// Lista editável helper
+function iebBuildLista(id, items){
+  return `<div class="ieb-list" id="${id}_list">`+
+    items.map((v,i)=>`<div class="ieb-list-row"><input class="ieb-list-input" id="${id}_${i}" value="${v}"><button class="btn-ieb-rm" onclick="iebRmItem('${id}',${i})">✕</button></div>`).join("")+
+  `</div><button class="btn-ieb-add-row" onclick="iebAddItem('${id}')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Adicionar</button>`;
+}
+function iebRmItem(id, idx){
+  const list=document.getElementById(id+"_list");
+  list.querySelectorAll(".ieb-list-row")[idx]?.remove();
+  list.querySelectorAll(".ieb-list-input").forEach((el,i)=>el.id=`${id}_${i}`);
+  list.querySelectorAll(".btn-ieb-rm").forEach((el,i)=>el.setAttribute("onclick",`iebRmItem('${id}',${i})`));
+}
+function iebAddItem(id){
+  const list=document.getElementById(id+"_list");
+  const n=list.querySelectorAll(".ieb-list-row").length;
+  const d=document.createElement("div"); d.className="ieb-list-row";
+  d.innerHTML=`<input class="ieb-list-input" id="${id}_${n}" value=""><button class="btn-ieb-rm" onclick="iebRmItem('${id}',${n})">✕</button>`;
+  list.appendChild(d); d.querySelector("input").focus();
+}
+function iebReadLista(id){
+  return Array.from(document.querySelectorAll(`[id^="${id}_"]`))
+    .filter(el=>el.tagName==="INPUT" && /^[a-z_]+_\d+$/.test(el.id))
+    .map(el=>el.value.trim()).filter(Boolean);
 }
 
-async function adicionarFinal(){
-  const al=getAdmL(); const v=al.versoes.find(x=>x.id===editandoId); if(!v) return;
+// ═══════════════════════════════════════════════════════════
+// ADMIN — EDIÇÃO INLINE POR SEÇÃO
+// ═══════════════════════════════════════════════════════════
+function admEditarTipologia(){
+  if(!modoAdmin) return;
+  const v=getVersao(); if(!v) return;
+  const m=v.meta||{}; const folder=`${linhaId}/${tipoId}`;
+  iebAbrir(`Editar Tipologia — ${linhaId} · ${tipoId}`, `
+    <div class="ieb-grid">
+      <div class="ieb-field"><label class="ieb-label">ID</label><input class="ieb-input" id="ie_id" value="${v.id}"></div>
+      <div class="ieb-field"><label class="ieb-label">Nome exibido</label><input class="ieb-input" id="ie_nome" value="${v.nome}"></div>
+    </div>
+    <div class="ieb-section-hdr">Metadados</div>
+    <div class="ieb-grid ieb-grid-3">
+      <div class="ieb-field"><label class="ieb-label">Tipo de Planta</label><input class="ieb-input" id="ie_mplanta" value="${m.planta_tipo||"Planta padrão"}"></div>
+      <div class="ieb-field"><label class="ieb-label">Rótulo Versão</label><input class="ieb-input" id="ie_mversao" value="${m.versao_label||""}"></div>
+      <div class="ieb-field"><label class="ieb-label">Finais</label><input class="ieb-input" id="ie_mfinais" value="${m.finais||""}"></div>
+    </div>
+    <div class="ieb-section-hdr">Imagem da Planta Geral</div>
+    ${iebBuildUpload("ie_img","Imagem principal",v.imagem,folder)}
+    <div class="ieb-section-hdr">Arquivos para Download</div>
+    <div class="ieb-grid">
+      ${iebBuildUpload("ie_pdf","PDF do Projeto",v.pdf_url&&v.pdf_url!="#"?v.pdf_url:"",folder)}
+      ${iebBuildUpload("ie_dwg","DWG do Projeto",v.dwg_url&&v.dwg_url!="#"?v.dwg_url:"",folder)}
+    </div>
+    <div class="ieb-actions">
+      <button class="btn-ieb-save" onclick="iebSalvarTipologia()">Salvar</button>
+      <button class="btn-ieb-cancel" onclick="iebFechar()">Cancelar</button>
+    </div>`);
+}
+function iebSalvarTipologia(){
+  const v=getVersao(); if(!v) return;
+  v.id=document.getElementById("ie_id").value.trim()||v.id;
+  v.nome=document.getElementById("ie_nome").value.trim();
+  v.meta={planta_tipo:document.getElementById("ie_mplanta").value.trim(),versao_label:document.getElementById("ie_mversao").value.trim(),finais:document.getElementById("ie_mfinais").value.trim()};
+  const img=document.getElementById("ie_img").value.trim(); if(img) v.imagem=img;
+  const pdf=document.getElementById("ie_pdf").value.trim(); if(pdf) v.pdf_url=pdf;
+  const dwg=document.getElementById("ie_dwg").value.trim(); if(dwg) v.dwg_url=dwg;
+  salvarLocal(); iebFechar(); renderTipoInfo(); renderPlanta(); renderCarrossel(); toast("Tipologia salva ✓",true);
+}
+
+function admEditarFicha(){
+  if(!modoAdmin) return;
+  const v=getVersao(); if(!v) return;
+  const a=v.areas||{};
+  iebAbrir("Editar Ficha Técnica — Áreas Privativas", `
+    <div class="ieb-grid ieb-grid-3">
+      <div class="ieb-field"><label class="ieb-label">Tipo A (m²)</label><input class="ieb-input" id="ie_ta" type="number" step="0.1" value="${a.tipo_a_m2||""}"></div>
+      <div class="ieb-field"><label class="ieb-label">Tipo B (m²)</label><input class="ieb-input" id="ie_tb" type="number" step="0.1" value="${a.tipo_b_m2||""}"></div>
+      <div class="ieb-field"><label class="ieb-label">Tipo C (m²) — opcional</label><input class="ieb-input" id="ie_tc" type="number" step="0.1" value="${a.tipo_c_m2||""}"></div>
+    </div>
+    <div class="ieb-actions">
+      <button class="btn-ieb-save" onclick="iebSalvarFicha()">Salvar</button>
+      <button class="btn-ieb-cancel" onclick="iebFechar()">Cancelar</button>
+    </div>`);
+}
+function iebSalvarFicha(){
+  const v=getVersao(); if(!v) return;
+  const pf=s=>{ const n=parseFloat(s); return isNaN(n)?null:n; };
+  v.areas={tipo_a_m2:pf(document.getElementById("ie_ta").value),tipo_b_m2:pf(document.getElementById("ie_tb").value),tipo_c_m2:pf(document.getElementById("ie_tc").value)||null};
+  salvarLocal(); iebFechar(); renderAreas(); toast("Áreas salvas ✓",true);
+}
+
+function admEditarPavimento(){
+  if(!modoAdmin) return;
+  const v=getVersao(); if(!v) return;
+  const cp=v.config_pav||{}; const ft=v.ficha_tecnica||{};
+  iebAbrir("Editar Configuração do Pavimento", `
+    <div class="ieb-grid">
+      <div class="ieb-field"><label class="ieb-label">Unidades por Pav.</label><input class="ieb-input" id="ie_unid" type="number" value="${cp.unidades_pav||0}"></div>
+      <div class="ieb-field"><label class="ieb-label">Finais por Pav.</label><input class="ieb-input" id="ie_finais" type="number" value="${cp.finais_pav||0}"></div>
+      <div class="ieb-field"><label class="ieb-label">Finais Diferentes</label><input class="ieb-input" id="ie_fdif" type="number" value="${cp.finais_diferentes||0}"></div>
+      <div class="ieb-field"><label class="ieb-label">Dormitórios</label><input class="ieb-input" id="ie_dorm" type="number" value="${ft.dormitorios_qtd||0}"></div>
+      <div class="ieb-field full"><label class="ieb-label">Torre</label><input class="ieb-input" id="ie_torre" value="${cp.torre||""}"></div>
+      <div class="ieb-field full"><label class="ieb-label">Varanda</label><input class="ieb-input" id="ie_var" value="${cp.varanda||""}"></div>
+      <div class="ieb-field full"><label class="ieb-label">Pavimentos</label><input class="ieb-input" id="ie_pav" value="${ft.pavimentos||""}"></div>
+    </div>
+    <div class="ieb-actions">
+      <button class="btn-ieb-save" onclick="iebSalvarPavimento()">Salvar</button>
+      <button class="btn-ieb-cancel" onclick="iebFechar()">Cancelar</button>
+    </div>`);
+}
+function iebSalvarPavimento(){
+  const v=getVersao(); if(!v) return;
+  const pi=s=>{ const n=parseInt(s); return isNaN(n)?0:n; };
+  v.config_pav={unidades_pav:pi(document.getElementById("ie_unid").value),finais_pav:pi(document.getElementById("ie_finais").value),finais_diferentes:pi(document.getElementById("ie_fdif").value),torre:document.getElementById("ie_torre").value.trim(),varanda:document.getElementById("ie_var").value.trim()};
+  v.ficha_tecnica={...(v.ficha_tecnica||{}),dormitorios_qtd:pi(document.getElementById("ie_dorm").value),pavimentos:document.getElementById("ie_pav").value.trim()};
+  salvarLocal(); iebFechar(); renderTipoInfo(); renderPav(); toast("Configuração salva ✓",true);
+}
+
+function admEditarAplicacoes(){
+  if(!modoAdmin) return;
+  const v=getVersao(); if(!v) return;
+  iebAbrir("Editar Aplicações", `
+    <div class="ieb-section-hdr" style="border-top:none;padding-top:0;">Cidades Aplicáveis</div>
+    ${iebBuildLista("ie_cid", v.cidades||[])}
+    <div class="ieb-section-hdr">Empreendimentos Utilizados</div>
+    ${iebBuildLista("ie_emp", v.projetos||[])}
+    <div class="ieb-actions">
+      <button class="btn-ieb-save" onclick="iebSalvarAplicacoes()">Salvar</button>
+      <button class="btn-ieb-cancel" onclick="iebFechar()">Cancelar</button>
+    </div>`);
+}
+function iebSalvarAplicacoes(){
+  const v=getVersao(); if(!v) return;
+  v.cidades=iebReadLista("ie_cid");
+  v.projetos=iebReadLista("ie_emp");
+  salvarLocal(); iebFechar(); renderAplicacoes(); toast("Aplicações salvas ✓",true);
+}
+
+// Editar final no carrossel
+function admEditarFinal(idx){
+  if(!modoAdmin) return;
+  const v=getVersao(); if(!v) return;
+  if(idx===0){ admEditarTipologia(); return; } // planta geral = editar tipologia
+  const f=v.finais?.[idx-1]; if(!f) return;
+  const folder=`${linhaId}/${tipoId}`;
+  iebAbrir(`Editar ${f.id}`, `
+    <div class="ieb-grid ieb-grid-3">
+      <div class="ieb-field"><label class="ieb-label">ID do Final</label><input class="ieb-input" id="ie_fid" value="${f.id}"></div>
+      <div class="ieb-field"><label class="ieb-label">Tipo</label><input class="ieb-input" id="ie_ftipo" value="${f.tipo||""}"></div>
+      <div class="ieb-field"><label class="ieb-label">m²</label><input class="ieb-input" id="ie_fm2" type="number" step="0.1" value="${f.m2||""}"></div>
+    </div>
+    <div class="ieb-section-hdr">Imagem deste Final</div>
+    ${iebBuildUpload(`ie_fimg_${idx}`,"Imagem do final",f.imagem,folder)}
+    <div class="ieb-section-hdr">Downloads específicos</div>
+    <div class="ieb-grid">
+      ${iebBuildUpload(`ie_fpdf_${idx}`,"PDF específico",f.pdf_url&&f.pdf_url!="#"?f.pdf_url:"",folder)}
+      ${iebBuildUpload(`ie_fdwg_${idx}`,"DWG específico",f.dwg_url&&f.dwg_url!="#"?f.dwg_url:"",folder)}
+    </div>
+    <div class="ieb-actions">
+      <button class="btn-ieb-save" onclick="iebSalvarFinal(${idx})">Salvar</button>
+      <button class="btn-ieb-cancel" onclick="iebFechar()">Cancelar</button>
+      <button style="padding:11px 18px;border-radius:var(--radius-sm);border:1.5px solid #FCA5A5;background:transparent;color:#DC2626;font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;" onclick="admExcluirFinal(${idx})">Excluir Final</button>
+    </div>`);
+}
+function iebSalvarFinal(idx){
+  const v=getVersao(); if(!v) return;
+  const f=v.finais?.[idx-1]; if(!f) return;
+  const pf=s=>{ const n=parseFloat(s); return isNaN(n)?null:n; };
+  f.id=document.getElementById("ie_fid").value.trim()||f.id;
+  f.tipo=document.getElementById("ie_ftipo").value.trim();
+  f.m2=pf(document.getElementById("ie_fm2").value)||f.m2;
+  const img=document.getElementById(`ie_fimg_${idx}`).value.trim(); if(img) f.imagem=img;
+  const pdf=document.getElementById(`ie_fpdf_${idx}`).value.trim(); if(pdf) f.pdf_url=pdf;
+  const dwg=document.getElementById(`ie_fdwg_${idx}`).value.trim(); if(dwg) f.dwg_url=dwg;
+  salvarLocal(); iebFechar(); renderCarrossel(); renderPlanta(); toast("Final salvo ✓",true);
+}
+function admExcluirFinal(idx){
+  if(!confirm(`Excluir este final?`)) return;
+  const v=getVersao(); if(!v) return;
+  v.finais.splice(idx-1,1); finalIdx=0;
+  salvarLocal(); iebFechar(); renderCarrossel(); renderPlanta(); toast("Final excluído.");
+}
+
+// Adicionar final novo
+function admAdicionarFinal(){
+  const v=getVersao(); if(!v) return;
   v.finais=v.finais||[];
   const n=v.finais.length+1;
   v.finais.push({id:`Final ${String(n).padStart(2,"0")}`,tipo:"Tipo A",m2:0,imagem:"",pdf_url:"#",dwg_url:"#"});
-  try{ await upsertTipologia(al.id,v); salvarLocal(); editarV(editandoId); }
-  catch(e){ toast("Erro: "+e.message); }
-}
-async function excluirFinal(idx){
-  const al=getAdmL(); const v=al.versoes.find(x=>x.id===editandoId); if(!v) return;
-  if(!confirm(`Excluir Final ${idx+1}?`)) return;
-  v.finais.splice(idx,1);
-  try{ await upsertTipologia(al.id,v); salvarLocal(); editarV(editandoId); }
-  catch(e){ toast("Erro: "+e.message); }
+  salvarLocal(); renderCarrossel(); admEditarFinal(n);
 }
 
-function cancelarEd(){ document.getElementById("editFormWrap").innerHTML=""; editandoId=null; }
-
-async function salvarV(){
-  const al=getAdmL(); const v=al.versoes.find(x=>x.id===editandoId); if(!v) return;
-  const sl=s=>s.split("\n").map(l=>l.trim()).filter(Boolean);
-  const pf=s=>{ const n=parseFloat(s); return isNaN(n)?null:n; };
-  const pi=s=>{ const n=parseInt(s); return isNaN(n)?0:n; };
-
-  v.id   = document.getElementById("f_id").value.trim()||v.id;
-  v.nome = document.getElementById("f_nome").value.trim();
-  v.imagem = document.getElementById("f_imagem").value.trim();
-  v.areas={tipo_a_m2:pf(document.getElementById("f_ta").value),tipo_b_m2:pf(document.getElementById("f_tb").value),tipo_c_m2:pf(document.getElementById("f_tc").value)||null};
-  v.config_pav={unidades_pav:pi(document.getElementById("f_unid").value),finais_pav:pi(document.getElementById("f_finais").value),finais_diferentes:pi(document.getElementById("f_fdif").value),torre:document.getElementById("f_torre").value.trim(),varanda:document.getElementById("f_var").value.trim()};
-  v.ficha_tecnica={dormitorios_qtd:pi(document.getElementById("f_dorms").value),pavimentos:document.getElementById("f_pav").value.trim()};
-  v.meta={planta_tipo:document.getElementById("f_mplanta").value.trim(),versao_label:document.getElementById("f_mversao").value.trim(),finais:document.getElementById("f_mfinais").value.trim()};
-  v.pdf_url=document.getElementById("f_pdf").value.trim()||"#";
-  v.dwg_url=document.getElementById("f_dwg").value.trim()||"#";
-  v.cidades=sl(document.getElementById("f_cidades").value);
-  v.projetos=sl(document.getElementById("f_projs").value);
-
-  // salvar finais
-  (v.finais||[]).forEach((f,i)=>{
-    f.id=document.getElementById(`f_fid_${i}`)?.value.trim()||f.id;
-    f.tipo=document.getElementById(`f_ftipo_${i}`)?.value.trim()||f.tipo;
-    f.m2=pf(document.getElementById(`f_fm2_${i}`)?.value)||f.m2;
-    f.imagem=document.getElementById(`f_fimg_${i}`)?.value.trim()||f.imagem;
-    f.pdf_url=document.getElementById(`f_fpdf_${i}`)?.value.trim()||"#";
-    f.dwg_url=document.getElementById(`f_fdwg_${i}`)?.value.trim()||"#";
-  });
-
-  editandoId=v.id;
-  try{
-    await upsertTipologia(al.id,v);
-    salvarLocal(); renderAll(); renderAdm(); toast("Salvo ✓",true);
-  } catch(e){ toast("Erro ao salvar: "+e.message); }
+// Sidebar admin: nova linha / renomear / excluir / nova tipologia
+function admNovaLinha(){
+  const nome=prompt("Nome do novo produto (ex: Master):"); if(!nome?.trim()) return;
+  const id=nome.trim().replace(/\s+/g,"_");
+  if(P.linhas.find(l=>l.id===id)){ alert("Já existe um produto com esse nome."); return; }
+  P.linhas.push({id,nome:nome.trim(),descricao:"",versoes:[]});
+  salvarLocal(); updateMeta(); renderLinhas(); toast(`Produto '${nome.trim()}' criado ✓`,true);
 }
+function admRenomearLinha(lid){
+  const l=P.linhas.find(x=>x.id===lid); if(!l) return;
+  const novo=prompt("Novo nome:",l.nome); if(!novo?.trim()) return;
+  l.nome=novo.trim(); salvarLocal(); renderLinhas(); toast("Produto renomeado ✓",true);
+}
+function admExcluirLinha(lid){
+  if(!confirm(`Excluir o produto "${lid}" e todas as suas tipologias?`)) return;
+  P.linhas=P.linhas.filter(l=>l.id!==lid);
+  if(linhaId===lid){ linhaId=P.linhas[0]?.id||""; tipoId=P.linhas[0]?.versoes[0]?.id||""; renderConteudo(); }
+  salvarLocal(); updateMeta(); renderLinhas(); toast("Produto excluído.");
+}
+function admNovaTipologia(lid){
+  const l=P.linhas.find(x=>x.id===lid); if(!l) return;
+  const n=l.versoes.length+1; const id="T"+n;
+  l.versoes.push({id,nome:id,imagem:"",finais:[],areas:{tipo_a_m2:0,tipo_b_m2:0,tipo_c_m2:null},config_pav:{unidades_pav:0,finais_pav:0,finais_diferentes:0,torre:"",varanda:""},ficha_tecnica:{dormitorios_qtd:0,pavimentos:""},meta:{planta_tipo:"Planta padrão",versao_label:`Versão ${String(n).padStart(2,"0")}`,finais:""},cidades:[],projetos:[],pdf_url:"#",dwg_url:"#"});
+  salvarLocal(); updateMeta(); renderLinhas();
+  selLinha(lid); selTipo(id); admEditarTipologia(); toast(`Tipologia ${id} criada ✓`,true);
+}
+function admExcluirTipologia(lid,tid){
+  if(!confirm(`Excluir a tipologia ${tid}?`)) return;
+  const l=P.linhas.find(x=>x.id===lid); if(!l) return;
+  l.versoes=l.versoes.filter(v=>v.id!==tid);
+  if(linhaId===lid&&tipoId===tid){ tipoId=l.versoes[0]?.id||""; renderConteudo(); }
+  salvarLocal(); updateMeta(); renderLinhas(); toast("Tipologia excluída.");
+}
+
+// Compatibilidade: função upsertLinha e upsertTip (do Code)
+async function upsertLinha(l){
+  const {error}=await supa.from('linhas').upsert({id:l.id,nome:l.nome,descricao:l.descricao||''});
+  if(error) throw error;
+}
+async function upsertTip(linhaId,v){
+  const {error}=await supa.from('tipologias').upsert({id:v.id,linha_id:linhaId,nome:v.nome,imagem:v.imagem||'',finais:v.finais||[],areas:v.areas,config_pav:v.config_pav,ficha_tecnica:v.ficha_tecnica,meta:v.meta,cidades:v.cidades,projetos:v.projetos,pdf_url:v.pdf_url,dwg_url:v.dwg_url});
+  if(error) throw error;
+}
+
 
 // INIT
 (async function(){
@@ -1252,11 +1385,13 @@ async function salvarV(){
     linhaId=P.linhas.find(l=>l.id===linhaId)?linhaId:(P.linhas[0]?.id||'');
     const curL=P.linhas.find(l=>l.id===linhaId);
     tipoId=curL?.versoes.find(v=>v.id===tipoId)?tipoId:(curL?.versoes[0]?.id||'');
-    admLinhaId=P.linhas.find(l=>l.id===admLinhaId)?admLinhaId:(P.linhas[0]?.id||'');
     renderAll();
   } catch(e){
     console.warn('Supabase indisponível, usando localStorage:',e.message);
   }
+  // verificar sessão admin ativa
+  const {data:{session}}=await supa.auth.getSession();
+  if(session) ativarModoAdmin();
 })();
 </script>
 </body>
