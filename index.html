@@ -501,26 +501,33 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-900);f
     <img class="login-logo" src="icons/Arbore_logo.jpeg" alt="Árbore">
     <div class="login-title">Acesso Administrativo</div>
     <div class="login-sub">Área restrita — equipe Árbore</div>
-    <input class="login-input" type="password" id="senhaInput" placeholder="Senha de acesso"
-           onkeydown="if(event.key==='Enter')verificarSenha()">
+    <input class="login-input" type="email" id="emailInput" placeholder="E-mail de acesso"
+           onkeydown="if(event.key==='Enter')document.getElementById('senhaInput').focus()">
+    <input class="login-input" type="password" id="senhaInput" placeholder="Senha"
+           onkeydown="if(event.key==='Enter')verificarLogin()">
     <div class="login-error" id="loginErro"></div>
-    <button class="btn-green" onclick="verificarSenha()">Entrar</button>
+    <button class="btn-green" onclick="verificarLogin()">Entrar</button>
     <button class="btn-ghost" onclick="fecharAdmin()">Cancelar</button>
   </div>
 
   <div class="admin-panel" id="adminPanel" style="display:none;">
     <div class="adm-topbar">
       <div class="adm-page-title">Painel <span>Administrativo</span></div>
-      <button class="btn-close-adm" onclick="fecharAdmin()">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        Fechar
-      </button>
+      <div style="display:flex;gap:8px;">
+        <button class="btn-close-adm" onclick="logout()">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Sair da Conta
+        </button>
+        <button class="btn-close-adm" onclick="fecharAdmin()">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Fechar
+        </button>
+      </div>
     </div>
     <div class="sb-bar">
       <span class="sb-label">Supabase</span>
-      <input class="sb-input" id="sbUrl" placeholder="URL do projeto">
-      <input class="sb-input" id="sbKey" placeholder="anon key">
-      <input class="sb-input" id="sbBucket" placeholder="bucket" style="max-width:140px;">
+      <span style="font-size:11px;color:rgba(76,175,114,.8);font-weight:600;">✓ Conectado</span>
+      <input class="sb-input" id="sbBucket" placeholder="bucket de imagens (ex: plantas)" style="max-width:240px;">
       <button class="btn-save-cfg" onclick="salvarSb()">Salvar</button>
     </div>
     <div class="adm-linha-tabs" id="admLinhaTabs"></div>
@@ -540,27 +547,75 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-900);f
 
 <div class="toast" id="toast"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
+// ═══════════════════════════════════════════════════════════
+// SUPABASE
+// ═══════════════════════════════════════════════════════════
+const SUPABASE_URL = 'https://dxycbutskkjjmywmskyd.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_NKlw6Fxon7gwTcoz0rxgrw_1txaPIF7';
+const supa = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 // ═══════════════════════════════════════════════════════════
 // DADOS INICIAIS
 // ═══════════════════════════════════════════════════════════
-const DADOS_INICIAIS = {"linhas":[{"id":"Compact","nome":"Compact","descricao":"Máxima eficiência em área reduzida.","versoes":[{"id":"T1","nome":"T1","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":38.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":40.2,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo B","m2":40.2,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 04","tipo":"Tipo A","m2":38.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":38.5,"tipo_b_m2":40.2,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":1,"pavimentos":"Térreo ao 5º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 04"},"cidades":["São Paulo","Campinas","Guarulhos","Santo André"],"projetos":["Residencial Vila Nova","Edifício Horizonte","Parque das Flores","Árbore Paulínia","Árbore Indaiatuba"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":41.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":43.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":46.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 04","tipo":"Tipo A","m2":41.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":41.0,"tipo_b_m2":43.5,"tipo_c_m2":46.0},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Osasco"],"projetos":["Residencial Primavera","Portal do Sol"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":44.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":46.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":48.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":44.5,"tipo_b_m2":46.0,"tipo_c_m2":48.5},"config_pav":{"unidades_pav":8,"finais_pav":8,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 a 08"},"cidades":["São Paulo","Guarulhos","Barueri"],"projetos":["Condomínio Araucária","Residencial Monte Verde","Edifício Ipê"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":48.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":50.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":48.0,"tipo_b_m2":50.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":2,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","Ribeirão Preto"],"projetos":["Grand Compact","Residencial Aurora"],"pdf_url":"#","dwg_url":"#"}]},{"id":"Slim","nome":"Slim","descricao":"Planta alongada para terrenos estreitos.","versoes":[{"id":"T1","nome":"T1","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":42.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":44.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":42.0,"tipo_b_m2":44.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 04"},"cidades":["São Paulo","Santos","São Bernardo do Campo","Diadema"],"projetos":["Slim Tower Centro","Edifício Vertical"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":45.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":47.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":50.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":45.5,"tipo_b_m2":47.5,"tipo_c_m2":50.0},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Jundiaí"],"projetos":["Slim Essencial","Residencial Avenida","Torres do Parque"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":49.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":51.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":49.0,"tipo_b_m2":51.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":2,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 e 02"},"cidades":["São Paulo","ABC Paulista","Guarulhos"],"projetos":["Slim Premium","Edifício Panorama"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":53.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":56.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":58.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":53.5,"tipo_b_m2":56.0,"tipo_c_m2":58.5},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":4,"torre":"Torre Premium","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":3,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Sorocaba"],"projetos":["Grand Slim","Residencial Vertice"],"pdf_url":"#","dwg_url":"#"}]},{"id":"Plus","nome":"Plus","descricao":"Amplitude e conforto com varanda gourmet.","versoes":[{"id":"T1","nome":"T1","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":58.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":61.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":58.0,"tipo_b_m2":61.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":2,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","Ribeirão Preto","Bauru"],"projetos":["Plus Jardins","Residencial Boulevard"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":62.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":65.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":68.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":62.0,"tipo_b_m2":65.0,"tipo_c_m2":68.0},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":4,"torre":"Torre Premium","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":3,"pavimentos":"Térreo ao 15º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Alphaville","Campinas","Santos"],"projetos":["Plus Connect","Edifício Harmonia","Residencial Allegro"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":67.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":70.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":67.5,"tipo_b_m2":70.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":2,"finais_pav":2,"finais_diferentes":2,"torre":"Torre Premium","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":3,"pavimentos":"Térreo ao 15º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","São José dos Campos"],"projetos":["Plus Alto Padrão","Grand Horizonte"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":73.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":76.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":80.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":73.0,"tipo_b_m2":76.5,"tipo_c_m2":80.0},"config_pav":{"unidades_pav":2,"finais_pav":2,"finais_diferentes":2,"torre":"Torre Premium","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":3,"pavimentos":"Térreo ao 18º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","Ribeirão Preto","Sorocaba","Bauru"],"projetos":["Plus Grand Reserve","Edifício Prestígio"],"pdf_url":"#","dwg_url":"#"}]},{"id":"Urbana","nome":"Urbana","descricao":"Conectividade urbana contemporânea.","versoes":[{"id":"T1","nome":"T1","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":39.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":41.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":39.5,"tipo_b_m2":41.5,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Compacta"},"ficha_tecnica":{"dormitorios_qtd":1,"pavimentos":"Térreo ao 5º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 04"},"cidades":["São Paulo","Guarulhos","Osasco","Santo André","São Caetano do Sul"],"projetos":["Urbana Paulista","Edifício Central","Residencial Metrô"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":43.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":45.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":43.5,"tipo_b_m2":45.5,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Compacta"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Mauá","Suzano"],"projetos":["Urbana Connect","Residencial Eixo"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":47.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":49.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":51.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":47.0,"tipo_b_m2":49.0,"tipo_c_m2":51.5},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 a 04"},"cidades":["São Paulo","Guarulhos","Campinas"],"projetos":["Urbana Prime","Edifício Mobilidade","Grand Urbana"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":51.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":54.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":51.5,"tipo_b_m2":54.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":2,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","São José dos Campos","Sorocaba"],"projetos":["Urbana Alto","Residencial Viaduto"],"pdf_url":"#","dwg_url":"#"}]}]};
+const DADOS_INICIAIS ={"linhas":[{"id":"Compact","nome":"Compact","descricao":"Máxima eficiência em área reduzida.","versoes":[{"id":"T1","nome":"T1","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":38.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":40.2,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo B","m2":40.2,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 04","tipo":"Tipo A","m2":38.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":38.5,"tipo_b_m2":40.2,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":1,"pavimentos":"Térreo ao 5º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 04"},"cidades":["São Paulo","Campinas","Guarulhos","Santo André"],"projetos":["Residencial Vila Nova","Edifício Horizonte","Parque das Flores","Árbore Paulínia","Árbore Indaiatuba"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":41.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":43.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":46.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 04","tipo":"Tipo A","m2":41.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":41.0,"tipo_b_m2":43.5,"tipo_c_m2":46.0},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Osasco"],"projetos":["Residencial Primavera","Portal do Sol"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":44.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":46.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":48.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":44.5,"tipo_b_m2":46.0,"tipo_c_m2":48.5},"config_pav":{"unidades_pav":8,"finais_pav":8,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 a 08"},"cidades":["São Paulo","Guarulhos","Barueri"],"projetos":["Condomínio Araucária","Residencial Monte Verde","Edifício Ipê"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":48.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":50.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":48.0,"tipo_b_m2":50.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":2,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","Ribeirão Preto"],"projetos":["Grand Compact","Residencial Aurora"],"pdf_url":"#","dwg_url":"#"}]},{"id":"Slim","nome":"Slim","descricao":"Planta alongada para terrenos estreitos.","versoes":[{"id":"T1","nome":"T1","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":42.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":44.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":42.0,"tipo_b_m2":44.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 04"},"cidades":["São Paulo","Santos","São Bernardo do Campo","Diadema"],"projetos":["Slim Tower Centro","Edifício Vertical"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":45.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":47.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":50.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":45.5,"tipo_b_m2":47.5,"tipo_c_m2":50.0},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Jundiaí"],"projetos":["Slim Essencial","Residencial Avenida","Torres do Parque"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":49.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":51.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":49.0,"tipo_b_m2":51.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":2,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 e 02"},"cidades":["São Paulo","ABC Paulista","Guarulhos"],"projetos":["Slim Premium","Edifício Panorama"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":53.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":56.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":58.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":53.5,"tipo_b_m2":56.0,"tipo_c_m2":58.5},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":4,"torre":"Torre Premium","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":3,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Sorocaba"],"projetos":["Grand Slim","Residencial Vertice"],"pdf_url":"#","dwg_url":"#"}]},{"id":"Plus","nome":"Plus","descricao":"Amplitude e conforto com varanda gourmet.","versoes":[{"id":"T1","nome":"T1","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":58.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":61.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":58.0,"tipo_b_m2":61.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":2,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","Ribeirão Preto","Bauru"],"projetos":["Plus Jardins","Residencial Boulevard"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":62.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":65.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":68.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":62.0,"tipo_b_m2":65.0,"tipo_c_m2":68.0},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":4,"torre":"Torre Premium","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":3,"pavimentos":"Térreo ao 15º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Alphaville","Campinas","Santos"],"projetos":["Plus Connect","Edifício Harmonia","Residencial Allegro"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":67.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":70.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":67.5,"tipo_b_m2":70.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":2,"finais_pav":2,"finais_diferentes":2,"torre":"Torre Premium","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":3,"pavimentos":"Térreo ao 15º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","São José dos Campos"],"projetos":["Plus Alto Padrão","Grand Horizonte"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":73.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":76.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":80.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":73.0,"tipo_b_m2":76.5,"tipo_c_m2":80.0},"config_pav":{"unidades_pav":2,"finais_pav":2,"finais_diferentes":2,"torre":"Torre Premium","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":3,"pavimentos":"Térreo ao 18º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","Ribeirão Preto","Sorocaba","Bauru"],"projetos":["Plus Grand Reserve","Edifício Prestígio"],"pdf_url":"#","dwg_url":"#"}]},{"id":"Urbana","nome":"Urbana","descricao":"Conectividade urbana contemporânea.","versoes":[{"id":"T1","nome":"T1","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":39.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":41.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":39.5,"tipo_b_m2":41.5,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Compacta"},"ficha_tecnica":{"dormitorios_qtd":1,"pavimentos":"Térreo ao 5º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 04"},"cidades":["São Paulo","Guarulhos","Osasco","Santo André","São Caetano do Sul"],"projetos":["Urbana Paulista","Edifício Central","Residencial Metrô"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":43.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":45.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":43.5,"tipo_b_m2":45.5,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Compacta"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Mauá","Suzano"],"projetos":["Urbana Connect","Residencial Eixo"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":47.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":49.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":51.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":47.0,"tipo_b_m2":49.0,"tipo_c_m2":51.5},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 a 04"},"cidades":["São Paulo","Guarulhos","Campinas"],"projetos":["Urbana Prime","Edifício Mobilidade","Grand Urbana"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":51.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":54.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":51.5,"tipo_b_m2":54.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":2,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","São José dos Campos","Sorocaba"],"projetos":["Urbana Alto","Residencial Viaduto"],"pdf_url":"#","dwg_url":"#"}]}]};
 
-const SENHA = "arbore2024";
 const LS_KEY = "arbore_v4";
 const LS_SB  = "arbore_sb";
 
-function carregar(){ try{ const s=localStorage.getItem(LS_KEY); if(s) return JSON.parse(s); }catch(e){} return JSON.parse(JSON.stringify(DADOS_INICIAIS)); }
-function salvar(){ localStorage.setItem(LS_KEY,JSON.stringify(P)); }
+function carregarLocal(){ try{ const s=localStorage.getItem(LS_KEY); if(s) return JSON.parse(s); }catch(e){} return JSON.parse(JSON.stringify(DADOS_INICIAIS)); }
+function salvarLocal(){ localStorage.setItem(LS_KEY,JSON.stringify(P)); }
 
-let P = carregar();
+async function carregarDadosSupa(){
+  const {data:linhas,error:e1}=await supa.from('linhas').select('*').order('created_at',{ascending:true});
+  if(e1) throw e1;
+  if(!linhas||linhas.length===0) throw new Error('vazio');
+  const {data:tips,error:e2}=await supa.from('tipologias').select('*').order('created_at',{ascending:true});
+  if(e2) throw e2;
+  return {
+    linhas: linhas.map(l=>({
+      id:l.id, nome:l.nome, descricao:l.descricao||'',
+      versoes: tips.filter(t=>t.linha_id===l.id).map(t=>({
+        id:t.id, nome:t.nome, imagem:t.imagem||'',
+        finais:t.finais||[], areas:t.areas||{}, config_pav:t.config_pav||{},
+        ficha_tecnica:t.ficha_tecnica||{}, meta:t.meta||{},
+        cidades:t.cidades||[], projetos:t.projetos||[],
+        pdf_url:t.pdf_url||'#', dwg_url:t.dwg_url||'#',
+      }))
+    }))
+  };
+}
+
+async function upsertTipologia(linhaId,v){
+  const {error}=await supa.from('tipologias').upsert({
+    id:v.id, linha_id:linhaId, nome:v.nome, imagem:v.imagem||'',
+    finais:v.finais||[], areas:v.areas, config_pav:v.config_pav,
+    ficha_tecnica:v.ficha_tecnica, meta:v.meta,
+    cidades:v.cidades, projetos:v.projetos,
+    pdf_url:v.pdf_url, dwg_url:v.dwg_url
+  });
+  if(error) throw error;
+}
+
+async function deleteTipologia(linhaId,tipId){
+  const {error}=await supa.from('tipologias').delete().eq('linha_id',linhaId).eq('id',tipId);
+  if(error) throw error;
+}
+
+async function upsertLinha(l){
+  const {error}=await supa.from('linhas').upsert({id:l.id,nome:l.nome,descricao:l.descricao||''});
+  if(error) throw error;
+}
+
+let P = carregarLocal();
 let SB = (()=>{ try{ return JSON.parse(localStorage.getItem(LS_SB)||"{}"); }catch(e){ return {}; } })();
 
 // Estado
-let linhaId  = P.linhas[0].id;
-let tipoId   = P.linhas[0].versoes[0].id;
+let linhaId  = P.linhas[0]?.id||'';
+let tipoId   = P.linhas[0]?.versoes[0]?.id||'';
 let finalIdx = 0; // 0 = planta geral, 1+ = final[idx-1]
-let admLinhaId = P.linhas[0].id;
+let admLinhaId = P.linhas[0]?.id||'';
 let editandoId = null;
 let zoomAtivo  = false;
 let carrosselOffset = 0;
@@ -898,41 +953,57 @@ function renderAll(){ renderLinhas(); renderConteudo(); updateMeta(); }
 // ═══════════════════════════════════════════════════════════
 // ADMIN
 // ═══════════════════════════════════════════════════════════
-function abrirLogin(){
+async function abrirLogin(){
+  const {data:{session}}=await supa.auth.getSession();
+  if(session){
+    document.getElementById("adminOverlay").classList.add("open");
+    document.getElementById("loginBox").style.display="none";
+    document.getElementById("adminPanel").style.display="";
+    admLinhaId=P.linhas[0]?.id||''; carregarSb(); renderAdm();
+    return;
+  }
   document.getElementById("adminOverlay").classList.add("open");
   document.getElementById("loginBox").style.display="";
   document.getElementById("adminPanel").style.display="none";
+  document.getElementById("emailInput").value="";
   document.getElementById("senhaInput").value="";
   document.getElementById("loginErro").textContent="";
-  setTimeout(()=>document.getElementById("senhaInput").focus(),120);
+  setTimeout(()=>document.getElementById("emailInput").focus(),120);
 }
 function fecharAdmin(){ document.getElementById("adminOverlay").classList.remove("open"); }
-function verificarSenha(){
-  if(document.getElementById("senhaInput").value===SENHA){
-    document.getElementById("loginBox").style.display="none";
-    document.getElementById("adminPanel").style.display="";
-    admLinhaId=P.linhas[0].id; carregarSb(); renderAdm();
-  } else {
-    document.getElementById("loginErro").textContent="Senha incorreta.";
+async function logout(){
+  await supa.auth.signOut();
+  fecharAdmin();
+  toast("Sessão encerrada.");
+}
+async function verificarLogin(){
+  const email=document.getElementById("emailInput").value.trim();
+  const senha=document.getElementById("senhaInput").value;
+  document.getElementById("loginErro").textContent="";
+  const {error}=await supa.auth.signInWithPassword({email,password:senha});
+  if(error){
+    document.getElementById("loginErro").textContent="E-mail ou senha incorretos.";
     document.getElementById("senhaInput").value="";
+    return;
   }
+  document.getElementById("loginBox").style.display="none";
+  document.getElementById("adminPanel").style.display="";
+  admLinhaId=P.linhas[0]?.id||''; carregarSb(); renderAdm();
 }
 
 function carregarSb(){
-  document.getElementById("sbUrl").value=SB.url||"";
-  document.getElementById("sbKey").value=SB.key||"";
   document.getElementById("sbBucket").value=SB.bucket||"plantas";
 }
 function salvarSb(){
-  SB={url:document.getElementById("sbUrl").value.trim(),key:document.getElementById("sbKey").value.trim(),bucket:document.getElementById("sbBucket").value.trim()||"plantas"};
-  localStorage.setItem(LS_SB,JSON.stringify(SB)); toast("Supabase salvo ✓",true);
+  SB={bucket:document.getElementById("sbBucket").value.trim()||"plantas"};
+  localStorage.setItem(LS_SB,JSON.stringify(SB)); toast("Bucket salvo ✓",true);
 }
 async function uploadSB(file,path){
-  if(!SB.url||!SB.key) throw new Error("Configure o Supabase.");
-  const url=`${SB.url}/storage/v1/object/${SB.bucket}/${path}`;
-  const res=await fetch(url,{method:"POST",headers:{"Authorization":`Bearer ${SB.key}`,"Content-Type":file.type,"x-upsert":"true"},body:file});
-  if(!res.ok){ const e=await res.text(); throw new Error(e); }
-  return `${SB.url}/storage/v1/object/public/${SB.bucket}/${path}`;
+  const bucket=SB.bucket||'plantas';
+  const {error:upErr}=await supa.storage.from(bucket).upload(path,file,{upsert:true});
+  if(upErr) throw upErr;
+  const {data:{publicUrl}}=supa.storage.from(bucket).getPublicUrl(path);
+  return publicUrl;
 }
 
 function renderAdm(){
@@ -956,23 +1027,38 @@ function renderAdm(){
   editandoId=null;
 }
 function selAdmL(id){ admLinhaId=id; renderAdm(); }
-function salvarDescLinha(){ getAdmL().descricao=document.getElementById("admLinhaDesc").value; salvar(); renderAll(); toast("Salvo ✓",true); }
-function novaLinha(){
+async function salvarDescLinha(){
+  const al=getAdmL(); al.descricao=document.getElementById("admLinhaDesc").value;
+  try{ await upsertLinha(al); salvarLocal(); renderAll(); toast("Salvo ✓",true); }
+  catch(e){ toast("Erro: "+e.message); }
+}
+async function novaLinha(){
   const nome=prompt("Nome da nova linha:"); if(!nome?.trim()) return;
   const id=nome.trim().replace(/\s+/g,"_");
   if(P.linhas.find(l=>l.id===id)){ alert("Já existe."); return; }
-  P.linhas.push({id,nome:nome.trim(),descricao:"",versoes:[]});
-  admLinhaId=id; salvar(); renderAll(); renderAdm(); toast(`Linha '${nome.trim()}' criada ✓`,true);
+  const novaL={id,nome:nome.trim(),descricao:"",versoes:[]};
+  try{
+    await upsertLinha(novaL);
+    P.linhas.push(novaL); admLinhaId=id;
+    salvarLocal(); renderAll(); renderAdm(); toast(`Linha '${nome.trim()}' criada ✓`,true);
+  } catch(e){ toast("Erro: "+e.message); }
 }
-function novaVersao(){
+async function novaVersao(){
   const al=getAdmL(); const n=al.versoes.length+1; const id="T"+n;
-  al.versoes.push({id,nome:id,imagem:"",finais:[],areas:{tipo_a_m2:0,tipo_b_m2:0,tipo_c_m2:null},config_pav:{unidades_pav:0,finais_pav:0,finais_diferentes:0,torre:"",varanda:""},ficha_tecnica:{dormitorios_qtd:0,pavimentos:""},meta:{planta_tipo:"Planta padrão",versao_label:"Versão "+String(n).padStart(2,"0"),finais:""},cidades:[],projetos:[],pdf_url:"#",dwg_url:"#"});
-  salvar(); renderAdm(); editarV(id);
+  const v={id,nome:id,imagem:"",finais:[],areas:{tipo_a_m2:0,tipo_b_m2:0,tipo_c_m2:null},config_pav:{unidades_pav:0,finais_pav:0,finais_diferentes:0,torre:"",varanda:""},ficha_tecnica:{dormitorios_qtd:0,pavimentos:""},meta:{planta_tipo:"Planta padrão",versao_label:"Versão "+String(n).padStart(2,"0"),finais:""},cidades:[],projetos:[],pdf_url:"#",dwg_url:"#"};
+  try{
+    await upsertTipologia(al.id,v);
+    al.versoes.push(v); salvarLocal(); renderAdm(); editarV(id);
+  } catch(e){ toast("Erro: "+e.message); }
 }
-function excluirV(id){
+async function excluirV(id){
   if(!confirm(`Excluir ${id}?`)) return;
-  const al=getAdmL(); al.versoes=al.versoes.filter(v=>v.id!==id);
-  salvar(); renderAll(); renderAdm(); toast("Excluído.");
+  const al=getAdmL();
+  try{
+    await deleteTipologia(al.id,id);
+    al.versoes=al.versoes.filter(v=>v.id!==id);
+    salvarLocal(); renderAll(); renderAdm(); toast("Excluído.");
+  } catch(e){ toast("Erro: "+e.message); }
 }
 
 function buildUploadField(fieldId, labelText, currentUrl, folder){
@@ -1002,11 +1088,6 @@ async function doUpload(e,fieldId,folder){
 
   prev.src=URL.createObjectURL(file); prev.style.display="block";
   lbl.innerHTML=file.name;
-
-  if(!SB.url||!SB.key){
-    ul.textContent="⚠ Supabase não configurado.";
-    hidden.value=prev.src; return;
-  }
   pw.style.display=""; st.style.display=""; st.textContent="Enviando...";
   let p=0; const iv=setInterval(()=>{ p=Math.min(p+10,80); pf.style.width=p+"%"; },200);
   try{
@@ -1109,23 +1190,25 @@ function editarV(id){
   document.getElementById("editFormWrap").scrollIntoView({behavior:"smooth",block:"start"});
 }
 
-function adicionarFinal(){
+async function adicionarFinal(){
   const al=getAdmL(); const v=al.versoes.find(x=>x.id===editandoId); if(!v) return;
   v.finais=v.finais||[];
   const n=v.finais.length+1;
   v.finais.push({id:`Final ${String(n).padStart(2,"0")}`,tipo:"Tipo A",m2:0,imagem:"",pdf_url:"#",dwg_url:"#"});
-  salvar(); editarV(editandoId);
+  try{ await upsertTipologia(al.id,v); salvarLocal(); editarV(editandoId); }
+  catch(e){ toast("Erro: "+e.message); }
 }
-function excluirFinal(idx){
+async function excluirFinal(idx){
   const al=getAdmL(); const v=al.versoes.find(x=>x.id===editandoId); if(!v) return;
   if(!confirm(`Excluir Final ${idx+1}?`)) return;
   v.finais.splice(idx,1);
-  salvar(); editarV(editandoId);
+  try{ await upsertTipologia(al.id,v); salvarLocal(); editarV(editandoId); }
+  catch(e){ toast("Erro: "+e.message); }
 }
 
 function cancelarEd(){ document.getElementById("editFormWrap").innerHTML=""; editandoId=null; }
 
-function salvarV(){
+async function salvarV(){
   const al=getAdmL(); const v=al.versoes.find(x=>x.id===editandoId); if(!v) return;
   const sl=s=>s.split("\n").map(l=>l.trim()).filter(Boolean);
   const pf=s=>{ const n=parseFloat(s); return isNaN(n)?null:n; };
@@ -1154,11 +1237,27 @@ function salvarV(){
   });
 
   editandoId=v.id;
-  salvar(); renderAll(); renderAdm(); toast("Salvo ✓",true);
+  try{
+    await upsertTipologia(al.id,v);
+    salvarLocal(); renderAll(); renderAdm(); toast("Salvo ✓",true);
+  } catch(e){ toast("Erro ao salvar: "+e.message); }
 }
 
 // INIT
-renderAll();
+(async function(){
+  renderAll();
+  try{
+    const dados=await carregarDadosSupa();
+    P=dados; salvarLocal();
+    linhaId=P.linhas.find(l=>l.id===linhaId)?linhaId:(P.linhas[0]?.id||'');
+    const curL=P.linhas.find(l=>l.id===linhaId);
+    tipoId=curL?.versoes.find(v=>v.id===tipoId)?tipoId:(curL?.versoes[0]?.id||'');
+    admLinhaId=P.linhas.find(l=>l.id===admLinhaId)?admLinhaId:(P.linhas[0]?.id||'');
+    renderAll();
+  } catch(e){
+    console.warn('Supabase indisponível, usando localStorage:',e.message);
+  }
+})();
 </script>
 </body>
 </html>
