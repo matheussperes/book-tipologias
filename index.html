@@ -7,408 +7,498 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --green:        #2B6B3F;
-  --green-mid:    #3D8B55;
-  --green-light:  #4CAF72;
-  --green-pale:   #E8F5EE;
-  --green-bg:     #F0F8F3;
-  --text-900:     #111827;
-  --text-700:     #374151;
-  --text-500:     #6B7280;
-  --text-400:     #9CA3AF;
-  --border:       #E5E7EB;
-  --border-mid:   #D1D5DB;
-  --bg:           #F4F6F8;
-  --white:        #FFFFFF;
-  --shadow-card:  0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
-  --shadow-hover: 0 4px 12px rgba(0,0,0,0.1), 0 12px 32px rgba(0,0,0,0.08);
-  --radius:       16px;
-  --radius-sm:    10px;
-  --radius-xs:    7px;
-  --t:            0.2s cubic-bezier(0.4,0,0.2,1);
-  --green-dark:   #1A4D2E;
+  --green:       #2B6B3F;
+  --green-mid:   #3D8B55;
+  --green-light: #4CAF72;
+  --green-pale:  #E8F5EE;
+  --text-900:    #111827;
+  --text-700:    #374151;
+  --text-500:    #6B7280;
+  --text-400:    #9CA3AF;
+  --border:      #E5E7EB;
+  --border-mid:  #D1D5DB;
+  --bg:          #F4F6F8;
+  --white:       #FFFFFF;
+  --shadow:      0 1px 3px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.05);
+  --radius:      14px;
+  --radius-sm:   9px;
+  --radius-xs:   6px;
+  --t:           0.2s cubic-bezier(0.4,0,0.2,1);
+  --green-dark:  #1A4D2E;
+  --sidebar-w:   200px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-900);min-height:100vh;font-size:14px;line-height:1.5;}
-::-webkit-scrollbar{width:5px;}
-::-webkit-scrollbar-track{background:var(--bg);}
-::-webkit-scrollbar-thumb{background:var(--border-mid);border-radius:3px;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-900);font-size:13px;line-height:1.5;display:flex;flex-direction:column;}
 
-/* ══════════════════════ HEADER ══════════════════════ */
-.site-header{background:var(--white);border-bottom:1px solid var(--border);padding:0 40px;}
-.header-top{display:flex;align-items:center;gap:24px;padding:16px 0 13px;border-bottom:1px solid var(--border);}
-.logo-img{height:40px;width:auto;object-fit:contain;flex-shrink:0;}
-.header-div{width:1px;height:38px;background:var(--border);}
-.header-titles{flex:1;}
-.header-main-title{font-size:22px;font-weight:800;color:var(--text-900);letter-spacing:-0.5px;line-height:1.15;}
-.header-sub{font-size:10px;font-weight:700;letter-spacing:0.18em;color:var(--green-mid);text-transform:uppercase;margin-top:2px;}
-.header-badges{display:flex;gap:16px;margin-left:auto;}
-.header-badge{display:flex;align-items:center;gap:10px;padding:8px 16px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);}
+/* ══ HEADER ══════════════════════════════════════════════════ */
+.site-header{background:var(--white);border-bottom:1px solid var(--border);padding:0 20px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;height:58px;}
+.hdr-left{display:flex;align-items:center;gap:16px;}
+.logo-img{height:34px;width:auto;object-fit:contain;}
+.hdr-div{width:1px;height:32px;background:var(--border);}
+.hdr-titles{}
+.hdr-title{font-size:16px;font-weight:800;color:var(--text-900);letter-spacing:-0.3px;line-height:1.1;}
+.hdr-sub{font-size:9px;font-weight:700;letter-spacing:0.18em;color:var(--green-mid);text-transform:uppercase;}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.hdr-badge{display:flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);}
 .hb-icon{color:var(--green-mid);}
-.hb-label{font-size:10px;color:var(--text-500);font-weight:500;letter-spacing:0.05em;text-transform:uppercase;}
-.hb-value{font-size:14px;font-weight:700;color:var(--green);line-height:1.2;}
-.hb-value.big{font-size:22px;font-weight:800;}
-.btn-admin-hdr{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:var(--radius-xs);border:1px solid var(--border-mid);background:var(--white);color:var(--text-500);font-family:'Inter',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all var(--t);}
+.hb-label{font-size:9px;color:var(--text-500);font-weight:500;letter-spacing:0.05em;text-transform:uppercase;}
+.hb-value{font-size:13px;font-weight:700;color:var(--green);line-height:1.1;}
+.hb-value.big{font-size:18px;font-weight:800;}
+.btn-admin-hdr{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:var(--radius-xs);border:1px solid var(--border-mid);background:var(--white);color:var(--text-500);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all var(--t);}
 .btn-admin-hdr:hover{border-color:var(--green);color:var(--green);}
 
-/* ══════════════════════ LINHA TABS ══════════════════════ */
-.linha-bar{padding:14px 0 0;}
-.linha-bar-label{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-500);margin-bottom:10px;}
-.linha-tabs{display:flex;gap:10px;padding-bottom:0;flex-wrap:wrap;}
-.linha-tab{display:flex;align-items:center;gap:9px;padding:10px 22px;border-radius:99px;border:1.5px solid var(--border);background:var(--white);color:var(--text-700);font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all var(--t);white-space:nowrap;margin-bottom:14px;}
-.linha-tab svg{opacity:.5;transition:opacity var(--t);}
-.linha-tab:hover{border-color:var(--green-mid);color:var(--green);}
+/* ══ APP BODY (header + content) ════════════════════════════ */
+.app-body{display:flex;flex:1;overflow:hidden;}
+
+/* ══ SIDEBAR ESQUERDA — linhas de produto ════════════════════ */
+.linhas-sidebar{width:var(--sidebar-w);background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;padding:16px 12px;gap:6px;overflow-y:auto;}
+.linhas-sidebar-label{font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-400);margin-bottom:4px;padding:0 4px;}
+.linha-tab{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:var(--radius-sm);border:1.5px solid transparent;background:transparent;color:var(--text-700);font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all var(--t);width:100%;text-align:left;}
+.linha-tab svg{flex-shrink:0;opacity:.5;transition:opacity var(--t);}
+.linha-tab:hover{background:var(--green-pale);color:var(--green);border-color:transparent;}
 .linha-tab:hover svg{opacity:.8;}
-.linha-tab.active{background:var(--green);border-color:var(--green);color:var(--white);font-weight:600;box-shadow:0 4px 14px rgba(43,107,63,.25);}
+.linha-tab.active{background:var(--green);border-color:var(--green);color:var(--white);font-weight:600;box-shadow:0 3px 10px rgba(43,107,63,.25);}
 .linha-tab.active svg{opacity:1;filter:brightness(10);}
 
-/* ══════════════════════ MAIN WRAP ══════════════════════ */
-.main-wrap{max-width:1400px;margin:0 auto;padding:20px 40px 48px;}
+/* ══ CONTEÚDO PRINCIPAL ══════════════════════════════════════ */
+.main-content{flex:1;display:flex;overflow:hidden;padding:14px;gap:12px;}
 
-/* ══════════════════════ CARD PRINCIPAL ══════════════════════ */
-.central-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-card);display:grid;grid-template-columns:220px 1fr 300px;overflow:hidden;margin-bottom:20px;}
+/* ══ CARD CENTRAL ════════════════════════════════════════════ */
+.central-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);display:flex;flex:1;overflow:hidden;min-width:0;}
 
-/* Coluna esquerda */
-.tipo-col{padding:26px 22px;border-right:1px solid var(--border);display:flex;flex-direction:column;}
-.tipo-kicker{font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--green-mid);margin-bottom:6px;}
-.tipo-nome{font-size:42px;font-weight:900;color:var(--text-900);letter-spacing:-2px;line-height:1;margin-bottom:6px;}
-.tipo-subtitulo{font-size:12px;font-weight:700;color:var(--text-700);text-transform:uppercase;letter-spacing:0.06em;line-height:1.5;margin-bottom:16px;}
-.tipo-sep{width:28px;height:3px;background:var(--green-light);border-radius:2px;margin-bottom:20px;}
+/* Col info (esquerda dentro do card) */
+.tipo-col{width:188px;flex-shrink:0;padding:18px 16px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:0;overflow:hidden;}
+.tipo-kicker{font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--green-mid);margin-bottom:4px;}
+.tipo-nome{font-size:32px;font-weight:900;color:var(--text-900);letter-spacing:-1.5px;line-height:1;margin-bottom:4px;}
+.tipo-sub{font-size:10px;font-weight:700;color:var(--text-700);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;}
+.tipo-sep{width:24px;height:2.5px;background:var(--green-light);border-radius:2px;margin-bottom:14px;}
 
-/* Tipologia selector (T1, T2...) */
-.tipo-selector-label{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-400);margin-bottom:8px;}
-.tipo-btns{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;}
-.tipo-btn{padding:6px 16px;border-radius:99px;border:1.5px solid var(--border);background:var(--white);color:var(--text-700);font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all var(--t);}
+.tipo-selector-label{font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-400);margin-bottom:6px;}
+.tipo-btns{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;}
+.tipo-btn{padding:5px 12px;border-radius:99px;border:1.5px solid var(--border);background:var(--white);color:var(--text-700);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all var(--t);}
 .tipo-btn:hover{border-color:var(--green-mid);color:var(--green);}
 .tipo-btn.active{background:var(--green);border-color:var(--green);color:var(--white);font-weight:600;}
 
-.tipo-meta-box{background:var(--green-pale);border-radius:var(--radius-sm);padding:14px 14px;display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;}
-.meta-icon{color:var(--green-mid);flex-shrink:0;margin-top:2px;}
-.meta-lines{font-size:12px;color:var(--text-700);line-height:1.7;}
-.meta-lines strong{color:var(--text-900);}
+/* metabox */
+.tipo-meta-box{background:var(--green-pale);border-radius:var(--radius-sm);padding:10px 12px;display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;}
+.meta-icon{color:var(--green-mid);flex-shrink:0;margin-top:1px;}
+.meta-lines{font-size:11px;color:var(--text-700);line-height:1.6;}
+.meta-lines strong{color:var(--text-900);font-weight:600;}
 
-.tipo-stats{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
-.tipo-stat-row{display:flex;align-items:center;gap:10px;}
-.tipo-stat-icon{width:30px;height:30px;border-radius:7px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;color:var(--green-mid);flex-shrink:0;}
-.tipo-stat-text{font-size:12.5px;color:var(--text-700);line-height:1.4;}
-.tipo-stat-text strong{display:block;font-weight:700;color:var(--text-900);font-size:13px;}
+/* botões sidebar esquerda */
+.btn-sidebar{display:flex;align-items:center;gap:7px;padding:8px 12px;border-radius:var(--radius-xs);border:1.5px solid var(--border-mid);background:var(--white);color:var(--text-700);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all var(--t);width:100%;justify-content:center;margin-top:6px;}
+.btn-sidebar:hover{border-color:var(--green);color:var(--green);background:var(--green-pale);}
+.btn-sidebar.primary{margin-top:auto;}
 
-.btn-fullscreen{display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:var(--radius-xs);border:1.5px solid var(--border-mid);background:var(--white);color:var(--text-700);font-family:'Inter',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all var(--t);width:100%;justify-content:center;margin-top:auto;letter-spacing:.02em;}
-.btn-fullscreen:hover{border-color:var(--green);color:var(--green);background:var(--green-pale);}
+/* ══ COL CENTRAL — planta + carrossel ═══════════════════════ */
+.planta-col{flex:1;display:flex;flex-direction:column;background:#F2F3F2;overflow:hidden;position:relative;}
 
-/* Coluna central (planta) */
-.planta-col{background:#F2F3F2;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:background var(--t);}
-.planta-col:hover{background:#ECEEED;}
-.planta-img{max-width:100%;max-height:100%;object-fit:contain;display:block;padding:20px;}
-.planta-placeholder-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;padding:60px 40px;text-align:center;}
-.planta-ph-circle{width:64px;height:64px;border-radius:50%;background:var(--white);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-400);}
-.planta-ph-title{font-size:14px;font-weight:600;color:var(--text-700);margin-bottom:3px;}
-.planta-ph-sub{font-size:12px;color:var(--text-400);line-height:1.6;}
+/* Viewer principal */
+.planta-viewer{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:default;}
+.planta-viewer-img{max-width:100%;max-height:100%;object-fit:contain;display:block;padding:16px;transition:transform var(--t);}
+.planta-placeholder-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;}
+.planta-ph-circle{width:56px;height:56px;border-radius:50%;background:var(--white);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-400);}
+.planta-ph-title{font-size:13px;font-weight:600;color:var(--text-700);}
+.planta-ph-sub{font-size:11px;color:var(--text-400);}
 
-/* Botões PDF/DWG sobre a planta */
-.planta-action-btns{position:absolute;top:12px;right:12px;display:flex;gap:7px;z-index:10;}
-.btn-planta-dl{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;border:1.5px solid;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all var(--t);letter-spacing:.03em;text-decoration:none;backdrop-filter:blur(8px);}
-.btn-planta-pdf{background:rgba(255,255,255,.85);border-color:rgba(180,60,50,.35);color:#B03020;}
-.btn-planta-pdf:hover{background:#B03020;border-color:#B03020;color:var(--white);}
-.btn-planta-dwg{background:rgba(255,255,255,.85);border-color:rgba(43,107,63,.35);color:var(--green);}
-.btn-planta-dwg:hover{background:var(--green);border-color:var(--green);color:var(--white);}
-.btn-planta-dl.disabled{opacity:.35;cursor:not-allowed;pointer-events:none;}
+/* Botões topo da planta (PDF/DWG/Imagem) */
+.planta-top-btns{position:absolute;top:10px;right:10px;display:flex;gap:6px;z-index:20;}
+.btn-planta-top{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:99px;border:1.5px solid;font-family:'Inter',sans-serif;font-size:10px;font-weight:600;cursor:pointer;transition:all var(--t);backdrop-filter:blur(8px);text-decoration:none;letter-spacing:.02em;}
+.btn-dl-img{background:rgba(255,255,255,.88);border-color:rgba(43,107,63,.3);color:var(--green);}
+.btn-dl-img:hover{background:var(--green);border-color:var(--green);color:var(--white);}
+.btn-dl-pdf{background:rgba(255,255,255,.88);border-color:rgba(180,60,50,.3);color:#B03020;}
+.btn-dl-pdf:hover{background:#B03020;border-color:#B03020;color:var(--white);}
+.btn-dl-dwg{background:rgba(255,255,255,.88);border-color:rgba(100,80,30,.3);color:#7A5F20;}
+.btn-dl-dwg:hover{background:#7A5F20;border-color:#7A5F20;color:var(--white);}
+.btn-planta-top.disabled{opacity:.32;cursor:not-allowed;pointer-events:none;}
 
-/* Coluna direita */
-.right-col{border-left:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;max-height:600px;}
+/* Botões canto inferior direito */
+.planta-bottom-btns{position:absolute;bottom:10px;right:10px;display:flex;gap:6px;z-index:20;}
+.btn-planta-bottom{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:99px;border:1.5px solid rgba(0,0,0,.12);background:rgba(255,255,255,.88);color:var(--text-700);font-family:'Inter',sans-serif;font-size:10px;font-weight:600;cursor:pointer;transition:all var(--t);backdrop-filter:blur(8px);}
+.btn-planta-bottom:hover{background:var(--white);border-color:var(--green);color:var(--green);}
+.btn-planta-bottom.active-zoom{background:var(--green);border-color:var(--green);color:var(--white);}
 
-/* Seção genérica direita */
-.r-section{padding:18px 20px;}
-.r-section+.r-section{border-top:1px solid var(--border);}
-.r-section-title{font-size:11px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-900);margin-bottom:14px;}
+/* Lupa zoom */
+.zoom-lens{position:absolute;border-radius:50%;border:2.5px solid var(--green);pointer-events:none;overflow:hidden;z-index:50;display:none;box-shadow:0 4px 20px rgba(0,0,0,.25);}
 
-/* Áreas privativas — cards tipo A/B/C */
-.areas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.area-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 10px;text-align:center;}
-.area-card-value{font-size:20px;font-weight:800;color:var(--text-900);letter-spacing:-0.5px;line-height:1.1;}
-.area-card-value sup{font-size:12px;font-weight:500;}
-.area-card-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-400);margin-top:3px;}
+/* ══ CARROSSEL DE FINAIS ══════════════════════════════════ */
+.carrossel-wrap{background:var(--white);border-top:1px solid var(--border);padding:8px 10px;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.carrossel-arrow{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border);background:var(--white);color:var(--text-500);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all var(--t);}
+.carrossel-arrow:hover{border-color:var(--green);color:var(--green);}
+.carrossel-arrow:disabled{opacity:.3;cursor:default;pointer-events:none;}
+.carrossel-track-wrap{flex:1;overflow:hidden;position:relative;}
+.carrossel-track{display:flex;gap:6px;transition:transform .3s ease;}
+.carrossel-item{flex-shrink:0;width:90px;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);cursor:pointer;overflow:hidden;transition:all var(--t);}
+.carrossel-item:hover{border-color:var(--green-mid);}
+.carrossel-item.active{border-color:var(--green);box-shadow:0 0 0 2px rgba(43,107,63,.15);}
+.carrossel-thumb{width:100%;height:52px;object-fit:cover;display:block;background:#E8EAE8;}
+.carrossel-thumb-empty{width:100%;height:52px;background:#ECEEED;display:flex;align-items:center;justify-content:center;color:var(--text-400);}
+.carrossel-info{padding:4px 6px 5px;}
+.carrossel-final{font-size:9px;font-weight:700;color:var(--text-900);letter-spacing:.04em;line-height:1.2;}
+.carrossel-tipo{font-size:8px;color:var(--text-500);line-height:1.2;}
+.carrossel-m2{font-size:8px;font-weight:600;color:var(--green);line-height:1.2;}
 
-/* Configuração pavimento */
-.pav-list{display:flex;flex-direction:column;gap:10px;}
-.pav-item{display:flex;align-items:center;gap:10px;}
-.pav-item-icon{width:28px;height:28px;border-radius:7px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;color:var(--green-mid);flex-shrink:0;}
-.pav-item-text{font-size:13px;color:var(--text-700);}
+/* ══ SIDEBAR DIREITA — ficha técnica ════════════════════════ */
+.right-sidebar{width:268px;flex-shrink:0;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden;}
+
+.rs-section{padding:12px 14px;flex-shrink:0;}
+.rs-section+.rs-section{border-top:1px solid var(--border);}
+.rs-title{font-size:10px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-900);margin-bottom:10px;}
+
+/* Áreas A/B/C */
+.areas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.areas-grid.cols2{grid-template-columns:repeat(2,1fr);}
+.area-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 6px;text-align:center;}
+.area-val{font-size:15px;font-weight:800;color:var(--text-900);letter-spacing:-0.3px;line-height:1.1;}
+.area-val sup{font-size:9px;font-weight:500;}
+.area-lbl{font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-400);margin-top:2px;}
+
+/* Config pavimento */
+.pav-list{display:flex;flex-direction:column;gap:6px;}
+.pav-item{display:flex;align-items:center;gap:8px;}
+.pav-icon{width:24px;height:24px;border-radius:6px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;color:var(--green-mid);flex-shrink:0;}
+.pav-text{font-size:11.5px;color:var(--text-700);}
+
+/* Aplicações header */
+.rs-aplicacoes-label{font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green-mid);margin-bottom:8px;}
 
 /* Cidades */
-.cidades-list{display:flex;flex-wrap:wrap;gap:6px 0;}
-.cidade-chip{font-size:13px;color:var(--text-700);}
-.cidade-chip:not(:last-child)::after{content:" •";color:var(--text-400);margin-right:6px;}
+.cidades-wrap{display:flex;flex-wrap:wrap;gap:0;}
+.cidade-chip{font-size:11px;color:var(--text-700);}
+.cidade-chip:not(:last-child)::after{content:" •";color:var(--text-400);margin-right:5px;}
 
 /* Empreendimentos */
-.emp-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px 16px;}
-.emp-item{display:flex;align-items:flex-start;gap:7px;padding:3px 0;font-size:12px;color:var(--text-700);line-height:1.4;}
-.emp-dot{width:4px;height:4px;border-radius:50%;background:var(--green-light);flex-shrink:0;margin-top:5px;}
+.emp-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;}
+.emp-item{display:flex;align-items:flex-start;gap:5px;font-size:10.5px;color:var(--text-700);line-height:1.4;padding:1px 0;}
+.emp-dot{width:4px;height:4px;border-radius:50%;background:var(--green-light);flex-shrink:0;margin-top:4px;}
 
-/* ══════════════════════ FOOTER ══════════════════════ */
-.site-footer{background:var(--green-dark);color:rgba(255,255,255,.5);text-align:right;padding:14px 40px;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;}
+/* ══ FOOTER ══════════════════════════════════════════════════ */
+.site-footer{background:var(--green-dark);color:rgba(255,255,255,.5);text-align:right;padding:6px 20px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;flex-shrink:0;}
 .site-footer span{color:rgba(255,255,255,.85);}
 
-/* ══════════════════════ MODAL ══════════════════════ */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,14,.88);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(12px);}
+/* ══ MODAL / OVERLAY GENÉRICO ════════════════════════════════ */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,14,.88);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(10px);}
 .modal-overlay.open{display:flex;}
-.modal-box{background:var(--white);border-radius:var(--radius);max-width:92vw;max-height:94vh;overflow:auto;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.4);animation:zoomIn .22s cubic-bezier(.34,1.4,.64,1);}
-.modal-hdr{padding:16px 22px 13px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.modal-kicker{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--green-mid);}
-.modal-title{font-size:18px;font-weight:700;color:var(--text-900);}
-.modal-close{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:var(--bg);color:var(--text-500);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all var(--t);}
-.modal-close:hover{border-color:var(--green);color:var(--green);}
-.modal-img-wrap{background:#F2F3F2;display:flex;align-items:center;justify-content:center;padding:32px;}
-.modal-img-wrap img{max-width:80vw;max-height:75vh;object-fit:contain;display:block;}
-.modal-empty{padding:80px;text-align:center;color:var(--text-400);}
-@keyframes zoomIn{from{opacity:0;transform:scale(.94);}to{opacity:1;transform:scale(1);}}
+@keyframes zIn{from{opacity:0;transform:scale(.94);}to{opacity:1;transform:scale(1);}}
 
-/* ══════════════════════ ADMIN OVERLAY ══════════════════════ */
-.admin-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,14,.95);z-index:2000;align-items:flex-start;justify-content:center;backdrop-filter:blur(14px);overflow-y:auto;padding:40px 20px;}
+/* Modal imagem */
+.modal-img-box{background:var(--white);border-radius:var(--radius);max-width:90vw;max-height:92vh;overflow:auto;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.4);animation:zIn .22s cubic-bezier(.34,1.4,.64,1);}
+.modal-hdr{padding:14px 18px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.modal-kicker{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--green-mid);}
+.modal-title{font-size:16px;font-weight:700;color:var(--text-900);}
+.modal-close{width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:var(--bg);color:var(--text-500);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all var(--t);}
+.modal-close:hover{border-color:var(--green);color:var(--green);}
+.modal-img-wrap{background:#F2F3F2;display:flex;align-items:center;justify-content:center;padding:24px;}
+.modal-img-wrap img{max-width:80vw;max-height:75vh;object-fit:contain;display:block;}
+.modal-empty{padding:60px;text-align:center;color:var(--text-400);}
+
+/* Modal PDF viewer */
+.modal-pdf-box{background:var(--white);border-radius:var(--radius);width:90vw;height:90vh;overflow:hidden;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.4);animation:zIn .22s cubic-bezier(.34,1.4,.64,1);display:flex;flex-direction:column;}
+.modal-pdf-hdr{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.modal-pdf-iframe{flex:1;border:none;width:100%;}
+.modal-pdf-nourl{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;flex:1;color:var(--text-400);}
+.modal-pdf-nourl p{font-size:13px;}
+
+/* ══ ADMIN OVERLAY ═══════════════════════════════════════════ */
+.admin-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,14,.95);z-index:2000;align-items:flex-start;justify-content:center;backdrop-filter:blur(14px);overflow-y:auto;padding:36px 20px;}
 .admin-overlay.open{display:flex;}
 
 /* Login */
-.login-box{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:48px 44px 40px;width:100%;max-width:380px;margin:auto;text-align:center;animation:zoomIn .22s ease;box-shadow:0 20px 60px rgba(0,0,0,.2);}
-.login-logo{height:36px;margin-bottom:24px;}
-.login-title{font-size:20px;font-weight:700;color:var(--text-900);margin-bottom:5px;}
-.login-sub{font-size:13px;color:var(--text-500);margin-bottom:26px;}
-.login-input{width:100%;padding:12px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--bg);color:var(--text-900);font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color var(--t);margin-bottom:10px;text-align:center;letter-spacing:.1em;}
+.login-box{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:40px 40px 36px;width:100%;max-width:360px;margin:auto;text-align:center;animation:zIn .22s ease;box-shadow:0 20px 60px rgba(0,0,0,.2);}
+.login-logo{height:32px;margin-bottom:20px;}
+.login-title{font-size:18px;font-weight:700;color:var(--text-900);margin-bottom:4px;}
+.login-sub{font-size:12px;color:var(--text-500);margin-bottom:22px;}
+.login-input{width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--bg);color:var(--text-900);font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color var(--t);margin-bottom:8px;text-align:center;letter-spacing:.1em;}
 .login-input:focus{border-color:var(--green);}
-.login-error{font-size:12px;color:#DC2626;min-height:18px;margin-bottom:10px;}
-.btn-green{width:100%;padding:12px;border-radius:var(--radius-sm);border:none;background:var(--green);color:var(--white);font-family:'Inter',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all var(--t);letter-spacing:.04em;}
+.login-error{font-size:11px;color:#DC2626;min-height:16px;margin-bottom:8px;}
+.btn-green{width:100%;padding:11px;border-radius:var(--radius-sm);border:none;background:var(--green);color:var(--white);font-family:'Inter',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all var(--t);}
 .btn-green:hover{background:var(--green-mid);}
-.btn-ghost{width:100%;padding:10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:transparent;color:var(--text-500);font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;transition:all var(--t);margin-top:8px;}
-.btn-ghost:hover{color:var(--text-700);border-color:var(--border-mid);}
+.btn-ghost{width:100%;padding:9px;border-radius:var(--radius-sm);border:1px solid var(--border);background:transparent;color:var(--text-500);font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;transition:all var(--t);margin-top:6px;}
+.btn-ghost:hover{color:var(--text-700);}
 
 /* Admin Panel */
-.admin-panel{width:100%;max-width:980px;margin:0 auto;animation:zoomIn .22s ease;}
-.admin-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;}
-.admin-page-title{font-size:24px;font-weight:800;color:var(--white);}
-.admin-page-title span{color:#4CAF72;}
-.btn-close-admin{display:flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--radius-xs);border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;transition:all var(--t);}
-.btn-close-admin:hover{background:rgba(255,255,255,.12);color:var(--white);}
+.admin-panel{width:100%;max-width:960px;margin:0 auto;animation:zIn .22s ease;}
+.adm-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.adm-page-title{font-size:22px;font-weight:800;color:var(--white);}
+.adm-page-title span{color:#4CAF72;}
+.btn-close-adm{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius-xs);border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;transition:all var(--t);}
+.btn-close-adm:hover{background:rgba(255,255,255,.12);color:var(--white);}
 
 /* Supabase cfg */
-.sb-cfg-bar{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:var(--radius-sm);padding:14px 18px;margin-bottom:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.sb-cfg-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);}
-.sb-cfg-input{flex:1;min-width:180px;padding:7px 12px;border-radius:var(--radius-xs);border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.07);color:var(--white);font-family:'Inter',sans-serif;font-size:12px;outline:none;transition:border-color var(--t);}
-.sb-cfg-input:focus{border-color:var(--green-mid);}
-.sb-cfg-input::placeholder{color:rgba(255,255,255,.2);}
-.btn-save-cfg{padding:7px 16px;border-radius:var(--radius-xs);border:none;background:var(--green);color:var(--white);font-family:'Inter',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all var(--t);}
+.sb-bar{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.sb-label{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.sb-input{flex:1;min-width:160px;padding:6px 10px;border-radius:var(--radius-xs);border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.07);color:var(--white);font-family:'Inter',sans-serif;font-size:11px;outline:none;transition:border-color var(--t);}
+.sb-input:focus{border-color:var(--green-mid);}
+.sb-input::placeholder{color:rgba(255,255,255,.2);}
+.btn-save-cfg{padding:6px 14px;border-radius:var(--radius-xs);border:none;background:var(--green);color:var(--white);font-family:'Inter',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all var(--t);}
 .btn-save-cfg:hover{background:var(--green-mid);}
 
 /* Admin linha tabs */
-.adm-linha-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
-.adm-linha-tab{padding:8px 20px;border-radius:99px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);font-family:'Inter',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all var(--t);}
-.adm-linha-tab:hover{color:var(--white);border-color:rgba(255,255,255,.3);}
-.adm-linha-tab.active{background:var(--green);border-color:var(--green);color:var(--white);font-weight:600;}
-.btn-add-linha{padding:8px 20px;border-radius:99px;border:1px dashed rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.4);font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;transition:all var(--t);}
-.btn-add-linha:hover{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.4);}
+.adm-linha-tabs{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap;}
+.adm-tab{padding:7px 18px;border-radius:99px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all var(--t);}
+.adm-tab:hover{color:var(--white);border-color:rgba(255,255,255,.3);}
+.adm-tab.active{background:var(--green);border-color:var(--green);color:var(--white);font-weight:600;}
+.btn-add-linha{padding:7px 18px;border-radius:99px;border:1px dashed rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.4);font-family:'Inter',sans-serif;font-size:11px;cursor:pointer;transition:all var(--t);}
+.btn-add-linha:hover{color:rgba(255,255,255,.7);}
 
-/* Admin card */
-.adm-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-sm);padding:18px;margin-bottom:16px;}
-.adm-card-label{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;}
-.adm-input{width:100%;padding:9px 13px;border-radius:var(--radius-xs);border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:var(--white);font-family:'Inter',sans-serif;font-size:13px;outline:none;transition:border-color var(--t);}
+.adm-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:14px;}
+.adm-card-label{font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px;}
+.adm-input{width:100%;padding:8px 12px;border-radius:var(--radius-xs);border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:var(--white);font-family:'Inter',sans-serif;font-size:12px;outline:none;transition:border-color var(--t);}
 .adm-input:focus{border-color:var(--green-mid);}
 .adm-input::placeholder{color:rgba(255,255,255,.2);}
-.btn-save-desc{margin-top:9px;padding:8px 20px;border-radius:var(--radius-xs);border:none;background:var(--green);color:var(--white);font-family:'Inter',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all var(--t);}
+.btn-save-desc{margin-top:8px;padding:7px 18px;border-radius:var(--radius-xs);border:none;background:var(--green);color:var(--white);font-family:'Inter',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all var(--t);}
 .btn-save-desc:hover{background:var(--green-mid);}
 
-/* Versões grid */
-.versoes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:11px;margin-bottom:11px;}
-.v-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-sm);padding:15px;transition:border-color var(--t);}
-.v-card:hover{border-color:rgba(255,255,255,.2);}
-.v-card-id{font-size:20px;font-weight:800;color:#4CAF72;margin-bottom:3px;}
-.v-card-nome{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:7px;}
-.v-card-info{font-size:12px;color:rgba(255,255,255,.65);font-weight:500;margin-bottom:11px;}
-.v-card-actions{display:flex;gap:7px;}
-.btn-edit-v{flex:1;padding:7px;border-radius:var(--radius-xs);border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.6);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all var(--t);}
+.versoes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-bottom:10px;}
+.v-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-sm);padding:13px;}
+.v-card-id{font-size:18px;font-weight:800;color:#4CAF72;margin-bottom:2px;}
+.v-card-nome{font-size:11px;color:rgba(255,255,255,.5);margin-bottom:6px;}
+.v-card-info{font-size:11px;color:rgba(255,255,255,.65);font-weight:500;margin-bottom:10px;}
+.v-card-actions{display:flex;gap:6px;}
+.btn-edit-v{flex:1;padding:6px;border-radius:var(--radius-xs);border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.6);font-family:'Inter',sans-serif;font-size:10px;font-weight:500;cursor:pointer;transition:all var(--t);}
 .btn-edit-v:hover{border-color:var(--green-mid);color:#4CAF72;}
-.btn-del-v{padding:7px 11px;border-radius:var(--radius-xs);border:1px solid rgba(220,38,38,.25);background:transparent;color:rgba(220,38,38,.6);font-size:13px;cursor:pointer;transition:all var(--t);}
-.btn-del-v:hover{background:rgba(220,38,38,.12);border-color:rgba(220,38,38,.5);color:#F87171;}
-.btn-add-v{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;border-radius:var(--radius-sm);border:1px dashed rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.4);font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;transition:all var(--t);margin-bottom:16px;}
+.btn-del-v{padding:6px 10px;border-radius:var(--radius-xs);border:1px solid rgba(220,38,38,.25);background:transparent;color:rgba(220,38,38,.6);font-size:12px;cursor:pointer;transition:all var(--t);}
+.btn-del-v:hover{background:rgba(220,38,38,.12);color:#F87171;}
+.btn-add-v{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:11px;border-radius:var(--radius-sm);border:1px dashed rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.4);font-family:'Inter',sans-serif;font-size:11px;cursor:pointer;transition:all var(--t);margin-bottom:14px;}
 .btn-add-v:hover{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.35);}
 
 /* Form edição */
-.edit-form-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:var(--radius);padding:26px;margin-top:14px;animation:zoomIn .18s ease;}
-.efc-title{font-size:16px;font-weight:700;color:var(--white);margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.1);}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:14px;}
+.edit-form-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:var(--radius);padding:22px;margin-top:12px;animation:zIn .18s ease;}
+.efc-title{font-size:15px;font-weight:700;color:var(--white);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.1);}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:12px;}
 .form-grid-3{grid-template-columns:1fr 1fr 1fr;}
 .form-grid-4{grid-template-columns:1fr 1fr 1fr 1fr;}
-.form-field{display:flex;flex-direction:column;gap:5px;}
+.form-field{display:flex;flex-direction:column;gap:4px;}
 .form-field.full{grid-column:1/-1;}
-.form-label{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);}
-.form-input,.form-textarea{padding:9px 13px;border-radius:var(--radius-xs);border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:var(--white);font-family:'Inter',sans-serif;font-size:13px;outline:none;transition:border-color var(--t);}
+.form-label{font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);}
+.form-input,.form-textarea{padding:8px 12px;border-radius:var(--radius-xs);border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:var(--white);font-family:'Inter',sans-serif;font-size:12px;outline:none;transition:border-color var(--t);}
 .form-input:focus,.form-textarea:focus{border-color:var(--green-mid);}
 .form-input::placeholder,.form-textarea::placeholder{color:rgba(255,255,255,.2);}
-.form-textarea{resize:vertical;min-height:80px;line-height:1.6;}
-.form-section{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#4CAF72;padding:13px 0 9px;border-top:1px solid rgba(255,255,255,.08);margin-top:4px;}
-.form-actions{display:flex;gap:10px;margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1);}
-.btn-save-form{flex:1;padding:12px;border-radius:var(--radius-sm);border:none;background:var(--green);color:var(--white);font-family:'Inter',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all var(--t);letter-spacing:.04em;}
+.form-textarea{resize:vertical;min-height:70px;line-height:1.6;}
+.form-section{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#4CAF72;padding:11px 0 8px;border-top:1px solid rgba(255,255,255,.08);margin-top:4px;}
+.form-actions{display:flex;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);}
+.btn-save-form{flex:1;padding:11px;border-radius:var(--radius-sm);border:none;background:var(--green);color:var(--white);font-family:'Inter',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all var(--t);}
 .btn-save-form:hover{background:var(--green-mid);}
-.btn-cancel-form{padding:12px 22px;border-radius:var(--radius-sm);border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.5);font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;transition:all var(--t);}
+.btn-cancel-form{padding:11px 20px;border-radius:var(--radius-sm);border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.5);font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;transition:all var(--t);}
 .btn-cancel-form:hover{color:rgba(255,255,255,.8);}
 
 /* Upload zone */
-.upload-zone{border:2px dashed rgba(255,255,255,.15);border-radius:var(--radius-sm);padding:18px;text-align:center;cursor:pointer;transition:all var(--t);position:relative;}
+.upload-zone{border:2px dashed rgba(255,255,255,.15);border-radius:var(--radius-sm);padding:14px;text-align:center;cursor:pointer;transition:all var(--t);position:relative;}
 .upload-zone:hover{border-color:var(--green-mid);background:rgba(61,139,85,.06);}
-.upload-zone.dragover{border-color:#4CAF72;background:rgba(61,139,85,.1);}
 .upload-zone input[type=file]{display:none;}
-.upload-zone-lbl{font-size:12px;color:rgba(255,255,255,.4);cursor:pointer;line-height:1.7;}
-.upload-zone-lbl strong{color:#4CAF72;}
-.upload-preview{width:100%;max-height:130px;object-fit:contain;border-radius:var(--radius-xs);margin-bottom:8px;display:none;}
-.up-prog-wrap{height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:8px;overflow:hidden;display:none;}
+.up-zone-lbl{font-size:11px;color:rgba(255,255,255,.4);line-height:1.7;}
+.up-zone-lbl strong{color:#4CAF72;}
+.up-preview{width:100%;max-height:110px;object-fit:contain;border-radius:var(--radius-xs);margin-bottom:6px;display:none;}
+.up-prog-wrap{height:3px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:6px;overflow:hidden;display:none;}
 .up-prog-fill{height:100%;background:#4CAF72;width:0%;transition:width .3s ease;}
-.up-status{font-size:11px;color:rgba(255,255,255,.4);margin-top:6px;display:none;}
-.up-url{font-size:10px;color:rgba(255,255,255,.25);margin-top:6px;word-break:break-all;line-height:1.5;}
+.up-status{font-size:10px;color:rgba(255,255,255,.4);margin-top:5px;display:none;}
+.up-url{font-size:9px;color:rgba(255,255,255,.22);margin-top:4px;word-break:break-all;line-height:1.4;}
+
+/* Nota finais admin */
+.finais-nota{font-size:10px;color:rgba(255,255,255,.35);margin-top:6px;line-height:1.5;font-style:italic;}
 
 /* Toast */
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--text-900);color:var(--white);padding:10px 22px;border-radius:99px;font-size:13px;font-weight:500;opacity:0;transition:all .28s ease;z-index:9999;white-space:nowrap;letter-spacing:.01em;border:1px solid rgba(255,255,255,.08);}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--text-900);color:var(--white);padding:9px 20px;border-radius:99px;font-size:12px;font-weight:500;opacity:0;transition:all .28s ease;z-index:9999;white-space:nowrap;border:1px solid rgba(255,255,255,.08);}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .toast.green{background:var(--green);border-color:transparent;}
 
-.fade-in{animation:fadeIn .18s ease;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(3px);}to{opacity:1;transform:translateY(0);}}
+.fade-in{animation:fIn .16s ease;}
+@keyframes fIn{from{opacity:0;transform:translateY(2px);}to{opacity:1;transform:translateY(0);}}
 </style>
 </head>
 <body>
 
 <!-- HEADER -->
 <header class="site-header">
-  <div class="header-top">
-    <img class="logo-img" src="icons/logo-arbore.jpg" alt="Árbore Engenharia">
-    <div class="header-div"></div>
-    <div class="header-titles">
-      <div class="header-main-title">Book Digital de Tipologias</div>
-      <div class="header-sub">Portfólio de Produtos</div>
+  <div class="hdr-left">
+    <img class="logo-img" src="icons/Arbore_logo.jpeg" alt="Árbore Engenharia">
+    <div class="hdr-div"></div>
+    <div class="hdr-titles">
+      <div class="hdr-title">Book Digital de Tipologias</div>
+      <div class="hdr-sub">Portfólio de Produtos</div>
     </div>
-    <div class="header-badges">
-      <div class="header-badge">
-        <div class="hb-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-        <div><div class="hb-label">Atualizado em</div><div class="hb-value" id="dataAtual">—</div></div>
-      </div>
-      <div class="header-badge">
-        <div class="hb-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
-        <div><div class="hb-label">Tipologias Cadastradas</div><div class="hb-value big" id="totalTipologias">—</div></div>
-      </div>
+  </div>
+  <div class="hdr-right">
+    <div class="hdr-badge">
+      <div class="hb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      <div><div class="hb-label">Atualizado em</div><div class="hb-value" id="dataAtual">—</div></div>
+    </div>
+    <div class="hdr-badge">
+      <div class="hb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+      <div><div class="hb-label">Tipologias</div><div class="hb-value big" id="totalTip">—</div></div>
     </div>
     <button class="btn-admin-hdr" onclick="abrirLogin()">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       Admin
     </button>
   </div>
-  <div class="linha-bar">
-    <div class="linha-bar-label">Selecione a linha de produtos</div>
-    <div class="linha-tabs" id="linhaTabs"></div>
-  </div>
 </header>
 
-<!-- MAIN -->
-<div class="main-wrap">
-  <div class="central-card">
+<!-- APP BODY -->
+<div class="app-body">
 
-    <!-- COLUNA ESQUERDA: info + seletor T1/T2... -->
-    <div class="tipo-col">
-      <div class="tipo-kicker">Tipologia</div>
-      <div class="tipo-nome" id="tipoNome">—</div>
-      <div class="tipo-subtitulo" id="tipoSubtitulo">—</div>
-      <div class="tipo-sep"></div>
+  <!-- SIDEBAR LINHAS -->
+  <nav class="linhas-sidebar">
+    <div class="linhas-sidebar-label">Linha de Produtos</div>
+    <div id="linhaTabs"></div>
+  </nav>
 
-      <div class="tipo-selector-label">Versão</div>
-      <div class="tipo-btns" id="tipoBtns"></div>
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div class="main-content">
 
-      <div class="tipo-stats" id="tipoStats"></div>
+    <!-- CARD CENTRAL -->
+    <div class="central-card">
 
-      <div class="tipo-meta-box" id="tipoMetaBox">
-        <div class="meta-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
-        <div class="meta-lines" id="tipoMetaLines"></div>
+      <!-- Col info esquerda -->
+      <div class="tipo-col">
+        <div class="tipo-kicker">Tipologia</div>
+        <div class="tipo-nome" id="tipoNome">—</div>
+        <div class="tipo-sub" id="tipoSub">—</div>
+        <div class="tipo-sep"></div>
+        <div class="tipo-selector-label">Versão</div>
+        <div class="tipo-btns" id="tipoBtns"></div>
+        <div class="tipo-meta-box" id="tipoMetaBox">
+          <div class="meta-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+          <div class="meta-lines" id="tipoMetaLines"></div>
+        </div>
+        <button class="btn-sidebar" id="btnVerPdf" onclick="abrirPdfViewer()" style="margin-top:6px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Visualizar PDF
+        </button>
+        <button class="btn-sidebar primary" onclick="abrirModalImagem()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+          Ver em Tela Cheia
+        </button>
       </div>
 
-      <button class="btn-fullscreen" onclick="abrirModal()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-        Ver em Tela Cheia
-      </button>
-    </div>
+      <!-- Col planta central -->
+      <div class="planta-col">
 
-    <!-- COLUNA CENTRAL: planta -->
-    <div class="planta-col" id="plantaCol">
-      <!-- Botões PDF/DWG no canto superior -->
-      <div class="planta-action-btns">
-        <a id="btnPdf" class="btn-planta-dl btn-planta-pdf disabled" href="#" target="_blank">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          PDF
-        </a>
-        <a id="btnDwg" class="btn-planta-dl btn-planta-dwg disabled" href="#" target="_blank">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-          DWG
-        </a>
+        <!-- Botões topo -->
+        <div class="planta-top-btns">
+          <a id="btnDlImg" class="btn-planta-top btn-dl-img disabled" href="#" download>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Baixar Imagem
+          </a>
+          <a id="btnDlPdf" class="btn-planta-top btn-dl-pdf disabled" href="#" target="_blank">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Baixar PDF
+          </a>
+          <a id="btnDlDwg" class="btn-planta-top btn-dl-dwg disabled" href="#" target="_blank">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            Baixar DWG
+          </a>
+        </div>
+
+        <!-- Viewer -->
+        <div class="planta-viewer" id="plantaViewer">
+          <div class="zoom-lens" id="zoomLens"></div>
+          <div id="plantaConteudo"></div>
+        </div>
+
+        <!-- Botões inferior direito -->
+        <div class="planta-bottom-btns">
+          <button class="btn-planta-bottom" onclick="abrirModalImagem()">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+            Abrir Imagem
+          </button>
+          <button class="btn-planta-bottom" id="btnZoom" onclick="toggleZoom()">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            Zoom
+          </button>
+        </div>
+
+        <!-- Carrossel -->
+        <div class="carrossel-wrap">
+          <button class="carrossel-arrow" id="arrLeft" onclick="scrollCarrossel(-1)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="carrossel-track-wrap" id="carrosselWrap">
+            <div class="carrossel-track" id="carrosselTrack"></div>
+          </div>
+          <button class="carrossel-arrow" id="arrRight" onclick="scrollCarrossel(1)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
       </div>
-      <div id="plantaConteudo"></div>
-    </div>
 
-    <!-- COLUNA DIREITA: ficha + cidades + projetos -->
-    <div class="right-col">
+    </div><!-- /central-card -->
 
-      <!-- FICHA TÉCNICA -->
-      <div class="r-section">
-        <div class="r-section-title">Ficha Técnica</div>
+    <!-- SIDEBAR DIREITA -->
+    <div class="right-sidebar">
 
-        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-500);margin-bottom:8px;">Áreas Privativas</div>
+      <!-- Ficha Técnica -->
+      <div class="rs-section">
+        <div class="rs-title">Ficha Técnica</div>
+        <div style="font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-500);margin-bottom:6px;">Áreas Privativas</div>
         <div class="areas-grid" id="areasGrid"></div>
       </div>
 
-      <!-- CONFIGURAÇÃO DO PAVIMENTO -->
-      <div class="r-section">
-        <div class="r-section-title">Configuração do Pavimento</div>
+      <!-- Config pavimento -->
+      <div class="rs-section">
+        <div class="rs-title">Configuração do Pavimento</div>
         <div class="pav-list" id="pavList"></div>
       </div>
 
-      <!-- CIDADES -->
-      <div class="r-section">
-        <div class="r-section-header" style="display:flex;align-items:center;gap:9px;margin-bottom:10px;">
-          <div style="width:26px;height:26px;border-radius:7px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;color:var(--green-mid);">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <!-- Aplicações -->
+      <div class="rs-section" style="flex:1;overflow:hidden;display:flex;flex-direction:column;gap:0;">
+        <div class="rs-aplicacoes-label">Aplicações</div>
+
+        <div style="margin-bottom:8px;">
+          <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+            <div style="width:22px;height:22px;border-radius:6px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;color:var(--green-mid);">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <span style="font-size:10px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-900);">Cidades Aplicáveis</span>
           </div>
-          <div class="r-section-title" style="margin-bottom:0;">Cidades Aplicáveis</div>
+          <div class="cidades-wrap" id="cidadesWrap"></div>
         </div>
-        <div class="cidades-list" id="cidadesWrap"></div>
+
+        <div>
+          <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+            <div style="width:22px;height:22px;border-radius:6px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;color:var(--green-mid);">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <span style="font-size:10px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-900);">Empreendimentos Utilizados</span>
+          </div>
+          <div class="emp-grid" id="empWrap"></div>
+        </div>
       </div>
 
-      <!-- EMPREENDIMENTOS -->
-      <div class="r-section">
-        <div class="r-section-header" style="display:flex;align-items:center;gap:9px;margin-bottom:10px;">
-          <div style="width:26px;height:26px;border-radius:7px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;color:var(--green-mid);">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          </div>
-          <div class="r-section-title" style="margin-bottom:0;">Empreendimentos Utilizados</div>
-        </div>
-        <div class="emp-grid" id="empreendimentosWrap"></div>
-      </div>
+    </div><!-- /right-sidebar -->
 
-    </div>
-  </div>
-</div>
+  </div><!-- /main-content -->
+</div><!-- /app-body -->
 
-<!-- FOOTER -->
 <footer class="site-footer"><span>arboreengenharia.com.br</span></footer>
 
-<!-- MODAL ZOOM -->
-<div class="modal-overlay" id="modal">
-  <div class="modal-box">
+<!-- MODAL IMAGEM -->
+<div class="modal-overlay" id="modalImg">
+  <div class="modal-img-box">
     <div class="modal-hdr">
-      <div><div class="modal-kicker" id="modalKicker"></div><div class="modal-title" id="modalTitle"></div></div>
-      <button class="modal-close" id="modalClose">✕</button>
+      <div><div class="modal-kicker" id="modalImgKicker"></div><div class="modal-title" id="modalImgTitle"></div></div>
+      <button class="modal-close" onclick="document.getElementById('modalImg').classList.remove('open')">✕</button>
     </div>
     <div class="modal-img-wrap" id="modalImgWrap"></div>
   </div>
 </div>
 
+<!-- MODAL PDF -->
+<div class="modal-overlay" id="modalPdf">
+  <div class="modal-pdf-box">
+    <div class="modal-pdf-hdr">
+      <div><div class="modal-kicker" id="modalPdfKicker"></div><div class="modal-title" id="modalPdfTitle"></div></div>
+      <button class="modal-close" onclick="document.getElementById('modalPdf').classList.remove('open')">✕</button>
+    </div>
+    <div id="modalPdfBody" style="flex:1;display:flex;flex-direction:column;overflow:hidden;"></div>
+  </div>
+</div>
+
 <!-- ADMIN -->
 <div class="admin-overlay" id="adminOverlay">
-
   <div class="login-box" id="loginBox">
-    <img class="login-logo" src="icons/logo-arbore.jpg" alt="Árbore">
+    <img class="login-logo" src="icons/Arbore_logo.jpeg" alt="Árbore">
     <div class="login-title">Acesso Administrativo</div>
     <div class="login-sub">Área restrita — equipe Árbore</div>
     <input class="login-input" type="password" id="senhaInput" placeholder="Senha de acesso"
@@ -419,37 +509,31 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-900);m
   </div>
 
   <div class="admin-panel" id="adminPanel" style="display:none;">
-    <div class="admin-topbar">
-      <div class="admin-page-title">Painel <span>Administrativo</span></div>
-      <button class="btn-close-admin" onclick="fecharAdmin()">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    <div class="adm-topbar">
+      <div class="adm-page-title">Painel <span>Administrativo</span></div>
+      <button class="btn-close-adm" onclick="fecharAdmin()">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         Fechar
       </button>
     </div>
-
-    <!-- Supabase -->
-    <div class="sb-cfg-bar">
-      <span class="sb-cfg-label">Supabase</span>
-      <input class="sb-cfg-input" id="sbUrl" placeholder="URL do projeto (https://xxxx.supabase.co)">
-      <input class="sb-cfg-input" id="sbKey" placeholder="anon / public key">
-      <input class="sb-cfg-input" id="sbBucket" placeholder="bucket (ex: plantas)" style="max-width:170px;">
-      <button class="btn-save-cfg" onclick="salvarSbCfg()">Salvar</button>
+    <div class="sb-bar">
+      <span class="sb-label">Supabase</span>
+      <input class="sb-input" id="sbUrl" placeholder="URL do projeto">
+      <input class="sb-input" id="sbKey" placeholder="anon key">
+      <input class="sb-input" id="sbBucket" placeholder="bucket" style="max-width:140px;">
+      <button class="btn-save-cfg" onclick="salvarSb()">Salvar</button>
     </div>
-
     <div class="adm-linha-tabs" id="admLinhaTabs"></div>
-
     <div class="adm-card">
       <div class="adm-card-label">Descrição da Linha</div>
       <input class="adm-input" id="admLinhaDesc" placeholder="Descrição curta...">
       <button class="btn-save-desc" onclick="salvarDescLinha()">Salvar</button>
     </div>
-
     <div class="versoes-grid" id="versoesGrid"></div>
     <button class="btn-add-v" onclick="novaVersao()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
       Adicionar Versão
     </button>
-
     <div id="editFormWrap"></div>
   </div>
 </div>
@@ -457,215 +541,363 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-900);m
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 // DADOS INICIAIS
-// ══════════════════════════════════════════════════════════════
-const DADOS_INICIAIS = {"linhas":[{"id":"Compact","nome":"Compact","descricao":"Máxima eficiência em área reduzida.","versoes":[{"id":"T1","nome":"T1","imagem":"","areas":{"tipo_a_m2":38.5,"tipo_b_m2":40.2,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"torre":"Torre Tipo","varanda":"Varanda Gourmet","finais_diferentes":4},"ficha_tecnica":{"dormitorios_qtd":1,"banheiros_qtd":1,"vagas_qtd":0,"pavimentos":"Térreo ao 5º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 04"},"cidades":["São Paulo","Campinas","Guarulhos","Santo André"],"projetos":["Residencial Vila Nova","Edifício Horizonte","Parque das Flores","Árbore Paulínia","Árbore Indaiatuba"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","areas":{"tipo_a_m2":41.0,"tipo_b_m2":43.5,"tipo_c_m2":46.0},"config_pav":{"unidades_pav":8,"finais_pav":6,"torre":"Torre Tipo","varanda":"Varanda Gourmet","finais_diferentes":4},"ficha_tecnica":{"dormitorios_qtd":2,"banheiros_qtd":1,"vagas_qtd":1,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Osasco"],"projetos":["Residencial Primavera","Portal do Sol"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","areas":{"tipo_a_m2":44.5,"tipo_b_m2":46.0,"tipo_c_m2":48.5},"config_pav":{"unidades_pav":8,"finais_pav":8,"torre":"Torre Tipo","varanda":"Varanda Gourmet","finais_diferentes":4},"ficha_tecnica":{"dormitorios_qtd":2,"banheiros_qtd":2,"vagas_qtd":1,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 a 08"},"cidades":["São Paulo","Guarulhos","Barueri"],"projetos":["Condomínio Araucária","Residencial Monte Verde","Edifício Ipê"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","areas":{"tipo_a_m2":48.0,"tipo_b_m2":50.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet","finais_diferentes":2},"ficha_tecnica":{"dormitorios_qtd":2,"banheiros_qtd":2,"vagas_qtd":1,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","Ribeirão Preto"],"projetos":["Grand Compact","Residencial Aurora"],"pdf_url":"#","dwg_url":"#"}]},{"id":"Slim","nome":"Slim","descricao":"Planta alongada e otimizada para terrenos estreitos.","versoes":[{"id":"T1","nome":"T1","imagem":"","areas":{"tipo_a_m2":42.0,"tipo_b_m2":44.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"torre":"Torre Tipo","varanda":"Varanda Gourmet","finais_diferentes":4},"ficha_tecnica":{"dormitorios_qtd":2,"banheiros_qtd":1,"vagas_qtd":1,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 04"},"cidades":["São Paulo","Santos","São Bernardo do Campo","Diadema"],"projetos":["Slim Tower Centro","Edifício Vertical"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","areas":{"tipo_a_m2":45.5,"tipo_b_m2":47.5,"tipo_c_m2":50.0},"config_pav":{"unidades_pav":8,"finais_pav":6,"torre":"Torre Tipo","varanda":"Varanda Gourmet","finais_diferentes":4},"ficha_tecnica":{"dormitorios_qtd":2,"banheiros_qtd":1,"vagas_qtd":1,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Jundiaí"],"projetos":["Slim Essencial","Residencial Avenida","Torres do Parque"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","areas":{"tipo_a_m2":49.0,"tipo_b_m2":51.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet","finais_diferentes":2},"ficha_tecnica":{"dormitorios_qtd":2,"banheiros_qtd":2,"vagas_qtd":1,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 e 02"},"cidades":["São Paulo","ABC Paulista","Guarulhos"],"projetos":["Slim Premium","Edifício Panorama"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","areas":{"tipo_a_m2":53.5,"tipo_b_m2":56.0,"tipo_c_m2":58.5},"config_pav":{"unidades_pav":4,"finais_pav":4,"torre":"Torre Premium","varanda":"Varanda Gourmet","finais_diferentes":4},"ficha_tecnica":{"dormitorios_qtd":3,"banheiros_qtd":2,"vagas_qtd":2,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Sorocaba"],"projetos":["Grand Slim","Residencial Vertice"],"pdf_url":"#","dwg_url":"#"}]},{"id":"Plus","nome":"Plus","descricao":"Amplitude e conforto ampliados com varanda gourmet.","versoes":[{"id":"T1","nome":"T1","imagem":"","areas":{"tipo_a_m2":58.0,"tipo_b_m2":61.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet","finais_diferentes":2},"ficha_tecnica":{"dormitorios_qtd":2,"banheiros_qtd":2,"vagas_qtd":1,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","Ribeirão Preto","Bauru"],"projetos":["Plus Jardins","Residencial Boulevard"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","areas":{"tipo_a_m2":62.0,"tipo_b_m2":65.0,"tipo_c_m2":68.0},"config_pav":{"unidades_pav":4,"finais_pav":4,"torre":"Torre Premium","varanda":"Varanda Gourmet","finais_diferentes":4},"ficha_tecnica":{"dormitorios_qtd":3,"banheiros_qtd":2,"vagas_qtd":2,"pavimentos":"Térreo ao 15º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Alphaville","Campinas","Santos"],"projetos":["Plus Connect","Edifício Harmonia","Residencial Allegro"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","areas":{"tipo_a_m2":67.5,"tipo_b_m2":70.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":2,"finais_pav":2,"torre":"Torre Premium","varanda":"Varanda Gourmet","finais_diferentes":2},"ficha_tecnica":{"dormitorios_qtd":3,"banheiros_qtd":2,"vagas_qtd":2,"pavimentos":"Térreo ao 15º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","São José dos Campos"],"projetos":["Plus Alto Padrão","Grand Horizonte"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","areas":{"tipo_a_m2":73.0,"tipo_b_m2":76.5,"tipo_c_m2":80.0},"config_pav":{"unidades_pav":2,"finais_pav":2,"torre":"Torre Premium","varanda":"Varanda Gourmet","finais_diferentes":2},"ficha_tecnica":{"dormitorios_qtd":3,"banheiros_qtd":3,"vagas_qtd":2,"pavimentos":"Térreo ao 18º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","Ribeirão Preto","Sorocaba","Bauru"],"projetos":["Plus Grand Reserve","Edifício Prestígio"],"pdf_url":"#","dwg_url":"#"}]},{"id":"Urbana","nome":"Urbana","descricao":"Conectividade urbana contemporânea.","versoes":[{"id":"T1","nome":"T1","imagem":"","areas":{"tipo_a_m2":39.5,"tipo_b_m2":41.5,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"torre":"Torre Tipo","varanda":"Varanda Compacta","finais_diferentes":4},"ficha_tecnica":{"dormitorios_qtd":1,"banheiros_qtd":1,"vagas_qtd":0,"pavimentos":"Térreo ao 5º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 04"},"cidades":["São Paulo","Guarulhos","Osasco","Santo André","São Caetano do Sul"],"projetos":["Urbana Paulista","Edifício Central","Residencial Metrô"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","areas":{"tipo_a_m2":43.5,"tipo_b_m2":45.5,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"torre":"Torre Tipo","varanda":"Varanda Compacta","finais_diferentes":4},"ficha_tecnica":{"dormitorios_qtd":2,"banheiros_qtd":1,"vagas_qtd":1,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Mauá","Suzano"],"projetos":["Urbana Connect","Residencial Eixo"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","areas":{"tipo_a_m2":47.0,"tipo_b_m2":49.0,"tipo_c_m2":51.5},"config_pav":{"unidades_pav":4,"finais_pav":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet","finais_diferentes":4},"ficha_tecnica":{"dormitorios_qtd":2,"banheiros_qtd":2,"vagas_qtd":1,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 a 04"},"cidades":["São Paulo","Guarulhos","Campinas"],"projetos":["Urbana Prime","Edifício Mobilidade","Grand Urbana"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","areas":{"tipo_a_m2":51.5,"tipo_b_m2":54.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet","finais_diferentes":2},"ficha_tecnica":{"dormitorios_qtd":2,"banheiros_qtd":2,"vagas_qtd":1,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","São José dos Campos","Sorocaba"],"projetos":["Urbana Alto","Residencial Viaduto"],"pdf_url":"#","dwg_url":"#"}]}]};
+// ═══════════════════════════════════════════════════════════
+const DADOS_INICIAIS = {"linhas":[{"id":"Compact","nome":"Compact","descricao":"Máxima eficiência em área reduzida.","versoes":[{"id":"T1","nome":"T1","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":38.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":40.2,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo B","m2":40.2,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 04","tipo":"Tipo A","m2":38.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":38.5,"tipo_b_m2":40.2,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":1,"pavimentos":"Térreo ao 5º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 04"},"cidades":["São Paulo","Campinas","Guarulhos","Santo André"],"projetos":["Residencial Vila Nova","Edifício Horizonte","Parque das Flores","Árbore Paulínia","Árbore Indaiatuba"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":41.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":43.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":46.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 04","tipo":"Tipo A","m2":41.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":41.0,"tipo_b_m2":43.5,"tipo_c_m2":46.0},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Osasco"],"projetos":["Residencial Primavera","Portal do Sol"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":44.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":46.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":48.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":44.5,"tipo_b_m2":46.0,"tipo_c_m2":48.5},"config_pav":{"unidades_pav":8,"finais_pav":8,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 a 08"},"cidades":["São Paulo","Guarulhos","Barueri"],"projetos":["Condomínio Araucária","Residencial Monte Verde","Edifício Ipê"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":48.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":50.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":48.0,"tipo_b_m2":50.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":2,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","Ribeirão Preto"],"projetos":["Grand Compact","Residencial Aurora"],"pdf_url":"#","dwg_url":"#"}]},{"id":"Slim","nome":"Slim","descricao":"Planta alongada para terrenos estreitos.","versoes":[{"id":"T1","nome":"T1","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":42.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":44.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":42.0,"tipo_b_m2":44.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 04"},"cidades":["São Paulo","Santos","São Bernardo do Campo","Diadema"],"projetos":["Slim Tower Centro","Edifício Vertical"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":45.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":47.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":50.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":45.5,"tipo_b_m2":47.5,"tipo_c_m2":50.0},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Jundiaí"],"projetos":["Slim Essencial","Residencial Avenida","Torres do Parque"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":49.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":51.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":49.0,"tipo_b_m2":51.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":2,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 e 02"},"cidades":["São Paulo","ABC Paulista","Guarulhos"],"projetos":["Slim Premium","Edifício Panorama"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":53.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":56.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":58.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":53.5,"tipo_b_m2":56.0,"tipo_c_m2":58.5},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":4,"torre":"Torre Premium","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":3,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Sorocaba"],"projetos":["Grand Slim","Residencial Vertice"],"pdf_url":"#","dwg_url":"#"}]},{"id":"Plus","nome":"Plus","descricao":"Amplitude e conforto com varanda gourmet.","versoes":[{"id":"T1","nome":"T1","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":58.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":61.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":58.0,"tipo_b_m2":61.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":2,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","Ribeirão Preto","Bauru"],"projetos":["Plus Jardins","Residencial Boulevard"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":62.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":65.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":68.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":62.0,"tipo_b_m2":65.0,"tipo_c_m2":68.0},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":4,"torre":"Torre Premium","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":3,"pavimentos":"Térreo ao 15º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Alphaville","Campinas","Santos"],"projetos":["Plus Connect","Edifício Harmonia","Residencial Allegro"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":67.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":70.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":67.5,"tipo_b_m2":70.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":2,"finais_pav":2,"finais_diferentes":2,"torre":"Torre Premium","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":3,"pavimentos":"Térreo ao 15º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","São José dos Campos"],"projetos":["Plus Alto Padrão","Grand Horizonte"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":73.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":76.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":80.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":73.0,"tipo_b_m2":76.5,"tipo_c_m2":80.0},"config_pav":{"unidades_pav":2,"finais_pav":2,"finais_diferentes":2,"torre":"Torre Premium","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":3,"pavimentos":"Térreo ao 18º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","Ribeirão Preto","Sorocaba","Bauru"],"projetos":["Plus Grand Reserve","Edifício Prestígio"],"pdf_url":"#","dwg_url":"#"}]},{"id":"Urbana","nome":"Urbana","descricao":"Conectividade urbana contemporânea.","versoes":[{"id":"T1","nome":"T1","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":39.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":41.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":39.5,"tipo_b_m2":41.5,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Compacta"},"ficha_tecnica":{"dormitorios_qtd":1,"pavimentos":"Térreo ao 5º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 04"},"cidades":["São Paulo","Guarulhos","Osasco","Santo André","São Caetano do Sul"],"projetos":["Urbana Paulista","Edifício Central","Residencial Metrô"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":43.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":45.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":43.5,"tipo_b_m2":45.5,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Compacta"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Mauá","Suzano"],"projetos":["Urbana Connect","Residencial Eixo"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":47.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":49.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":51.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":47.0,"tipo_b_m2":49.0,"tipo_c_m2":51.5},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 a 04"},"cidades":["São Paulo","Guarulhos","Campinas"],"projetos":["Urbana Prime","Edifício Mobilidade","Grand Urbana"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":51.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":54.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":51.5,"tipo_b_m2":54.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":2,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","São José dos Campos","Sorocaba"],"projetos":["Urbana Alto","Residencial Viaduto"],"pdf_url":"#","dwg_url":"#"}]}]};
 
 const SENHA = "arbore2024";
-const LS_KEY = "arbore_v3";
+const LS_KEY = "arbore_v4";
 const LS_SB  = "arbore_sb";
 
-function carregarDados(){ try{ const s=localStorage.getItem(LS_KEY); if(s) return JSON.parse(s); }catch(e){} return JSON.parse(JSON.stringify(DADOS_INICIAIS)); }
-function salvarDados(){ localStorage.setItem(LS_KEY,JSON.stringify(P)); }
+function carregar(){ try{ const s=localStorage.getItem(LS_KEY); if(s) return JSON.parse(s); }catch(e){} return JSON.parse(JSON.stringify(DADOS_INICIAIS)); }
+function salvar(){ localStorage.setItem(LS_KEY,JSON.stringify(P)); }
 
-let P = carregarDados();
+let P = carregar();
 let SB = (()=>{ try{ return JSON.parse(localStorage.getItem(LS_SB)||"{}"); }catch(e){ return {}; } })();
 
+// Estado
 let linhaId  = P.linhas[0].id;
 let tipoId   = P.linhas[0].versoes[0].id;
+let finalIdx = 0; // 0 = planta geral, 1+ = final[idx-1]
 let admLinhaId = P.linhas[0].id;
 let editandoId = null;
+let zoomAtivo  = false;
+let carrosselOffset = 0;
 
 const getLinha  = () => P.linhas.find(l=>l.id===linhaId);
-const getVersao = () => { const l=getLinha(); return l ? l.versoes.find(v=>v.id===tipoId) : null; };
+const getVersao = () => { const l=getLinha(); return l?l.versoes.find(v=>v.id===tipoId):null; };
 const getAdmL   = () => P.linhas.find(l=>l.id===admLinhaId);
 
 function toast(msg,green=false){
   const t=document.getElementById("toast");
   t.textContent=msg; t.className="toast"+(green?" green":"")+" show";
-  setTimeout(()=>{ t.className="toast"+(green?" green":""); },2800);
+  setTimeout(()=>{ t.className="toast"+(green?" green":""); },2600);
 }
 
-// Data e contador
-function updateUI(){
+function updateMeta(){
   const now=new Date();
   const m=now.toLocaleDateString("pt-BR",{month:"long"}).slice(0,3).toUpperCase();
   document.getElementById("dataAtual").textContent=`${m}/${now.getFullYear()}`;
   let t=0; P.linhas.forEach(l=>{ t+=l.versoes.length; });
-  document.getElementById("totalTipologias").textContent=t;
+  document.getElementById("totalTip").textContent=t;
 }
 
-// ══════════════════════════════════════════════════════════════
-// RENDER
-// ══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// RENDER LINHAS SIDEBAR
+// ═══════════════════════════════════════════════════════════
 const ICONS_LINHA={
-  Compact:`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>`,
-  Slim:`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="20" rx="2"/></svg>`,
-  Plus:`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>`,
-  Urbana:`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>`,
+  Compact:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>`,
+  Slim:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="20" rx="2"/></svg>`,
+  Plus:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>`,
+  Urbana:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>`,
 };
 
-function renderLinhaTabs(){
+function renderLinhas(){
   document.getElementById("linhaTabs").innerHTML = P.linhas.map(l=>
     `<button class="linha-tab ${l.id===linhaId?"active":""}" onclick="selLinha('${l.id}')">
       ${ICONS_LINHA[l.id]||ICONS_LINHA.Compact} ${l.nome}
     </button>`
   ).join("");
 }
+function selLinha(id){ linhaId=id; const l=getLinha(); tipoId=l.versoes[0]?.id||""; finalIdx=0; carrosselOffset=0; renderAll(); }
+function selTipo(id){ tipoId=id; finalIdx=0; carrosselOffset=0; renderConteudo(); }
 
-function selLinha(id){ linhaId=id; const l=getLinha(); tipoId=l.versoes[0]?.id||""; renderAll(); }
-function selTipo(id){ tipoId=id; renderConteudo(); }
-
-function renderTipoSelector(){
-  const l=getLinha();
-  document.getElementById("tipoBtns").innerHTML = l.versoes.map(v=>
-    `<button class="tipo-btn ${v.id===tipoId?"active":""}" onclick="selTipo('${v.id}')">${v.id}</button>`
-  ).join("");
-}
-
+// ═══════════════════════════════════════════════════════════
+// RENDER TIPO INFO
+// ═══════════════════════════════════════════════════════════
 function renderTipoInfo(){
   const v=getVersao(); if(!v) return;
-  const ft=v.ficha_tecnica;
-  const areas=v.areas;
-  const mainArea = areas.tipo_a_m2 || 0;
-  const dorms = ft.dormitorios_qtd||"?";
+  const cp=v.config_pav||{};
+  const nomeComplexo = cp.unidades_pav&&cp.finais_pav ? `${v.id} - ${cp.unidades_pav}/${cp.finais_pav}` : v.id;
+  document.getElementById("tipoNome").textContent=nomeComplexo;
+  document.getElementById("tipoSub").textContent="Pavimento Tipo";
 
-  // Nome: T1 - 8/6 (tipologia - unidades/finais por pav)
-  const cp = v.config_pav||{};
-  const nomeComplexo = cp.unidades_pav && cp.finais_pav
-    ? `${v.id} - ${cp.unidades_pav}/${cp.finais_pav}`
-    : v.id;
-  document.getElementById("tipoNome").textContent = nomeComplexo;
-  document.getElementById("tipoSubtitulo").textContent = "Pavimento Tipo";
+  // tipo btns
+  const l=getLinha();
+  document.getElementById("tipoBtns").innerHTML=l.versoes.map(vv=>
+    `<button class="tipo-btn ${vv.id===tipoId?"active":""}" onclick="selTipo('${vv.id}')">${vv.id}</button>`
+  ).join("");
 
-  // Stats: unidades + finais
-  document.getElementById("tipoStats").innerHTML = `
-    <div class="tipo-stat-row">
-      <div class="tipo-stat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
-      <div class="tipo-stat-text"><strong>${cp.unidades_pav||"—"} Unidades</strong>por Pavimento</div>
-    </div>
-    <div class="tipo-stat-row">
-      <div class="tipo-stat-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-      <div class="tipo-stat-text"><strong>${cp.finais_pav||"—"} Finais</strong>por Pavimento</div>
-    </div>`;
-
-  // Meta box
+  // metabox
   const m=v.meta||{};
-  document.getElementById("tipoMetaLines").innerHTML =
+  document.getElementById("tipoMetaLines").innerHTML=
     `<strong>${m.planta_tipo||"Planta padrão"}</strong><br>${m.versao_label||v.nome}<br>${m.finais||""}`;
 }
 
+// ═══════════════════════════════════════════════════════════
+// RENDER PLANTA + CARROSSEL
+// ═══════════════════════════════════════════════════════════
+function getImagemAtual(){
+  const v=getVersao(); if(!v) return null;
+  if(finalIdx===0) return v.imagem||null;
+  const f=v.finais?.[finalIdx-1]; return f?.imagem||null;
+}
+function getDownloadsAtual(){
+  const v=getVersao(); if(!v) return {img:null,pdf:null,dwg:null};
+  if(finalIdx===0) return {img:v.imagem||null, pdf:v.pdf_url||null, dwg:v.dwg_url||null};
+  const f=v.finais?.[finalIdx-1];
+  return {img:f?.imagem||null, pdf:f?.pdf_url||v.pdf_url||null, dwg:f?.dwg_url||v.dwg_url||null};
+}
+
 function renderPlanta(){
-  const v=getVersao(); if(!v) return;
-  document.getElementById("plantaConteudo").innerHTML = v.imagem
-    ? `<img class="planta-img" src="${v.imagem}" alt="Planta" style="cursor:zoom-in;" onclick="abrirModal()">`
-    : `<div class="planta-placeholder-wrap">
-        <div class="planta-ph-circle"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/><rect x="12" y="12" width="6" height="6" rx="1"/></svg></div>
-        <div><div class="planta-ph-title">Planta não inserida</div><div class="planta-ph-sub">Acesse o painel Admin para upload</div></div>
-       </div>`;
+  const img=getImagemAtual();
+  const viewer=document.getElementById("plantaConteudo");
+  if(img){
+    viewer.innerHTML=`<img class="planta-viewer-img" id="plantaImg" src="${img}" alt="Planta">`;
+    // zoom setup
+    setupZoom();
+  } else {
+    viewer.innerHTML=`<div class="planta-placeholder-wrap">
+      <div class="planta-ph-circle"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/><rect x="12" y="12" width="6" height="6" rx="1"/></svg></div>
+      <div class="planta-ph-title">Planta não inserida</div>
+      <div class="planta-ph-sub">Acesse o painel Admin para upload</div>
+    </div>`;
+  }
+  renderDownloadBtns();
 }
 
-function renderDownloads(){
-  const v=getVersao(); if(!v) return;
-  const pdf=document.getElementById("btnPdf");
-  const dwg=document.getElementById("btnDwg");
-  if(v.pdf_url && v.pdf_url!=="*" && v.pdf_url!=="#"){ pdf.href=v.pdf_url; pdf.classList.remove("disabled"); }
-  else{ pdf.href="#"; pdf.classList.add("disabled"); }
-  if(v.dwg_url && v.dwg_url!=="*" && v.dwg_url!=="#"){ dwg.href=v.dwg_url; dwg.classList.remove("disabled"); }
-  else{ dwg.href="#"; dwg.classList.add("disabled"); }
+function renderDownloadBtns(){
+  const dl=getDownloadsAtual();
+  const btnImg=document.getElementById("btnDlImg");
+  const btnPdf=document.getElementById("btnDlPdf");
+  const btnDwg=document.getElementById("btnDlDwg");
+
+  if(dl.img && dl.img!="#"){ btnImg.href=dl.img; btnImg.classList.remove("disabled"); }
+  else{ btnImg.href="#"; btnImg.classList.add("disabled"); }
+  if(dl.pdf && dl.pdf!="#"){ btnPdf.href=dl.pdf; btnPdf.classList.remove("disabled"); }
+  else{ btnPdf.href="#"; btnPdf.classList.add("disabled"); }
+  if(dl.dwg && dl.dwg!="#"){ btnDwg.href=dl.dwg; btnDwg.classList.remove("disabled"); }
+  else{ btnDwg.href="#"; btnDwg.classList.add("disabled"); }
+
+  // Visualizar PDF btn
+  const btnPdfView=document.getElementById("btnVerPdf");
+  const v=getVersao();
+  const pdfUrl=v?.pdf_url;
+  if(pdfUrl && pdfUrl!="#"){ btnPdfView.style.opacity="1"; btnPdfView.style.pointerEvents=""; }
+  else{ btnPdfView.style.opacity=".35"; btnPdfView.style.pointerEvents="none"; }
 }
 
+function renderCarrossel(){
+  const v=getVersao(); if(!v) return;
+  const finais=v.finais||[];
+  const track=document.getElementById("carrosselTrack");
+
+  // Item 0: planta geral
+  const items=[{
+    idx:0, label:"Planta Geral", tipo:"Pavimento Tipo", m2:null, imagem:v.imagem
+  }];
+  finais.forEach((f,i)=>{
+    items.push({idx:i+1, label:f.id, tipo:f.tipo, m2:f.m2, imagem:f.imagem});
+  });
+
+  track.innerHTML=items.map(it=>`
+    <div class="carrossel-item ${it.idx===finalIdx?"active":""}" onclick="selFinal(${it.idx})" id="citem_${it.idx}">
+      ${it.imagem
+        ? `<img class="carrossel-thumb" src="${it.imagem}" alt="${it.label}">`
+        : `<div class="carrossel-thumb-empty"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>`
+      }
+      <div class="carrossel-info">
+        <div class="carrossel-final">${it.label}</div>
+        <div class="carrossel-tipo">${it.tipo}</div>
+        ${it.m2 ? `<div class="carrossel-m2">${it.m2} m²</div>` : ''}
+      </div>
+    </div>
+  `).join("");
+
+  // posicionar offset
+  track.style.transform=`translateX(-${carrosselOffset}px)`;
+  updateArrows(items.length);
+}
+
+function selFinal(idx){
+  finalIdx=idx;
+  renderPlanta();
+  // atualiza active no carrossel sem re-render completo
+  document.querySelectorAll(".carrossel-item").forEach(el=>el.classList.remove("active"));
+  const el=document.getElementById("citem_"+idx);
+  if(el){ el.classList.add("active"); scrollToCarrosselItem(el); }
+}
+
+function scrollToCarrosselItem(el){
+  const wrap=document.getElementById("carrosselWrap");
+  const wrapW=wrap.offsetWidth;
+  const itemLeft=el.offsetLeft;
+  const itemW=el.offsetWidth;
+  const track=document.getElementById("carrosselTrack");
+  const trackW=track.scrollWidth;
+  let target=itemLeft - (wrapW/2) + (itemW/2);
+  target=Math.max(0,Math.min(target,trackW-wrapW));
+  carrosselOffset=target;
+  track.style.transform=`translateX(-${carrosselOffset}px)`;
+}
+
+function scrollCarrossel(dir){
+  const wrap=document.getElementById("carrosselWrap");
+  const track=document.getElementById("carrosselTrack");
+  const step=98;
+  const maxOffset=Math.max(0,track.scrollWidth-wrap.offsetWidth);
+  carrosselOffset=Math.max(0,Math.min(carrosselOffset+dir*step,maxOffset));
+  track.style.transform=`translateX(-${carrosselOffset}px)`;
+  updateArrows();
+}
+
+function updateArrows(total){
+  const wrap=document.getElementById("carrosselWrap");
+  const track=document.getElementById("carrosselTrack");
+  const maxOffset=Math.max(0,track.scrollWidth-wrap.offsetWidth);
+  document.getElementById("arrLeft").disabled=carrosselOffset<=0;
+  document.getElementById("arrRight").disabled=carrosselOffset>=maxOffset;
+}
+
+// ═══════════════════════════════════════════════════════════
+// SIDEBAR DIREITA
+// ═══════════════════════════════════════════════════════════
 function renderAreas(){
   const v=getVersao(); if(!v) return;
   const a=v.areas||{};
-  const cards=[
-    {val:a.tipo_a_m2,lbl:"Tipo A"},
-    {val:a.tipo_b_m2,lbl:"Tipo B"},
-    {val:a.tipo_c_m2,lbl:"Tipo C"},
-  ];
-  const visíveis = cards.filter(c=>c.val);
-  const cols = visíveis.length === 2 ? "1fr 1fr" : "1fr 1fr 1fr";
-  const grid = document.getElementById("areasGrid");
-  grid.style.gridTemplateColumns = cols;
-  grid.innerHTML = visíveis.map(c=>
-    `<div class="area-card">
-      <div class="area-card-value">${c.val} <sup>m²</sup></div>
-      <div class="area-card-label">${c.lbl}</div>
-    </div>`
-  ).join("");
+  const cards=[{val:a.tipo_a_m2,lbl:"Tipo A"},{val:a.tipo_b_m2,lbl:"Tipo B"},{val:a.tipo_c_m2,lbl:"Tipo C"}].filter(c=>c.val);
+  const grid=document.getElementById("areasGrid");
+  grid.className="areas-grid"+(cards.length===2?" cols2":"");
+  grid.innerHTML=cards.map(c=>`
+    <div class="area-card">
+      <div class="area-val">${c.val} <sup>m²</sup></div>
+      <div class="area-lbl">${c.lbl}</div>
+    </div>`).join("");
 }
 
-function renderPavConfig(){
+function renderPav(){
   const v=getVersao(); if(!v) return;
   const cp=v.config_pav||{};
-  const ft=v.ficha_tecnica||{};
-
-  const ICONE_PAV = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>`;
-  const ICONE_TORRE = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`;
-  const ICONE_VAR  = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`;
-  const ICONE_FINAL= `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>`;
-
-  const items = [
-    cp.unidades_pav ? {icon:ICONE_PAV, text:`${cp.unidades_pav} Unidades por Pavimento`} : null,
-    cp.torre        ? {icon:ICONE_TORRE, text:cp.torre} : null,
-    cp.varanda      ? {icon:ICONE_VAR, text:cp.varanda} : null,
-    cp.finais_diferentes ? {icon:ICONE_FINAL, text:`${cp.finais_diferentes} Finais Diferentes`} : null,
+  const I={
+    unid:`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>`,
+    torre:`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+    var:`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+    fin:`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>`,
+  };
+  const items=[
+    cp.unidades_pav?{icon:I.unid,text:`${cp.unidades_pav} Unidades por Pavimento`}:null,
+    cp.torre?{icon:I.torre,text:cp.torre}:null,
+    cp.varanda?{icon:I.var,text:cp.varanda}:null,
+    cp.finais_diferentes?{icon:I.fin,text:`${cp.finais_diferentes} Finais Diferentes`}:null,
   ].filter(Boolean);
-
-  document.getElementById("pavList").innerHTML = items.map(i=>
-    `<div class="pav-item">
-      <div class="pav-item-icon">${i.icon}</div>
-      <span class="pav-item-text">${i.text}</span>
-    </div>`
+  document.getElementById("pavList").innerHTML=items.map(i=>
+    `<div class="pav-item"><div class="pav-icon">${i.icon}</div><span class="pav-text">${i.text}</span></div>`
   ).join("");
 }
 
-function renderCidades(){
+function renderAplicacoes(){
   const v=getVersao(); if(!v) return;
   const cids=v.cidades||[];
-  document.getElementById("cidadesWrap").innerHTML = cids.length
+  document.getElementById("cidadesWrap").innerHTML=cids.length
     ? cids.map(c=>`<span class="cidade-chip">${c}</span>`).join("")
-    : `<span style="font-size:12px;color:var(--text-400);font-style:italic;">Nenhuma cadastrada</span>`;
-}
-
-function renderEmpreendimentos(){
-  const v=getVersao(); if(!v) return;
+    : `<span style="font-size:11px;color:var(--text-400);font-style:italic;">Nenhuma cadastrada</span>`;
   const projs=v.projetos||[];
-  document.getElementById("empreendimentosWrap").innerHTML = projs.length
+  document.getElementById("empWrap").innerHTML=projs.length
     ? projs.map(p=>`<div class="emp-item"><span class="emp-dot"></span>${p}</div>`).join("")
-    : `<div style="font-size:12px;color:var(--text-400);font-style:italic;grid-column:1/-1;">Nenhum cadastrado</div>`;
+    : `<div style="font-size:11px;color:var(--text-400);font-style:italic;grid-column:1/-1;">Nenhum cadastrado</div>`;
 }
 
+// ═══════════════════════════════════════════════════════════
+// ZOOM LUPA
+// ═══════════════════════════════════════════════════════════
+const ZOOM_SIZE=160, ZOOM_FACTOR=2.8;
+
+function toggleZoom(){
+  zoomAtivo=!zoomAtivo;
+  const btn=document.getElementById("btnZoom");
+  const lens=document.getElementById("zoomLens");
+  if(zoomAtivo){
+    btn.classList.add("active-zoom");
+    lens.style.width=ZOOM_SIZE+"px"; lens.style.height=ZOOM_SIZE+"px"; lens.style.display="block";
+    document.getElementById("plantaViewer").style.cursor="none";
+  } else {
+    btn.classList.remove("active-zoom");
+    lens.style.display="none";
+    document.getElementById("plantaViewer").style.cursor="default";
+  }
+}
+
+function setupZoom(){
+  const viewer=document.getElementById("plantaViewer");
+  viewer.onmousemove=function(e){
+    if(!zoomAtivo) return;
+    const img=document.getElementById("plantaImg");
+    if(!img) return;
+    const lens=document.getElementById("zoomLens");
+    const rect=viewer.getBoundingClientRect();
+    const imgRect=img.getBoundingClientRect();
+    const x=e.clientX-rect.left;
+    const y=e.clientY-rect.top;
+    const lx=x-ZOOM_SIZE/2, ly=y-ZOOM_SIZE/2;
+    lens.style.left=lx+"px"; lens.style.top=ly+"px";
+
+    // posição relativa dentro da imagem
+    const px=e.clientX-imgRect.left, py=e.clientY-imgRect.top;
+    const bx=px*ZOOM_FACTOR-ZOOM_SIZE/2, by=py*ZOOM_FACTOR-ZOOM_SIZE/2;
+    lens.style.backgroundImage=`url('${img.src}')`;
+    lens.style.backgroundSize=`${imgRect.width*ZOOM_FACTOR}px ${imgRect.height*ZOOM_FACTOR}px`;
+    lens.style.backgroundPosition=`-${bx}px -${by}px`;
+    lens.style.backgroundRepeat="no-repeat";
+  };
+  viewer.onmouseleave=function(){
+    if(zoomAtivo) document.getElementById("zoomLens").style.opacity="0";
+  };
+  viewer.onmouseenter=function(){
+    if(zoomAtivo) document.getElementById("zoomLens").style.opacity="1";
+  };
+}
+
+// ═══════════════════════════════════════════════════════════
+// MODAIS
+// ═══════════════════════════════════════════════════════════
+function abrirModalImagem(){
+  const v=getVersao(); if(!v) return;
+  const img=getImagemAtual();
+  const label=finalIdx===0?"Planta Geral":(v.finais?.[finalIdx-1]?.id||"Final");
+  document.getElementById("modalImgKicker").textContent=`${linhaId} · ${tipoId} · ${label}`;
+  document.getElementById("modalImgTitle").textContent=`Planta Técnica — ${getLinha().nome}`;
+  document.getElementById("modalImgWrap").innerHTML=img
+    ? `<img src="${img}" alt="Planta ampliada">`
+    : `<div class="modal-empty"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity=".3"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><p style="margin-top:10px;font-size:12px;color:#9CA3AF;">Imagem não disponível</p></div>`;
+  document.getElementById("modalImg").classList.add("open");
+}
+
+function abrirPdfViewer(){
+  const v=getVersao(); if(!v) return;
+  const pdfUrl=v.pdf_url;
+  document.getElementById("modalPdfKicker").textContent=`${linhaId} · ${tipoId}`;
+  document.getElementById("modalPdfTitle").textContent=`PDF do Projeto — ${getLinha().nome}`;
+  const body=document.getElementById("modalPdfBody");
+  if(pdfUrl && pdfUrl!="#"){
+    body.innerHTML=`<iframe class="modal-pdf-iframe" src="${pdfUrl}"></iframe>`;
+  } else {
+    body.innerHTML=`<div class="modal-pdf-nourl">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity=".3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <p>Nenhum PDF cadastrado para esta tipologia.</p>
+      <p style="font-size:11px;opacity:.6;">Adicione o link PDF no painel Admin.</p>
+    </div>`;
+  }
+  document.getElementById("modalPdf").classList.add("open");
+}
+
+// Fechar modais
+document.getElementById("modalImg").onclick=e=>{ if(e.target===document.getElementById("modalImg")) document.getElementById("modalImg").classList.remove("open"); };
+document.getElementById("modalPdf").onclick=e=>{ if(e.target===document.getElementById("modalPdf")) document.getElementById("modalPdf").classList.remove("open"); };
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ document.getElementById("modalImg").classList.remove("open"); document.getElementById("modalPdf").classList.remove("open"); document.getElementById("adminOverlay").classList.remove("open"); } });
+
+// ═══════════════════════════════════════════════════════════
+// RENDER ALL
+// ═══════════════════════════════════════════════════════════
 function renderConteudo(){
-  renderTipoSelector(); renderTipoInfo(); renderPlanta(); renderDownloads();
-  renderAreas(); renderPavConfig(); renderCidades(); renderEmpreendimentos();
-  document.querySelectorAll(".area-card,.pav-item,.cidade-chip,.emp-item").forEach(el=>{
-    el.classList.remove("fade-in"); void el.offsetWidth; el.classList.add("fade-in");
-  });
+  renderTipoInfo(); renderPlanta(); renderCarrossel();
+  renderAreas(); renderPav(); renderAplicacoes();
 }
+function renderAll(){ renderLinhas(); renderConteudo(); updateMeta(); }
 
-function renderAll(){ renderLinhaTabs(); renderConteudo(); updateUI(); }
-
-// ══════════════════════════════════════════════════════════════
-// MODAL
-// ══════════════════════════════════════════════════════════════
-function abrirModal(){
-  const v=getVersao();
-  document.getElementById("modalKicker").textContent=`${linhaId} · ${tipoId}`;
-  document.getElementById("modalTitle").textContent=`Planta Técnica — ${getLinha().nome}`;
-  document.getElementById("modalImgWrap").innerHTML = v.imagem
-    ? `<img src="${v.imagem}" alt="Planta ampliada">`
-    : `<div class="modal-empty"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity=".3"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><p style="margin-top:12px;font-size:13px;color:#9CA3AF;">Imagem não disponível</p></div>`;
-  document.getElementById("modal").classList.add("open");
-}
-document.getElementById("modalClose").onclick=()=>document.getElementById("modal").classList.remove("open");
-document.getElementById("modal").onclick=e=>{ if(e.target===document.getElementById("modal")) document.getElementById("modal").classList.remove("open"); };
-document.addEventListener("keydown",e=>{ if(e.key==="Escape") document.getElementById("modal").classList.remove("open"); });
-
-// ══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 // ADMIN
-// ══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 function abrirLogin(){
   document.getElementById("adminOverlay").classList.add("open");
   document.getElementById("loginBox").style.display="";
@@ -686,95 +918,143 @@ function verificarSenha(){
   }
 }
 
-// Supabase
 function carregarSb(){
   document.getElementById("sbUrl").value=SB.url||"";
   document.getElementById("sbKey").value=SB.key||"";
   document.getElementById("sbBucket").value=SB.bucket||"plantas";
 }
-function salvarSbCfg(){
+function salvarSb(){
   SB={url:document.getElementById("sbUrl").value.trim(),key:document.getElementById("sbKey").value.trim(),bucket:document.getElementById("sbBucket").value.trim()||"plantas"};
   localStorage.setItem(LS_SB,JSON.stringify(SB)); toast("Supabase salvo ✓",true);
 }
 async function uploadSB(file,path){
-  if(!SB.url||!SB.key) throw new Error("Configure o Supabase primeiro.");
+  if(!SB.url||!SB.key) throw new Error("Configure o Supabase.");
   const url=`${SB.url}/storage/v1/object/${SB.bucket}/${path}`;
   const res=await fetch(url,{method:"POST",headers:{"Authorization":`Bearer ${SB.key}`,"Content-Type":file.type,"x-upsert":"true"},body:file});
   if(!res.ok){ const e=await res.text(); throw new Error(e); }
   return `${SB.url}/storage/v1/object/public/${SB.bucket}/${path}`;
 }
 
-// Render admin
 function renderAdm(){
   document.getElementById("admLinhaTabs").innerHTML=
-    P.linhas.map(l=>`<button class="adm-linha-tab ${l.id===admLinhaId?"active":""}" onclick="selAdmLinha('${l.id}')">${l.nome}</button>`).join("")+
-    `<button class="btn-add-linha" onclick="novaLinha()">+ Nova Linha</button>`;
+    P.linhas.map(l=>`<button class="adm-tab ${l.id===admLinhaId?"active":""}" onclick="selAdmL('${l.id}')">${l.nome}</button>`).join("")+
+    `<button class="btn-add-linha" onclick="novaLinha()">+ Nova</button>`;
   const al=getAdmL();
   document.getElementById("admLinhaDesc").value=al.descricao||"";
   document.getElementById("versoesGrid").innerHTML=al.versoes.map(v=>
     `<div class="v-card">
       <div class="v-card-id">${v.id}</div>
       <div class="v-card-nome">${v.nome}</div>
-      <div class="v-card-info">A:${v.areas?.tipo_a_m2||"—"}m² · ${v.ficha_tecnica?.dormitorios_qtd||"?"}D</div>
+      <div class="v-card-info">A:${v.areas?.tipo_a_m2||"—"}m² · ${(v.finais||[]).length} finais</div>
       <div class="v-card-actions">
-        <button class="btn-edit-v" onclick="editarVersao('${v.id}')">Editar</button>
-        <button class="btn-del-v" onclick="excluirVersao('${v.id}')">✕</button>
+        <button class="btn-edit-v" onclick="editarV('${v.id}')">Editar</button>
+        <button class="btn-del-v" onclick="excluirV('${v.id}')">✕</button>
       </div>
     </div>`
   ).join("");
   document.getElementById("editFormWrap").innerHTML="";
   editandoId=null;
 }
-
-function selAdmLinha(id){ admLinhaId=id; renderAdm(); }
-function salvarDescLinha(){ getAdmL().descricao=document.getElementById("admLinhaDesc").value; salvarDados(); renderAll(); toast("Descrição salva ✓",true); }
+function selAdmL(id){ admLinhaId=id; renderAdm(); }
+function salvarDescLinha(){ getAdmL().descricao=document.getElementById("admLinhaDesc").value; salvar(); renderAll(); toast("Salvo ✓",true); }
 function novaLinha(){
   const nome=prompt("Nome da nova linha:"); if(!nome?.trim()) return;
   const id=nome.trim().replace(/\s+/g,"_");
   if(P.linhas.find(l=>l.id===id)){ alert("Já existe."); return; }
   P.linhas.push({id,nome:nome.trim(),descricao:"",versoes:[]});
-  admLinhaId=id; salvarDados(); renderAll(); renderAdm(); toast(`Linha '${nome.trim()}' criada ✓`,true);
+  admLinhaId=id; salvar(); renderAll(); renderAdm(); toast(`Linha '${nome.trim()}' criada ✓`,true);
 }
 function novaVersao(){
-  const al=getAdmL(); const n=al.versoes.length+1;
-  const id="T"+n;
-  al.versoes.push({id,nome:id,imagem:"",
-    areas:{tipo_a_m2:0,tipo_b_m2:0,tipo_c_m2:null},
-    config_pav:{unidades_pav:0,finais_pav:0,torre:"",varanda:"",finais_diferentes:0},
-    ficha_tecnica:{dormitorios_qtd:0,banheiros_qtd:0,vagas_qtd:0,pavimentos:""},
-    meta:{planta_tipo:"Planta padrão",versao_label:"Versão "+String(n).padStart(2,"0"),finais:""},
-    cidades:[],projetos:[],pdf_url:"#",dwg_url:"#"});
-  salvarDados(); renderAdm(); editarVersao(id);
+  const al=getAdmL(); const n=al.versoes.length+1; const id="T"+n;
+  al.versoes.push({id,nome:id,imagem:"",finais:[],areas:{tipo_a_m2:0,tipo_b_m2:0,tipo_c_m2:null},config_pav:{unidades_pav:0,finais_pav:0,finais_diferentes:0,torre:"",varanda:""},ficha_tecnica:{dormitorios_qtd:0,pavimentos:""},meta:{planta_tipo:"Planta padrão",versao_label:"Versão "+String(n).padStart(2,"0"),finais:""},cidades:[],projetos:[],pdf_url:"#",dwg_url:"#"});
+  salvar(); renderAdm(); editarV(id);
 }
-function excluirVersao(id){
+function excluirV(id){
   if(!confirm(`Excluir ${id}?`)) return;
   const al=getAdmL(); al.versoes=al.versoes.filter(v=>v.id!==id);
-  salvarDados(); renderAll(); renderAdm(); toast("Versão excluída.");
+  salvar(); renderAll(); renderAdm(); toast("Excluído.");
 }
 
-function editarVersao(id){
+function buildUploadField(fieldId, labelText, currentUrl, folder){
+  return `<div>
+    <label class="form-label">${labelText}</label>
+    <div class="upload-zone" onclick="document.getElementById('${fieldId}_file').click()" style="margin-top:4px;">
+      <input type="file" id="${fieldId}_file" accept="image/*" onchange="doUpload(event,'${fieldId}','${folder}')">
+      <img class="up-preview" id="${fieldId}_prev" ${currentUrl&&currentUrl!="#"?`src="${currentUrl}" style="display:block"`:""}/>
+      <div class="up-zone-lbl" id="${fieldId}_lbl">${currentUrl&&currentUrl!="#"?"Clique para trocar":"<strong>Clique</strong> para upload"}</div>
+      <div class="up-prog-wrap" id="${fieldId}_pw"><div class="up-prog-fill" id="${fieldId}_pf"></div></div>
+      <div class="up-status" id="${fieldId}_st"></div>
+      <div class="up-url" id="${fieldId}_url">${currentUrl&&currentUrl!="#"?"URL: "+currentUrl:""}</div>
+    </div>
+    <input type="hidden" id="${fieldId}" value="${currentUrl||""}">
+  </div>`;
+}
+
+async function doUpload(e,fieldId,folder){
+  const file=e.target.files[0]; if(!file) return;
+  const prev=document.getElementById(fieldId+"_prev");
+  const lbl=document.getElementById(fieldId+"_lbl");
+  const pw=document.getElementById(fieldId+"_pw");
+  const pf=document.getElementById(fieldId+"_pf");
+  const st=document.getElementById(fieldId+"_st");
+  const ul=document.getElementById(fieldId+"_url");
+  const hidden=document.getElementById(fieldId);
+
+  prev.src=URL.createObjectURL(file); prev.style.display="block";
+  lbl.innerHTML=file.name;
+
+  if(!SB.url||!SB.key){
+    ul.textContent="⚠ Supabase não configurado.";
+    hidden.value=prev.src; return;
+  }
+  pw.style.display=""; st.style.display=""; st.textContent="Enviando...";
+  let p=0; const iv=setInterval(()=>{ p=Math.min(p+10,80); pf.style.width=p+"%"; },200);
+  try{
+    const ext=file.name.split(".").pop();
+    const path=`${folder}/${fieldId}_${Date.now()}.${ext}`;
+    const url=await uploadSB(file,path);
+    clearInterval(iv); pf.style.width="100%"; st.textContent="✓ Concluído";
+    ul.textContent="URL: "+url; hidden.value=url;
+    setTimeout(()=>{ pw.style.display="none"; st.style.display="none"; },2000);
+    toast("Upload concluído ✓",true);
+  } catch(err){
+    clearInterval(iv); pw.style.display="none";
+    st.textContent="Erro: "+err.message; toast("Erro: "+err.message);
+  }
+}
+
+function editarV(id){
   const al=getAdmL(); const v=al.versoes.find(x=>x.id===id); if(!v) return;
   editandoId=id;
   const a=v.areas||{}; const cp=v.config_pav||{}; const ft=v.ficha_tecnica||{}; const m=v.meta||{};
+  const folder=`${admLinhaId}/${id}`;
+  const finaisRows=(v.finais||[]).map((f,i)=>`
+    <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:10px;margin-bottom:8px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <span style="font-size:11px;font-weight:700;color:#4CAF72;">${f.id}</span>
+        <button onclick="excluirFinal(${i})" style="background:transparent;border:none;color:rgba(220,38,38,.6);cursor:pointer;font-size:13px;">✕</button>
+      </div>
+      <div class="form-grid form-grid-3" style="margin-bottom:8px;">
+        <div class="form-field"><label class="form-label">ID</label><input class="form-input" id="f_fid_${i}" value="${f.id}"></div>
+        <div class="form-field"><label class="form-label">Tipo</label><input class="form-input" id="f_ftipo_${i}" value="${f.tipo||""}"></div>
+        <div class="form-field"><label class="form-label">m²</label><input class="form-input" id="f_fm2_${i}" type="number" step="0.1" value="${f.m2||""}"></div>
+      </div>
+      ${buildUploadField(`f_fimg_${i}`, "Imagem do Final", f.imagem, folder)}
+      <div class="form-grid" style="margin-top:8px;">
+        <div class="form-field"><label class="form-label">PDF específico</label><input class="form-input" id="f_fpdf_${i}" value="${f.pdf_url||"#"}"></div>
+        <div class="form-field"><label class="form-label">DWG específico</label><input class="form-input" id="f_fdwg_${i}" value="${f.dwg_url||"#"}"></div>
+      </div>
+    </div>`).join("");
 
   document.getElementById("editFormWrap").innerHTML=`<div class="edit-form-card">
     <div class="efc-title">Editando — ${al.nome} · ${v.id}</div>
-
     <div class="form-grid">
       <div class="form-field"><label class="form-label">ID (ex: T1)</label><input class="form-input" id="f_id" value="${v.id}"></div>
       <div class="form-field"><label class="form-label">Nome</label><input class="form-input" id="f_nome" value="${v.nome}"></div>
     </div>
 
-    <div class="form-section">Imagem da Planta (Supabase)</div>
-    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()" ondragover="doDragOver(event)" ondrop="doDrop(event)">
-      <input type="file" id="fileInput" accept="image/*" onchange="doFileSelect(event)">
-      <img class="upload-preview" id="upPreview" ${v.imagem?`src="${v.imagem}" style="display:block"`:""}>
-      <div class="upload-zone-lbl" id="upLabel">${v.imagem?"Clique para trocar a imagem":"<strong>Clique ou arraste</strong> a imagem da planta<br><span style='font-size:11px;opacity:.6'>PNG, JPG, WEBP — máx 10MB</span>"}</div>
-      <div class="up-prog-wrap" id="upProgWrap"><div class="up-prog-fill" id="upProgFill"></div></div>
-      <div class="up-status" id="upStatus"></div>
-      <div class="up-url" id="upUrl">${v.imagem?"URL: "+v.imagem:""}</div>
-    </div>
-    <input type="hidden" id="f_imagem" value="${v.imagem||""}">
+    <div class="form-section">Imagem Principal (Planta Geral)</div>
+    ${buildUploadField("f_imagem","Imagem da planta geral",v.imagem,folder)}
 
     <div class="form-section">Áreas Privativas (m²)</div>
     <div class="form-grid form-grid-3">
@@ -789,119 +1069,92 @@ function editarVersao(id){
       <div class="form-field"><label class="form-label">Finais/Pav.</label><input class="form-input" id="f_finais" type="number" value="${cp.finais_pav||0}"></div>
       <div class="form-field"><label class="form-label">Finais Diferentes</label><input class="form-input" id="f_fdif" type="number" value="${cp.finais_diferentes||0}"></div>
       <div class="form-field"><label class="form-label">Dormitórios</label><input class="form-input" id="f_dorms" type="number" value="${ft.dormitorios_qtd||0}"></div>
-      <div class="form-field full"><label class="form-label">Torre</label><input class="form-input" id="f_torre" value="${cp.torre||""}" placeholder="Ex: Torre Tipo, Torre Premium"></div>
-      <div class="form-field full"><label class="form-label">Varanda</label><input class="form-input" id="f_varanda" value="${cp.varanda||""}" placeholder="Ex: Varanda Gourmet"></div>
-      <div class="form-field full"><label class="form-label">Pavimentos</label><input class="form-input" id="f_pav" value="${ft.pavimentos||""}" placeholder="Ex: Térreo ao 8º Pav."></div>
+      <div class="form-field full"><label class="form-label">Torre</label><input class="form-input" id="f_torre" value="${cp.torre||""}"></div>
+      <div class="form-field full"><label class="form-label">Varanda</label><input class="form-input" id="f_var" value="${cp.varanda||""}"></div>
+      <div class="form-field full"><label class="form-label">Pavimentos</label><input class="form-input" id="f_pav" value="${ft.pavimentos||""}"></div>
     </div>
 
-    <div class="form-section">Metadados (info na coluna esquerda)</div>
+    <div class="form-section">Metadados</div>
     <div class="form-grid form-grid-3">
       <div class="form-field"><label class="form-label">Tipo de Planta</label><input class="form-input" id="f_mplanta" value="${m.planta_tipo||"Planta padrão"}"></div>
       <div class="form-field"><label class="form-label">Rótulo da Versão</label><input class="form-input" id="f_mversao" value="${m.versao_label||""}"></div>
-      <div class="form-field"><label class="form-label">Finais</label><input class="form-input" id="f_mfinais" value="${m.finais||""}" placeholder="Ex: Final 01 e 04"></div>
+      <div class="form-field"><label class="form-label">Finais</label><input class="form-input" id="f_mfinais" value="${m.finais||""}"></div>
     </div>
 
-    <div class="form-section">Cidades Elegíveis</div>
-    <div class="form-field"><label class="form-label">Uma por linha</label><textarea class="form-textarea" id="f_cidades">${(v.cidades||[]).join("\n")}</textarea></div>
-
-    <div class="form-section">Empreendimentos Utilizados</div>
-    <div class="form-field"><label class="form-label">Um por linha</label><textarea class="form-textarea" id="f_projs">${(v.projetos||[]).join("\n")}</textarea></div>
-
-    <div class="form-section">Downloads</div>
+    <div class="form-section">Downloads do Projeto Geral</div>
     <div class="form-grid">
-      <div class="form-field"><label class="form-label">Link PDF</label><input class="form-input" id="f_pdf" value="${v.pdf_url||"#"}" placeholder="https://..."></div>
-      <div class="form-field"><label class="form-label">Link DWG</label><input class="form-input" id="f_dwg" value="${v.dwg_url||"#"}" placeholder="https://..."></div>
+      <div class="form-field"><label class="form-label">Link PDF Geral</label><input class="form-input" id="f_pdf" value="${v.pdf_url||"#"}"></div>
+      <div class="form-field"><label class="form-label">Link DWG Geral</label><input class="form-input" id="f_dwg" value="${v.dwg_url||"#"}"></div>
+    </div>
+
+    <div class="form-section">Finais (Unidades Individuais)</div>
+    <div id="finaisContainer">${finaisRows}</div>
+    <button onclick="adicionarFinal()" style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;border:1px dashed rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.5);font-family:'Inter',sans-serif;font-size:11px;cursor:pointer;margin-bottom:12px;transition:all var(--t);"
+            onmouseover="this.style.color='rgba(255,255,255,.8)'" onmouseout="this.style.color='rgba(255,255,255,.5)'">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Adicionar Final
+    </button>
+
+    <div class="form-section">Cidades e Empreendimentos</div>
+    <div class="form-grid">
+      <div class="form-field"><label class="form-label">Cidades (uma por linha)</label><textarea class="form-textarea" id="f_cidades">${(v.cidades||[]).join("\n")}</textarea></div>
+      <div class="form-field"><label class="form-label">Empreendimentos (um por linha)</label><textarea class="form-textarea" id="f_projs">${(v.projetos||[]).join("\n")}</textarea></div>
     </div>
 
     <div class="form-actions">
-      <button class="btn-save-form" onclick="salvarVersao()">Salvar Alterações</button>
+      <button class="btn-save-form" onclick="salvarV()">Salvar Alterações</button>
       <button class="btn-cancel-form" onclick="cancelarEd()">Cancelar</button>
     </div>
   </div>`;
   document.getElementById("editFormWrap").scrollIntoView({behavior:"smooth",block:"start"});
 }
 
-function cancelarEd(){ document.getElementById("editFormWrap").innerHTML=""; editandoId=null; }
-
-// Upload
-function doDragOver(e){ e.preventDefault(); document.getElementById("uploadZone").classList.add("dragover"); }
-function doDrop(e){ e.preventDefault(); document.getElementById("uploadZone").classList.remove("dragover"); const f=e.dataTransfer.files[0]; if(f) doUpload(f); }
-function doFileSelect(e){ const f=e.target.files[0]; if(f) doUpload(f); }
-
-async function doUpload(file){
-  const prev=document.getElementById("upPreview");
-  const lbl=document.getElementById("upLabel");
-  const pw=document.getElementById("upProgWrap");
-  const pf=document.getElementById("upProgFill");
-  const st=document.getElementById("upStatus");
-  const ul=document.getElementById("upUrl");
-
-  prev.src=URL.createObjectURL(file); prev.style.display="block";
-  lbl.innerHTML=file.name;
-
-  if(!SB.url||!SB.key){
-    ul.textContent="⚠ Supabase não configurado. Configure acima para salvar permanentemente.";
-    document.getElementById("f_imagem").value=prev.src;
-    return;
-  }
-
-  pw.style.display=""; st.style.display=""; st.textContent="Enviando...";
-  let p=0;
-  const iv=setInterval(()=>{ p=Math.min(p+12,82); pf.style.width=p+"%"; },200);
-
-  try{
-    const ext=file.name.split(".").pop();
-    const path=`${admLinhaId}/${editandoId||"v"}_${Date.now()}.${ext}`;
-    const url=await uploadSB(file,path);
-    clearInterval(iv); pf.style.width="100%"; st.textContent="Upload concluído ✓";
-    ul.textContent="URL: "+url; document.getElementById("f_imagem").value=url;
-    setTimeout(()=>{ pw.style.display="none"; st.style.display="none"; },2000);
-    toast("Imagem enviada ✓",true);
-  } catch(err){
-    clearInterval(iv); pw.style.display="none";
-    st.textContent="Erro: "+err.message; ul.textContent="Falha no upload.";
-    toast("Erro: "+err.message);
-  }
+function adicionarFinal(){
+  const al=getAdmL(); const v=al.versoes.find(x=>x.id===editandoId); if(!v) return;
+  v.finais=v.finais||[];
+  const n=v.finais.length+1;
+  v.finais.push({id:`Final ${String(n).padStart(2,"0")}`,tipo:"Tipo A",m2:0,imagem:"",pdf_url:"#",dwg_url:"#"});
+  salvar(); editarV(editandoId);
+}
+function excluirFinal(idx){
+  const al=getAdmL(); const v=al.versoes.find(x=>x.id===editandoId); if(!v) return;
+  if(!confirm(`Excluir Final ${idx+1}?`)) return;
+  v.finais.splice(idx,1);
+  salvar(); editarV(editandoId);
 }
 
-function salvarVersao(){
+function cancelarEd(){ document.getElementById("editFormWrap").innerHTML=""; editandoId=null; }
+
+function salvarV(){
   const al=getAdmL(); const v=al.versoes.find(x=>x.id===editandoId); if(!v) return;
   const sl=s=>s.split("\n").map(l=>l.trim()).filter(Boolean);
-  const pf=f=>{ const n=parseFloat(f); return isNaN(n)?null:n; };
-  const pi=f=>{ const n=parseInt(f); return isNaN(n)?0:n; };
+  const pf=s=>{ const n=parseFloat(s); return isNaN(n)?null:n; };
+  const pi=s=>{ const n=parseInt(s); return isNaN(n)?0:n; };
 
   v.id   = document.getElementById("f_id").value.trim()||v.id;
   v.nome = document.getElementById("f_nome").value.trim();
   v.imagem = document.getElementById("f_imagem").value.trim();
+  v.areas={tipo_a_m2:pf(document.getElementById("f_ta").value),tipo_b_m2:pf(document.getElementById("f_tb").value),tipo_c_m2:pf(document.getElementById("f_tc").value)||null};
+  v.config_pav={unidades_pav:pi(document.getElementById("f_unid").value),finais_pav:pi(document.getElementById("f_finais").value),finais_diferentes:pi(document.getElementById("f_fdif").value),torre:document.getElementById("f_torre").value.trim(),varanda:document.getElementById("f_var").value.trim()};
+  v.ficha_tecnica={dormitorios_qtd:pi(document.getElementById("f_dorms").value),pavimentos:document.getElementById("f_pav").value.trim()};
+  v.meta={planta_tipo:document.getElementById("f_mplanta").value.trim(),versao_label:document.getElementById("f_mversao").value.trim(),finais:document.getElementById("f_mfinais").value.trim()};
+  v.pdf_url=document.getElementById("f_pdf").value.trim()||"#";
+  v.dwg_url=document.getElementById("f_dwg").value.trim()||"#";
+  v.cidades=sl(document.getElementById("f_cidades").value);
+  v.projetos=sl(document.getElementById("f_projs").value);
 
-  v.areas={
-    tipo_a_m2: pf(document.getElementById("f_ta").value),
-    tipo_b_m2: pf(document.getElementById("f_tb").value),
-    tipo_c_m2: pf(document.getElementById("f_tc").value)||null,
-  };
-  v.config_pav={
-    unidades_pav: pi(document.getElementById("f_unid").value),
-    finais_pav:   pi(document.getElementById("f_finais").value),
-    finais_diferentes: pi(document.getElementById("f_fdif").value),
-    torre:   document.getElementById("f_torre").value.trim(),
-    varanda: document.getElementById("f_varanda").value.trim(),
-  };
-  v.ficha_tecnica={
-    dormitorios_qtd: pi(document.getElementById("f_dorms").value),
-    pavimentos: document.getElementById("f_pav").value.trim(),
-  };
-  v.meta={
-    planta_tipo:  document.getElementById("f_mplanta").value.trim(),
-    versao_label: document.getElementById("f_mversao").value.trim(),
-    finais:       document.getElementById("f_mfinais").value.trim(),
-  };
-  v.cidades  = sl(document.getElementById("f_cidades").value);
-  v.projetos = sl(document.getElementById("f_projs").value);
-  v.pdf_url  = document.getElementById("f_pdf").value.trim()||"#";
-  v.dwg_url  = document.getElementById("f_dwg").value.trim()||"#";
+  // salvar finais
+  (v.finais||[]).forEach((f,i)=>{
+    f.id=document.getElementById(`f_fid_${i}`)?.value.trim()||f.id;
+    f.tipo=document.getElementById(`f_ftipo_${i}`)?.value.trim()||f.tipo;
+    f.m2=pf(document.getElementById(`f_fm2_${i}`)?.value)||f.m2;
+    f.imagem=document.getElementById(`f_fimg_${i}`)?.value.trim()||f.imagem;
+    f.pdf_url=document.getElementById(`f_fpdf_${i}`)?.value.trim()||"#";
+    f.dwg_url=document.getElementById(`f_fdwg_${i}`)?.value.trim()||"#";
+  });
 
   editandoId=v.id;
-  salvarDados(); renderAll(); renderAdm(); toast("Salvo ✓",true);
+  salvar(); renderAll(); renderAdm(); toast("Salvo ✓",true);
 }
 
 // INIT
