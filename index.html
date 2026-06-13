@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Árbore Engenharia — Book Digital de Tipologias</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:       #2B6B3F;
+  --green-mid:   #3D8B55;
+  --green-light: #4CAF72;
+  --green-pale:  #E8F5EE;
+  --text-900:    #111827;
+  --text-700:    #374151;
+  --text-500:    #6B7280;
+  --text-400:    #9CA3AF;
+  --border:      #E5E7EB;
+  --border-mid:  #D1D5DB;
+  --bg:          #F4F6F8;
+  --white:       #FFFFFF;
+  --shadow:      0 1px 3px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.05);
+  --radius:      14px;
+  --radius-sm:   9px;
+  --radius-xs:   6px;
+  --t:           0.2s cubic-bezier(0.4,0,0.2,1);
+  --green-dark:  #1A4D2E;
+  --sidebar-w:   200px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-900);font-size:13px;line-height:1.5;display:flex;flex-direction:column;}
+
+/* ══ HEADER ══════════════════════════════════════════════════ */
+.site-header{background:var(--white);border-bottom:1px solid var(--border);padding:0 20px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;height:58px;}
+.hdr-left{display:flex;align-items:center;gap:16px;}
+.logo-img{height:34px;width:auto;object-fit:contain;}
+.hdr-div{width:1px;height:32px;background:var(--border);}
+.hdr-titles{}
+.hdr-title{font-size:16px;font-weight:800;color:var(--text-900);letter-spacing:-0.3px;line-height:1.1;}
+.hdr-sub{font-size:9px;font-weight:700;letter-spacing:0.18em;color:var(--green-mid);text-transform:uppercase;}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.hdr-badge{display:flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);}
+.hb-icon{color:var(--green-mid);}
+.hb-label{font-size:9px;color:var(--text-500);font-weight:500;letter-spacing:0.05em;text-transform:uppercase;}
+.hb-value{font-size:13px;font-weight:700;color:var(--green);line-height:1.1;}
+.hb-value.big{font-size:18px;font-weight:800;}
+.btn-admin-hdr{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:var(--radius-xs);border:1px solid var(--border-mid);background:var(--white);color:var(--text-500);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all var(--t);}
+.btn-admin-hdr:hover{border-color:var(--green);color:var(--green);}
+
+/* ══ ADMIN MODE — badge no header ═══════════════════════════ */
+.admin-mode-bar{display:none;align-items:center;gap:10px;padding:5px 16px;background:var(--green-pale);border:1px solid #B6D9C4;border-radius:var(--radius-xs);font-size:11px;font-weight:600;color:var(--green);}
+.admin-mode-bar.visible{display:flex;}
+.btn-save-exit{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:var(--radius-xs);border:none;background:var(--green);color:var(--white);font-family:'Inter',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all var(--t);white-space:nowrap;}
+.btn-save-exit:hover{background:var(--green-mid);}
+
+/* Cards da sidebar direita clicáveis no admin */
+body.is-admin .rs-section{cursor:pointer;transition:background var(--t);}
+body.is-admin .rs-section:hover{background:var(--green-pale);}
+body.is-admin .rs-section:hover .rs-title::after{content:' ✎';font-size:10px;color:var(--green-mid);}
+/* Área de info da tipologia (kicker + nome + metabox) clicável no admin */
+.tipo-info-area{padding:18px 16px 12px;margin:-18px -16px 0;border-radius:var(--radius) var(--radius) 0 0;}
+body.is-admin .tipo-info-area{cursor:pointer;transition:background var(--t);}
+body.is-admin .tipo-info-area:hover{background:var(--green-pale);}
+body.is-admin .tipo-info-area:hover .tipo-kicker::after{content:' ✎';font-size:9px;color:var(--green-mid);}
+/* Planta clicável no admin */
+body.is-admin .planta-col{cursor:pointer;}
+body.is-admin .planta-col:hover .planta-viewer{outline:2px dashed var(--green-mid);outline-offset:-2px;}
+.adm-edit-hint{display:none;}
+/* Ícones lápis/lixo na sidebar */
+.linha-adm-actions{display:none;gap:2px;margin-left:auto;flex-shrink:0;}
+body.is-admin .linha-adm-actions{display:flex;}
+.btn-adm-sm{width:24px;height:24px;border-radius:5px;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-400);transition:all var(--t);}
+.btn-adm-sm:hover{background:var(--green-pale);color:var(--green);}
+.btn-adm-sm.del:hover{background:#FEE2E2;color:#DC2626;}
+.btn-add-produto{display:none;align-items:center;gap:7px;margin:4px 4px 8px;padding:8px 10px;border-radius:var(--radius-sm);border:1.5px dashed #B6D9C4;background:transparent;color:var(--green-mid);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all var(--t);width:calc(100% - 8px);}
+.btn-add-produto:hover{background:var(--green-pale);border-color:var(--green);}
+body.is-admin .btn-add-produto{display:flex;}
+/* Botão adicionar tipologia dentro do accordion (admin) */
+.btn-add-tipologia{display:none;align-items:center;gap:5px;padding:5px 8px 5px 24px;border:none;background:transparent;color:var(--green-mid);font-family:'Inter',sans-serif;font-size:11px;cursor:pointer;transition:all var(--t);}
+.btn-add-tipologia:hover{color:var(--green);}
+body.is-admin .btn-add-tipologia{display:flex;}
+/* Inline edit panel — desliza de baixo */
+.inline-edit-overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.3);backdrop-filter:blur(2px);align-items:flex-end;}
+.inline-edit-overlay.open{display:flex;}
+.inline-edit-box{background:var(--white);border-radius:var(--radius) var(--radius) 0 0;width:100%;max-height:78vh;overflow-y:auto;padding:22px 28px 32px;box-shadow:0 -8px 40px rgba(0,0,0,.15);animation:slideUp .24s cubic-bezier(.4,0,.2,1);}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.ieb-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.ieb-title{font-size:16px;font-weight:700;color:var(--text-900);}
+.ieb-close{width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:var(--bg);color:var(--text-500);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all var(--t);}
+.ieb-close:hover{border-color:var(--green);color:var(--green);}
+.ieb-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.ieb-grid-3{grid-template-columns:1fr 1fr 1fr;}
+.ieb-field{display:flex;flex-direction:column;gap:5px;}
+.ieb-field.full{grid-column:1/-1;}
+.ieb-label{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-500);}
+.ieb-input,.ieb-textarea{padding:9px 12px;border-radius:var(--radius-xs);border:1.5px solid var(--border);background:var(--bg);color:var(--text-900);font-family:'Inter',sans-serif;font-size:13px;outline:none;transition:border-color var(--t);}
+.ieb-input:focus,.ieb-textarea:focus{border-color:var(--green);}
+.ieb-textarea{resize:vertical;min-height:80px;line-height:1.6;}
+.ieb-section-hdr{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green-mid);padding:12px 0 8px;border-top:1px solid var(--border);margin-top:4px;}
+.ieb-actions{display:flex;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);}
+.btn-ieb-save{flex:1;padding:11px;border-radius:var(--radius-sm);border:none;background:var(--green);color:var(--white);font-family:'Inter',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all var(--t);}
+.btn-ieb-save:hover{background:var(--green-mid);}
+.btn-ieb-cancel{padding:11px 20px;border-radius:var(--radius-sm);border:1.5px solid var(--border-mid);background:transparent;color:var(--text-500);font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;transition:all var(--t);}
+.btn-ieb-cancel:hover{color:var(--text-700);}
+/* Upload zone no ieb */
+.ieb-upload{border:2px dashed var(--border-mid);border-radius:var(--radius-sm);padding:14px;text-align:center;cursor:pointer;transition:all var(--t);margin-top:4px;}
+.ieb-upload:hover{border-color:var(--green-mid);background:var(--green-pale);}
+.ieb-upload input{display:none;}
+.ieb-upload-lbl{font-size:12px;color:var(--text-500);line-height:1.7;}
+.ieb-upload-lbl strong{color:var(--green);}
+.ieb-upload-prev{width:100%;max-height:100px;object-fit:contain;border-radius:var(--radius-xs);margin-bottom:6px;display:none;}
+.ieb-upload-prog{height:3px;background:var(--border);border-radius:2px;margin-top:6px;overflow:hidden;display:none;}
+.ieb-upload-fill{height:100%;background:var(--green-light);width:0%;transition:width .3s ease;}
+.ieb-upload-status{font-size:10px;color:var(--text-500);margin-top:4px;display:none;}
+/* Lista editável */
+.ieb-list{display:flex;flex-direction:column;gap:4px;margin-bottom:8px;}
+.ieb-list-row{display:flex;align-items:center;gap:6px;}
+.ieb-list-input{flex:1;padding:7px 10px;border-radius:var(--radius-xs);border:1.5px solid var(--border);background:var(--bg);color:var(--text-900);font-family:'Inter',sans-serif;font-size:12px;outline:none;transition:border-color var(--t);}
+.ieb-list-input:focus{border-color:var(--green);}
+.btn-ieb-rm{width:24px;height:24px;border-radius:50%;border:1px solid var(--border-mid);background:var(--white);color:var(--text-400);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:all var(--t);}
+.btn-ieb-rm:hover{border-color:#DC2626;color:#DC2626;background:#FEE2E2;}
+.btn-ieb-add-row{display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:var(--radius-xs);border:1.5px dashed var(--border-mid);background:transparent;color:var(--text-500);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all var(--t);}
+.btn-ieb-add-row:hover{border-color:var(--green);color:var(--green);background:var(--green-pale);}
+
+/* ══ APP BODY (header + content) ════════════════════════════ */
+.app-body{display:flex;flex:1;overflow:hidden;}
+
+/* ══ SIDEBAR ESQUERDA — linhas de produto ════════════════════ */
+.linhas-sidebar{width:220px;background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;padding:14px 10px;gap:2px;overflow-y:auto;}
+.linhas-sidebar-label{font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-400);margin-bottom:6px;padding:0 4px;}
+.linha-tab{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:var(--radius-sm);border:1.5px solid transparent;background:transparent;color:var(--text-700);font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all var(--t);width:100%;text-align:left;}
+.linha-tab svg{flex-shrink:0;opacity:.5;transition:opacity var(--t);}
+.linha-tab:hover{background:var(--green-pale);color:var(--green);border-color:transparent;}
+.linha-tab:hover svg{opacity:.8;}
+.linha-tab.active{background:var(--green);border-color:var(--green);color:var(--white);font-weight:600;box-shadow:0 3px 10px rgba(43,107,63,.25);}
+.linha-tab.active svg{opacity:1;filter:brightness(10);}
+/* Tipologias dentro do accordion */
+.tipologia-list{display:flex;flex-direction:column;gap:1px;padding:3px 0 6px 0;}
+.tipologia-item{display:flex;align-items:center;gap:0;border-radius:var(--radius-xs);overflow:hidden;}
+.tipologia-btn{flex:1;display:flex;align-items:center;gap:8px;padding:7px 10px 7px 28px;border:none;background:transparent;color:var(--text-500);font-family:'Inter',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all var(--t);text-align:left;border-radius:var(--radius-xs);}
+.tipologia-btn:hover{background:var(--green-pale);color:var(--green);}
+.tipologia-btn.active{background:var(--green-pale);color:var(--green);font-weight:700;}
+.tipologia-btn.active .tip-dot{background:var(--green);}
+.tip-dot{width:6px;height:6px;border-radius:50%;background:var(--border-mid);flex-shrink:0;transition:background var(--t);}
+.tipologia-btn:hover .tip-dot{background:var(--green-light);}
+.tip-label{flex:1;line-height:1.2;}
+.tip-m2{font-size:10px;font-weight:500;color:var(--text-400);white-space:nowrap;}
+.tipologia-btn.active .tip-m2{color:var(--green-mid);}
+/* Separador entre linhas */
+.linha-sep{height:1px;background:var(--border);margin:4px 4px 2px;}
+
+/* ══ CONTEÚDO PRINCIPAL ══════════════════════════════════════ */
+.main-content{flex:1;display:flex;overflow:hidden;padding:14px;gap:12px;}
+
+/* ══ CARD CENTRAL ════════════════════════════════════════════ */
+.central-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);display:flex;flex:1;overflow:hidden;min-width:0;}
+
+/* ══ COL INFO — tipologia selecionada (esquerda do card) ════ */
+.tipo-col{width:188px;flex-shrink:0;padding:18px 16px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:0;overflow:hidden;}
+.tipo-kicker{font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--green-mid);margin-bottom:4px;}
+.tipo-nome{font-size:32px;font-weight:900;color:var(--text-900);letter-spacing:-1.5px;line-height:1;margin-bottom:4px;}
+.tipo-sub{font-size:10px;font-weight:700;color:var(--text-700);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;}
+.tipo-sep{width:24px;height:2.5px;background:var(--green-light);border-radius:2px;margin-bottom:14px;}
+.tipo-meta-box{background:var(--green-pale);border-radius:var(--radius-sm);padding:10px 12px;display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;}
+.meta-icon{color:var(--green-mid);flex-shrink:0;margin-top:1px;}
+.meta-lines{font-size:11px;color:var(--text-700);line-height:1.6;}
+.meta-lines strong{color:var(--text-900);font-weight:600;}
+.btn-sidebar{display:flex;align-items:center;gap:7px;padding:8px 12px;border-radius:var(--radius-xs);border:1.5px solid var(--border-mid);background:var(--white);color:var(--text-700);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all var(--t);width:100%;justify-content:center;margin-top:6px;}
+.btn-sidebar:hover{border-color:var(--green);color:var(--green);background:var(--green-pale);}
+.btn-sidebar.primary{margin-top:auto;}
+
+/* ══ COL CENTRAL — planta + carrossel ═══════════════════════ */
+.planta-col{flex:1;display:flex;flex-direction:column;background:#F2F3F2;overflow:hidden;position:relative;}
+
+/* Viewer principal */
+.planta-viewer{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:default;}
+.planta-viewer-img{max-width:100%;max-height:100%;object-fit:contain;display:block;padding:16px;transition:transform var(--t);}
+.planta-placeholder-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;}
+.planta-ph-circle{width:56px;height:56px;border-radius:50%;background:var(--white);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-400);}
+.planta-ph-title{font-size:13px;font-weight:600;color:var(--text-700);}
+.planta-ph-sub{font-size:11px;color:var(--text-400);}
+
+/* Botões topo da planta (PDF/DWG/Imagem) */
+.planta-top-btns{position:absolute;top:10px;right:10px;display:flex;gap:6px;z-index:20;}
+.btn-planta-top{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:99px;border:1.5px solid;font-family:'Inter',sans-serif;font-size:10px;font-weight:600;cursor:pointer;transition:all var(--t);backdrop-filter:blur(8px);text-decoration:none;letter-spacing:.02em;}
+.btn-dl-img{background:rgba(255,255,255,.88);border-color:rgba(43,107,63,.3);color:var(--green);}
+.btn-dl-img:hover{background:var(--green);border-color:var(--green);color:var(--white);}
+.btn-dl-pdf{background:rgba(255,255,255,.88);border-color:rgba(180,60,50,.3);color:#B03020;}
+.btn-dl-pdf:hover{background:#B03020;border-color:#B03020;color:var(--white);}
+.btn-dl-dwg{background:rgba(255,255,255,.88);border-color:rgba(100,80,30,.3);color:#7A5F20;}
+.btn-dl-dwg:hover{background:#7A5F20;border-color:#7A5F20;color:var(--white);}
+.btn-planta-top.disabled{opacity:.32;cursor:not-allowed;pointer-events:none;}
+
+/* Botões canto inferior direito */
+.planta-bottom-btns{position:absolute;bottom:10px;right:10px;display:flex;gap:6px;z-index:20;}
+.btn-planta-bottom{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:99px;border:1.5px solid rgba(0,0,0,.12);background:rgba(255,255,255,.88);color:var(--text-700);font-family:'Inter',sans-serif;font-size:10px;font-weight:600;cursor:pointer;transition:all var(--t);backdrop-filter:blur(8px);}
+.btn-planta-bottom:hover{background:var(--white);border-color:var(--green);color:var(--green);}
+.btn-planta-bottom.active-zoom{background:var(--green);border-color:var(--green);color:var(--white);}
+
+/* Lupa zoom — quadrada com cantos arredondados */
+.zoom-lens{position:absolute;border-radius:10px;border:2.5px solid var(--green);pointer-events:none;overflow:hidden;z-index:50;display:none;box-shadow:0 4px 20px rgba(0,0,0,.25);}
+
+/* ══ CARROSSEL DE FINAIS ══════════════════════════════════ */
+.carrossel-wrap{background:var(--white);border-top:1px solid var(--border);padding:8px 10px;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.carrossel-arrow{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border);background:var(--white);color:var(--text-500);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all var(--t);}
+.carrossel-arrow:hover{border-color:var(--green);color:var(--green);}
+.carrossel-arrow:disabled{opacity:.3;cursor:default;pointer-events:none;}
+.carrossel-track-wrap{flex:1;overflow:hidden;position:relative;}
+.carrossel-track{display:flex;gap:6px;transition:transform .3s ease;}
+.carrossel-item{flex-shrink:0;width:90px;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);cursor:pointer;overflow:hidden;transition:all var(--t);}
+.carrossel-item:hover{border-color:var(--green-mid);}
+.carrossel-item.active{border-color:var(--green);box-shadow:0 0 0 2px rgba(43,107,63,.15);}
+.carrossel-thumb{width:100%;height:52px;object-fit:cover;display:block;background:#E8EAE8;}
+.carrossel-thumb-empty{width:100%;height:52px;background:#ECEEED;display:flex;align-items:center;justify-content:center;color:var(--text-400);}
+.carrossel-info{padding:4px 6px 5px;}
+.carrossel-final{font-size:9px;font-weight:700;color:var(--text-900);letter-spacing:.04em;line-height:1.2;}
+.carrossel-tipo{font-size:8px;color:var(--text-500);line-height:1.2;}
+.carrossel-m2{font-size:8px;font-weight:600;color:var(--green);line-height:1.2;}
+
+/* ══ SIDEBAR DIREITA — ficha técnica ════════════════════════ */
+.right-sidebar{width:268px;flex-shrink:0;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden;}
+
+.rs-section{padding:12px 14px;flex-shrink:0;}
+.rs-section+.rs-section{border-top:1px solid var(--border);}
+.rs-title{font-size:10px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-900);margin-bottom:10px;}
+
+/* Áreas A/B/C */
+.areas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.areas-grid.cols2{grid-template-columns:repeat(2,1fr);}
+.area-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 6px;text-align:center;}
+.area-val{font-size:15px;font-weight:800;color:var(--text-900);letter-spacing:-0.3px;line-height:1.1;}
+.area-val sup{font-size:9px;font-weight:500;}
+.area-lbl{font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-400);margin-top:2px;}
+
+/* Config pavimento */
+.pav-list{display:flex;flex-direction:column;gap:6px;}
+.pav-item{display:flex;align-items:center;gap:8px;}
+.pav-icon{width:24px;height:24px;border-radius:6px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;color:var(--green-mid);flex-shrink:0;}
+.pav-text{font-size:11.5px;color:var(--text-700);}
+
+/* Aplicações header */
+.rs-aplicacoes-label{font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green-mid);margin-bottom:8px;}
+
+/* Cidades */
+.cidades-wrap{display:flex;flex-wrap:wrap;gap:0;}
+.cidade-chip{font-size:11px;color:var(--text-700);}
+.cidade-chip:not(:last-child)::after{content:" •";color:var(--text-400);margin-right:5px;}
+
+/* Empreendimentos */
+.emp-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;}
+.emp-item{display:flex;align-items:flex-start;gap:5px;font-size:10.5px;color:var(--text-700);line-height:1.4;padding:1px 0;}
+.emp-dot{width:4px;height:4px;border-radius:50%;background:var(--green-light);flex-shrink:0;margin-top:4px;}
+
+/* ══ FOOTER ══════════════════════════════════════════════════ */
+.site-footer{background:var(--green-dark);color:rgba(255,255,255,.5);text-align:right;padding:6px 20px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;flex-shrink:0;}
+.site-footer span{color:rgba(255,255,255,.85);}
+
+/* ══ MODAL / OVERLAY GENÉRICO ════════════════════════════════ */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,14,.88);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(10px);}
+.modal-overlay.open{display:flex;}
+@keyframes zIn{from{opacity:0;transform:scale(.94);}to{opacity:1;transform:scale(1);}}
+
+/* Modal imagem */
+.modal-img-box{background:var(--white);border-radius:var(--radius);max-width:90vw;max-height:92vh;overflow:auto;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.4);animation:zIn .22s cubic-bezier(.34,1.4,.64,1);}
+.modal-hdr{padding:14px 18px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.modal-kicker{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--green-mid);}
+.modal-title{font-size:16px;font-weight:700;color:var(--text-900);}
+.modal-close{width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:var(--bg);color:var(--text-500);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all var(--t);}
+.modal-close:hover{border-color:var(--green);color:var(--green);}
+.modal-img-wrap{background:#F2F3F2;display:flex;align-items:center;justify-content:center;padding:24px;}
+.modal-img-wrap img{max-width:80vw;max-height:75vh;object-fit:contain;display:block;}
+.modal-empty{padding:60px;text-align:center;color:var(--text-400);}
+
+/* Modal PDF viewer */
+.modal-pdf-box{background:var(--white);border-radius:var(--radius);width:90vw;height:90vh;overflow:hidden;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.4);animation:zIn .22s cubic-bezier(.34,1.4,.64,1);display:flex;flex-direction:column;}
+.modal-pdf-hdr{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.modal-pdf-iframe{flex:1;border:none;width:100%;}
+.modal-pdf-nourl{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;flex:1;color:var(--text-400);}
+.modal-pdf-nourl p{font-size:13px;}
+
+/* ══ ADMIN OVERLAY — tema light ══════════════════════════════ */
+/* (overlay escuro removido — admin agora usa inline edit light) */
+.admin-overlay{display:none;} /* classe legada, não utilizada */
+
+/* Login — já usa modal-img-box white, apenas ajustes de input */
+.login-input{width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--bg);color:var(--text-900);font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color var(--t);margin-bottom:8px;text-align:center;letter-spacing:.02em;}
+.login-input:focus{border-color:var(--green);}
+.login-error{font-size:11px;color:#DC2626;min-height:16px;margin-bottom:8px;}
+.btn-green{width:100%;padding:11px;border-radius:var(--radius-sm);border:none;background:var(--green);color:var(--white);font-family:'Inter',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all var(--t);}
+.btn-green:hover{background:var(--green-mid);}
+.btn-ghost{width:100%;padding:9px;border-radius:var(--radius-sm);border:1px solid var(--border);background:transparent;color:var(--text-500);font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;transition:all var(--t);margin-top:6px;}
+.btn-ghost:hover{color:var(--text-700);}
+
+/* Classes legadas — mantidas vazias para não quebrar referências residuais */
+.admin-panel{} .adm-topbar{} .adm-page-title{} .btn-close-adm{}
+.sb-bar{display:none;} .sb-label{} .sb-input{} .btn-save-cfg{}
+.adm-linha-tabs{} .adm-tab{} .btn-add-linha{}
+.adm-card{} .adm-card-label{} .adm-input{} .btn-save-desc{}
+.versoes-grid{} .v-card{} .v-card-id{} .v-card-nome{} .v-card-info{} .v-card-actions{}
+.btn-edit-v{} .btn-del-v{} .btn-add-v{}
+.edit-form-card{} .efc-title{}
+.form-grid{} .form-grid-3{} .form-grid-4{} .form-field{} .form-label{}
+.form-input{} .form-textarea{} .form-section{} .form-actions{}
+.btn-save-form{} .btn-cancel-form{}
+.upload-zone{} .up-zone-lbl{} .up-preview{} .up-prog-wrap{} .up-prog-fill{} .up-status{} .up-url{}
+.finais-nota{}
+
+/* Toast */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--text-900);color:var(--white);padding:9px 20px;border-radius:99px;font-size:12px;font-weight:500;opacity:0;transition:all .28s ease;z-index:9999;white-space:nowrap;border:1px solid rgba(255,255,255,.08);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.green{background:var(--green);border-color:transparent;}
+
+.fade-in{animation:fIn .16s ease;}
+@keyframes fIn{from{opacity:0;transform:translateY(2px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="hdr-left">
+    <img class="logo-img" src="icons/Arbore_logo.jpeg" alt="Árbore Engenharia">
+    <div class="hdr-div"></div>
+    <div class="hdr-titles">
+      <div class="hdr-title">Book Digital de Tipologias</div>
+      <div class="hdr-sub">Portfólio de Produtos</div>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <div class="hdr-badge">
+      <div class="hb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      <div><div class="hb-label">Atualizado em</div><div class="hb-value" id="dataAtual">—</div></div>
+    </div>
+    <div class="hdr-badge">
+      <div class="hb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+      <div><div class="hb-label">Tipologias</div><div class="hb-value big" id="totalTip">—</div></div>
+    </div>
+    <button class="btn-admin-hdr" id="btnAdminHdr" onclick="abrirLogin()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Admin
+    </button>
+    <!-- Badge modo admin -->
+    <div class="admin-mode-bar" id="adminModeBadge">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      Modo Administrador
+      <button class="btn-save-exit" onclick="admSalvarESair()">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Salvar e Sair
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- APP BODY -->
+<div class="app-body">
+
+  <!-- SIDEBAR LINHAS -->
+  <nav class="linhas-sidebar" id="linhasSidebar">
+    <div class="linhas-sidebar-label">Linha de Produtos</div>
+    <div id="linhaTabs"></div>
+    <button class="btn-add-produto" onclick="admNovaLinha()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Adicionar Produto
+    </button>
+  </nav>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div class="main-content">
+
+    <!-- CARD CENTRAL -->
+    <div class="central-card">
+
+      <!-- Col info esquerda — tipologia selecionada -->
+      <div class="tipo-col">
+        <!-- Área de info clicável no admin -->
+        <div class="tipo-info-area" onclick="admEditarTipologia()">
+          <div class="tipo-kicker">Tipologia</div>
+          <div class="tipo-nome" id="tipoNome">—</div>
+          <div class="tipo-sub" id="tipoSub">—</div>
+          <div class="tipo-sep"></div>
+          <div class="tipo-meta-box" id="tipoMetaBox">
+            <div class="meta-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+            <div class="meta-lines" id="tipoMetaLines"></div>
+          </div>
+        </div>
+        <!-- Botões — fora da área clicável -->
+        <button class="btn-sidebar" id="btnVerPdf" onclick="modoAdmin ? admEditarPdf() : abrirPdfViewer()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span id="btnVerPdfLabel">Visualizar PDF</span>
+        </button>
+        <button class="btn-sidebar primary" onclick="abrirModalImagem()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+          Ver em Tela Cheia
+        </button>
+      </div>
+
+      <!-- Col planta central -->
+      <div class="planta-col">
+
+        <!-- Botões topo -->
+        <div class="planta-top-btns">
+          <a id="btnDlImg" class="btn-planta-top btn-dl-img disabled" href="#" download>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Baixar Imagem
+          </a>
+          <a id="btnDlPdf" class="btn-planta-top btn-dl-pdf disabled" href="#" target="_blank">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Baixar PDF
+          </a>
+          <a id="btnDlDwg" class="btn-planta-top btn-dl-dwg disabled" href="#" target="_blank">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            Baixar DWG
+          </a>
+        </div>
+
+        <!-- Viewer -->
+        <div class="planta-viewer" id="plantaViewer">
+          <div class="zoom-lens" id="zoomLens"></div>
+          <div id="plantaConteudo"></div>
+        </div>
+
+        <!-- Botões inferior direito -->
+        <div class="planta-bottom-btns">
+          <button class="btn-planta-bottom" onclick="abrirModalImagem()">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+            Abrir Imagem
+          </button>
+          <button class="btn-planta-bottom" id="btnZoom" onclick="toggleZoom()">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            Zoom
+          </button>
+        </div>
+
+        <!-- Carrossel -->
+        <div class="carrossel-wrap">
+          <button class="carrossel-arrow" id="arrLeft" onclick="scrollCarrossel(-1)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="carrossel-track-wrap" id="carrosselWrap">
+            <div class="carrossel-track" id="carrosselTrack"></div>
+          </div>
+          <button class="carrossel-arrow" id="arrRight" onclick="scrollCarrossel(1)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div><!-- /central-card -->
+
+    <!-- SIDEBAR DIREITA -->
+    <div class="right-sidebar">
+
+      <!-- Ficha Técnica -->
+      <div class="rs-section" onclick="admEditarFicha()">
+        <div class="rs-title">Ficha Técnica</div>
+        <div style="font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-500);margin-bottom:6px;">Áreas Privativas</div>
+        <div class="areas-grid" id="areasGrid"></div>
+      </div>
+
+      <!-- Config pavimento -->
+      <div class="rs-section" onclick="admEditarPavimento()">
+        <div class="rs-title">Configuração do Pavimento</div>
+        <div class="pav-list" id="pavList"></div>
+      </div>
+
+      <!-- Aplicações -->
+      <div class="rs-section" onclick="admEditarAplicacoes()" style="flex:1;overflow:hidden;display:flex;flex-direction:column;gap:0;">
+        <div class="rs-aplicacoes-label">Aplicações</div>
+
+        <div style="margin-bottom:8px;">
+          <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+            <div style="width:22px;height:22px;border-radius:6px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;color:var(--green-mid);">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <span style="font-size:10px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-900);">Cidades Aplicáveis</span>
+          </div>
+          <div class="cidades-wrap" id="cidadesWrap"></div>
+        </div>
+
+        <div>
+          <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+            <div style="width:22px;height:22px;border-radius:6px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;color:var(--green-mid);">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <span style="font-size:10px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-900);">Empreendimentos Utilizados</span>
+          </div>
+          <div class="emp-grid" id="empWrap"></div>
+        </div>
+      </div>
+
+    </div><!-- /right-sidebar -->
+
+  </div><!-- /main-content -->
+</div><!-- /app-body -->
+
+<footer class="site-footer"><span>arboreengenharia.com.br</span></footer>
+
+<!-- MODAL IMAGEM -->
+<div class="modal-overlay" id="modalImg">
+  <div class="modal-img-box">
+    <div class="modal-hdr">
+      <div><div class="modal-kicker" id="modalImgKicker"></div><div class="modal-title" id="modalImgTitle"></div></div>
+      <button class="modal-close" onclick="document.getElementById('modalImg').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-img-wrap" id="modalImgWrap"></div>
+  </div>
+</div>
+
+<!-- MODAL PDF -->
+<div class="modal-overlay" id="modalPdf">
+  <div class="modal-pdf-box">
+    <div class="modal-pdf-hdr">
+      <div><div class="modal-kicker" id="modalPdfKicker"></div><div class="modal-title" id="modalPdfTitle"></div></div>
+      <button class="modal-close" onclick="document.getElementById('modalPdf').classList.remove('open')">✕</button>
+    </div>
+    <div id="modalPdfBody" style="flex:1;display:flex;flex-direction:column;overflow:hidden;"></div>
+  </div>
+</div>
+
+<!-- LOGIN MODAL (light, sobre o painel) -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal-img-box" style="max-width:380px;width:100%;">
+    <div style="padding:36px 36px 28px;text-align:center;">
+      <img src="icons/Arbore_logo.jpeg" alt="Árbore" style="height:32px;margin-bottom:20px;display:block;margin-left:auto;margin-right:auto;">
+      <div style="font-size:18px;font-weight:700;color:var(--text-900);margin-bottom:4px;">Acesso Administrativo</div>
+      <div style="font-size:12px;color:var(--text-500);margin-bottom:22px;">Área restrita — equipe Árbore</div>
+      <input class="login-input" type="email" id="emailInput" placeholder="E-mail de acesso"
+             onkeydown="if(event.key==='Enter')document.getElementById('senhaInput').focus()">
+      <input class="login-input" type="password" id="senhaInput" placeholder="Senha"
+             onkeydown="if(event.key==='Enter')verificarLogin()" style="margin-top:8px;">
+      <div class="login-error" id="loginErro" style="margin:8px 0 10px;text-align:left;"></div>
+      <button class="btn-green" onclick="verificarLogin()" style="width:100%;padding:11px;border-radius:var(--radius-sm);border:none;background:var(--green);color:var(--white);font-family:'Inter',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">Entrar</button>
+      <button onclick="fecharLogin()" style="width:100%;padding:9px;border-radius:var(--radius-sm);border:1px solid var(--border);background:transparent;color:var(--text-500);font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;margin-top:8px;">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- INLINE EDIT OVERLAY (desliza de baixo) -->
+<div class="inline-edit-overlay" id="inlineEditOverlay" onclick="iebFecharFora(event)">
+  <div class="inline-edit-box" id="inlineEditBox">
+    <div class="ieb-hdr">
+      <div class="ieb-title" id="iebTitle">Editar</div>
+      <button class="ieb-close" onclick="iebFechar()">✕</button>
+    </div>
+    <div id="iebContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+// ═══════════════════════════════════════════════════════════
+// SUPABASE
+// ═══════════════════════════════════════════════════════════
+const SUPABASE_URL = 'https://dxycbutskkjjmywmskyd.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_NKlw6Fxon7gwTcoz0rxgrw_1txaPIF7';
+const supa = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ═══════════════════════════════════════════════════════════
+// DADOS INICIAIS
+// ═══════════════════════════════════════════════════════════
+const DADOS_INICIAIS ={"linhas":[{"id":"Compact","nome":"Compact","descricao":"Máxima eficiência em área reduzida.","versoes":[{"id":"T1","nome":"T1","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":38.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":40.2,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo B","m2":40.2,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 04","tipo":"Tipo A","m2":38.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":38.5,"tipo_b_m2":40.2,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":1,"pavimentos":"Térreo ao 5º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 04"},"cidades":["São Paulo","Campinas","Guarulhos","Santo André"],"projetos":["Residencial Vila Nova","Edifício Horizonte","Parque das Flores","Árbore Paulínia","Árbore Indaiatuba"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":41.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":43.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":46.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 04","tipo":"Tipo A","m2":41.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":41.0,"tipo_b_m2":43.5,"tipo_c_m2":46.0},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Osasco"],"projetos":["Residencial Primavera","Portal do Sol"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":44.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":46.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":48.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":44.5,"tipo_b_m2":46.0,"tipo_c_m2":48.5},"config_pav":{"unidades_pav":8,"finais_pav":8,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 a 08"},"cidades":["São Paulo","Guarulhos","Barueri"],"projetos":["Condomínio Araucária","Residencial Monte Verde","Edifício Ipê"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":48.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":50.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":48.0,"tipo_b_m2":50.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":2,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","Ribeirão Preto"],"projetos":["Grand Compact","Residencial Aurora"],"pdf_url":"#","dwg_url":"#"}]},{"id":"Slim","nome":"Slim","descricao":"Planta alongada para terrenos estreitos.","versoes":[{"id":"T1","nome":"T1","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":42.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":44.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":42.0,"tipo_b_m2":44.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 04"},"cidades":["São Paulo","Santos","São Bernardo do Campo","Diadema"],"projetos":["Slim Tower Centro","Edifício Vertical"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":45.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":47.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":50.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":45.5,"tipo_b_m2":47.5,"tipo_c_m2":50.0},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Jundiaí"],"projetos":["Slim Essencial","Residencial Avenida","Torres do Parque"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":49.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":51.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":49.0,"tipo_b_m2":51.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":2,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 e 02"},"cidades":["São Paulo","ABC Paulista","Guarulhos"],"projetos":["Slim Premium","Edifício Panorama"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":53.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":56.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":58.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":53.5,"tipo_b_m2":56.0,"tipo_c_m2":58.5},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":4,"torre":"Torre Premium","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":3,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Sorocaba"],"projetos":["Grand Slim","Residencial Vertice"],"pdf_url":"#","dwg_url":"#"}]},{"id":"Plus","nome":"Plus","descricao":"Amplitude e conforto com varanda gourmet.","versoes":[{"id":"T1","nome":"T1","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":58.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":61.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":58.0,"tipo_b_m2":61.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":2,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","Ribeirão Preto","Bauru"],"projetos":["Plus Jardins","Residencial Boulevard"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":62.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":65.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":68.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":62.0,"tipo_b_m2":65.0,"tipo_c_m2":68.0},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":4,"torre":"Torre Premium","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":3,"pavimentos":"Térreo ao 15º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Alphaville","Campinas","Santos"],"projetos":["Plus Connect","Edifício Harmonia","Residencial Allegro"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":67.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":70.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":67.5,"tipo_b_m2":70.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":2,"finais_pav":2,"finais_diferentes":2,"torre":"Torre Premium","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":3,"pavimentos":"Térreo ao 15º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","São José dos Campos"],"projetos":["Plus Alto Padrão","Grand Horizonte"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":73.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":76.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":80.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":73.0,"tipo_b_m2":76.5,"tipo_c_m2":80.0},"config_pav":{"unidades_pav":2,"finais_pav":2,"finais_diferentes":2,"torre":"Torre Premium","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":3,"pavimentos":"Térreo ao 18º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","Ribeirão Preto","Sorocaba","Bauru"],"projetos":["Plus Grand Reserve","Edifício Prestígio"],"pdf_url":"#","dwg_url":"#"}]},{"id":"Urbana","nome":"Urbana","descricao":"Conectividade urbana contemporânea.","versoes":[{"id":"T1","nome":"T1","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":39.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":41.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":39.5,"tipo_b_m2":41.5,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Compacta"},"ficha_tecnica":{"dormitorios_qtd":1,"pavimentos":"Térreo ao 5º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 01","finais":"Final 01 e 04"},"cidades":["São Paulo","Guarulhos","Osasco","Santo André","São Caetano do Sul"],"projetos":["Urbana Paulista","Edifício Central","Residencial Metrô"],"pdf_url":"#","dwg_url":"#"},{"id":"T2","nome":"T2","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":43.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":45.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":43.5,"tipo_b_m2":45.5,"tipo_c_m2":null},"config_pav":{"unidades_pav":8,"finais_pav":6,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Compacta"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 02","finais":"Final 01 a 04"},"cidades":["São Paulo","Campinas","Mauá","Suzano"],"projetos":["Urbana Connect","Residencial Eixo"],"pdf_url":"#","dwg_url":"#"},{"id":"T3","nome":"T3","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":47.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":49.0,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 03","tipo":"Tipo C","m2":51.5,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":47.0,"tipo_b_m2":49.0,"tipo_c_m2":51.5},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":4,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 8º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 03","finais":"Final 01 a 04"},"cidades":["São Paulo","Guarulhos","Campinas"],"projetos":["Urbana Prime","Edifício Mobilidade","Grand Urbana"],"pdf_url":"#","dwg_url":"#"},{"id":"T4","nome":"T4","imagem":"","finais":[{"id":"Final 01","tipo":"Tipo A","m2":51.5,"imagem":"","pdf_url":"#","dwg_url":"#"},{"id":"Final 02","tipo":"Tipo B","m2":54.0,"imagem":"","pdf_url":"#","dwg_url":"#"}],"areas":{"tipo_a_m2":51.5,"tipo_b_m2":54.0,"tipo_c_m2":null},"config_pav":{"unidades_pav":4,"finais_pav":4,"finais_diferentes":2,"torre":"Torre Tipo","varanda":"Varanda Gourmet"},"ficha_tecnica":{"dormitorios_qtd":2,"pavimentos":"Térreo ao 12º Pav."},"meta":{"planta_tipo":"Planta padrão","versao_label":"Versão 04","finais":"Final 01 e 02"},"cidades":["São Paulo","Campinas","São José dos Campos","Sorocaba"],"projetos":["Urbana Alto","Residencial Viaduto"],"pdf_url":"#","dwg_url":"#"}]}]};
+
+const LS_KEY = "arbore_v4";
+const LS_SB  = "arbore_sb";
+
+function carregarLocal(){ try{ const s=localStorage.getItem(LS_KEY); if(s) return JSON.parse(s); }catch(e){} return JSON.parse(JSON.stringify(DADOS_INICIAIS)); }
+function salvarLocal(){ localStorage.setItem(LS_KEY,JSON.stringify(P)); }
+
+async function carregarDadosSupa(){
+  const {data:linhas,error:e1}=await supa.from('linhas').select('*').order('created_at',{ascending:true});
+  if(e1) throw e1;
+  if(!linhas||linhas.length===0) throw new Error('vazio');
+  const {data:tips,error:e2}=await supa.from('tipologias').select('*').order('created_at',{ascending:true});
+  if(e2) throw e2;
+  return {
+    linhas: linhas.map(l=>({
+      id:l.id, nome:l.nome, descricao:l.descricao||'',
+      versoes: tips.filter(t=>t.linha_id===l.id).map(t=>({
+        id:t.id, nome:t.nome, imagem:t.imagem||'',
+        finais:t.finais||[], areas:t.areas||{}, config_pav:t.config_pav||{},
+        ficha_tecnica:t.ficha_tecnica||{}, meta:t.meta||{},
+        cidades:t.cidades||[], projetos:t.projetos||[],
+        pdf_url:t.pdf_url||'#', dwg_url:t.dwg_url||'#',
+      }))
+    }))
+  };
+}
+
+async function upsertTipologia(linhaId,v){
+  const {error}=await supa.from('tipologias').upsert({
+    id:v.id, linha_id:linhaId, nome:v.nome, imagem:v.imagem||'',
+    finais:v.finais||[], areas:v.areas, config_pav:v.config_pav,
+    ficha_tecnica:v.ficha_tecnica, meta:v.meta,
+    cidades:v.cidades, projetos:v.projetos,
+    pdf_url:v.pdf_url, dwg_url:v.dwg_url
+  });
+  if(error) throw error;
+}
+
+async function deleteTipologia(linhaId,tipId){
+  const {error}=await supa.from('tipologias').delete().eq('linha_id',linhaId).eq('id',tipId);
+  if(error) throw error;
+}
+
+async function upsertLinha(l){
+  const {error}=await supa.from('linhas').upsert({id:l.id,nome:l.nome,descricao:l.descricao||''});
+  if(error) throw error;
+}
+
+let P = carregarLocal();
+let SB = (()=>{ try{ return JSON.parse(localStorage.getItem(LS_SB)||"{}"); }catch(e){ return {}; } })();
+
+// Estado
+let linhaId  = P.linhas[0]?.id||'';
+let tipoId   = P.linhas[0]?.versoes[0]?.id||'';
+let finalIdx = 0; // 0 = planta geral, 1+ = final[idx-1]
+let admLinhaId = P.linhas[0]?.id||'';
+let editandoId = null;
+let zoomAtivo  = false;
+let carrosselOffset = 0;
+
+const getLinha  = () => P.linhas.find(l=>l.id===linhaId);
+const getVersao = () => { const l=getLinha(); return l?l.versoes.find(v=>v.id===tipoId):null; };
+const getAdmL   = () => P.linhas.find(l=>l.id===admLinhaId);
+
+function toast(msg,green=false){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.className="toast"+(green?" green":"")+" show";
+  setTimeout(()=>{ t.className="toast"+(green?" green":""); },2600);
+}
+
+function updateMeta(){
+  const now=new Date();
+  const m=now.toLocaleDateString("pt-BR",{month:"long"}).slice(0,3).toUpperCase();
+  document.getElementById("dataAtual").textContent=`${m}/${now.getFullYear()}`;
+  let t=0; P.linhas.forEach(l=>{ t+=l.versoes.length; });
+  document.getElementById("totalTip").textContent=t;
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER LINHAS SIDEBAR
+// ═══════════════════════════════════════════════════════════
+// IDs das linhas atualmente expandidas no accordion
+const linhasExpandidas = new Set();
+
+const ICONS_LINHA={
+  Compact:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>`,
+  Slim:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="20" rx="2"/></svg>`,
+  Plus:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>`,
+  Urbana:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>`,
+};
+
+function renderLinhas(){
+  const ICO_PEN=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
+  const ICO_DEL=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>`;
+  const ICO_ADD=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
+  const ICO_CHV_DOWN=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`;
+  const ICO_CHV_RIGHT=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`;
+
+  document.getElementById("linhaTabs").innerHTML = P.linhas.map((l, li)=>{
+    const isActive   = l.id === linhaId;
+    const isExpanded = linhasExpandidas.has(l.id);
+
+    // subitens de tipologia (só no DOM quando expandida)
+    let tipItems = '';
+    if(isExpanded){
+      tipItems = l.versoes.map(v => {
+        const cp = v.config_pav||{};
+        const razao = cp.unidades_pav && cp.finais_pav
+          ? `<span class="tip-m2">${cp.unidades_pav}/${cp.finais_pav}</span>` : '';
+        const isSelActive = isActive && v.id === tipoId;
+        return `<div class="tipologia-item">
+          <button class="tipologia-btn ${isSelActive?'active':''}"
+            onclick="selLinhaTipo('${l.id}','${v.id}')">
+            <span class="tip-dot"></span>
+            <span class="tip-label">${v.id} ${razao}</span>
+          </button>
+          ${modoAdmin?`<div class="linha-adm-actions" style="padding-right:4px;">
+            <button class="btn-adm-sm" title="Editar" onclick="event.stopPropagation();selLinhaTipo('${l.id}','${v.id}');admEditarTipologia()">${ICO_PEN}</button>
+            <button class="btn-adm-sm del" title="Excluir" onclick="event.stopPropagation();admExcluirTipologia('${l.id}','${v.id}')">${ICO_DEL}</button>
+          </div>`:''}
+        </div>`;
+      }).join('');
+
+      if(modoAdmin) tipItems += `<button class="btn-add-tipologia" onclick="admNovaTipologia('${l.id}')">${ICO_ADD} Nova tipologia</button>`;
+    }
+
+    const sep = li > 0 ? `<div class="linha-sep"></div>` : '';
+    const chevron = isExpanded ? ICO_CHV_DOWN : ICO_CHV_RIGHT;
+
+    return `${sep}
+    <div style="display:flex;align-items:center;gap:0;border-radius:var(--radius-sm);overflow:hidden;">
+      <button class="linha-tab ${isActive?'active':''}" style="flex:1;" onclick="toggleLinha('${l.id}')">
+        ${ICONS_LINHA[l.id]||ICONS_LINHA.Compact} ${l.nome}
+        <span style="margin-left:auto;opacity:${isActive?'1':'.45'}">${chevron}</span>
+      </button>
+      <div class="linha-adm-actions">
+        <button class="btn-adm-sm" title="Renomear" onclick="event.stopPropagation();admRenomearLinha('${l.id}')">${ICO_PEN}</button>
+        <button class="btn-adm-sm del" title="Excluir" onclick="event.stopPropagation();admExcluirLinha('${l.id}')">${ICO_DEL}</button>
+      </div>
+    </div>
+    ${isExpanded ? `<div class="tipologia-list">${tipItems}</div>` : ''}`;
+  }).join("");
+}
+
+function toggleLinha(id){
+  if(linhasExpandidas.has(id)){
+    linhasExpandidas.delete(id);
+  } else {
+    linhasExpandidas.add(id);
+  }
+  renderLinhas();
+}
+
+function selLinha(id){
+  linhaId=id;
+  const l=getLinha();
+  if(!l.versoes.find(v=>v.id===tipoId)) tipoId=l.versoes[0]?.id||"";
+  finalIdx=0; carrosselOffset=0; renderAll();
+}
+function selLinhaTipo(lid, tid){
+  linhaId=lid; tipoId=tid; finalIdx=0; carrosselOffset=0; renderAll();
+}
+function selTipo(id){ tipoId=id; finalIdx=0; carrosselOffset=0; renderConteudo(); }
+
+// ═══════════════════════════════════════════════════════════
+// RENDER TIPO INFO — col esquerda do card central
+// ═══════════════════════════════════════════════════════════
+function renderTipoInfo(){
+  const v=getVersao(); if(!v) return;
+  const cp=v.config_pav||{};
+  const nomeComplexo = cp.unidades_pav&&cp.finais_pav
+    ? `${v.id} - ${cp.unidades_pav}/${cp.finais_pav}` : v.id;
+  document.getElementById("tipoNome").textContent=nomeComplexo;
+  document.getElementById("tipoSub").textContent="Pavimento Tipo";
+  const m=v.meta||{};
+  document.getElementById("tipoMetaLines").innerHTML=
+    `<strong>${m.planta_tipo||"Planta padrão"}</strong><br>${m.versao_label||v.nome}<br>${m.finais||""}`;
+  // Botão PDF: label e estado
+  const btnPdfView=document.getElementById("btnVerPdf");
+  const labelEl=document.getElementById("btnVerPdfLabel");
+  const pdfUrl=v?.pdf_url;
+  if(modoAdmin){
+    labelEl.textContent="Editar PDF";
+    btnPdfView.style.opacity="1";
+    btnPdfView.style.pointerEvents="";
+  } else {
+    labelEl.textContent="Visualizar PDF";
+    if(pdfUrl&&pdfUrl!="#"){ btnPdfView.style.opacity="1"; btnPdfView.style.pointerEvents=""; }
+    else{ btnPdfView.style.opacity=".35"; btnPdfView.style.pointerEvents="none"; }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER PLANTA + CARROSSEL
+// ═══════════════════════════════════════════════════════════
+function getImagemAtual(){
+  const v=getVersao(); if(!v) return null;
+  if(finalIdx===0) return v.imagem||null;
+  const f=v.finais?.[finalIdx-1]; return f?.imagem||null;
+}
+function getDownloadsAtual(){
+  const v=getVersao(); if(!v) return {img:null,pdf:null,dwg:null};
+  if(finalIdx===0) return {img:v.imagem||null, pdf:v.pdf_url||null, dwg:v.dwg_url||null};
+  const f=v.finais?.[finalIdx-1];
+  return {img:f?.imagem||null, pdf:f?.pdf_url||v.pdf_url||null, dwg:f?.dwg_url||v.dwg_url||null};
+}
+
+function renderPlanta(){
+  const img=getImagemAtual();
+  const viewer=document.getElementById("plantaConteudo");
+  if(img){
+    viewer.innerHTML=`<img class="planta-viewer-img" id="plantaImg" src="${img}" alt="Planta">`;
+    // zoom setup
+    setupZoom();
+  } else {
+    viewer.innerHTML=`<div class="planta-placeholder-wrap">
+      <div class="planta-ph-circle"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/><rect x="12" y="12" width="6" height="6" rx="1"/></svg></div>
+      <div class="planta-ph-title">Planta não inserida</div>
+      <div class="planta-ph-sub">Acesse o painel Admin para upload</div>
+    </div>`;
+  }
+  renderDownloadBtns();
+}
+
+function renderDownloadBtns(){
+  const dl=getDownloadsAtual();
+  const btnImg=document.getElementById("btnDlImg");
+  const btnPdf=document.getElementById("btnDlPdf");
+  const btnDwg=document.getElementById("btnDlDwg");
+
+  if(dl.img && dl.img!="#"){ btnImg.href=dl.img; btnImg.classList.remove("disabled"); }
+  else{ btnImg.href="#"; btnImg.classList.add("disabled"); }
+  if(dl.pdf && dl.pdf!="#"){ btnPdf.href=dl.pdf; btnPdf.classList.remove("disabled"); }
+  else{ btnPdf.href="#"; btnPdf.classList.add("disabled"); }
+  if(dl.dwg && dl.dwg!="#"){ btnDwg.href=dl.dwg; btnDwg.classList.remove("disabled"); }
+  else{ btnDwg.href="#"; btnDwg.classList.add("disabled"); }
+}
+
+function renderCarrossel(){
+  const v=getVersao(); if(!v) return;
+  const finais=v.finais||[];
+  const track=document.getElementById("carrosselTrack");
+
+  // Item 0: planta geral
+  const items=[{
+    idx:0, label:"Planta Geral", tipo:"Pavimento Tipo", m2:null, imagem:v.imagem
+  }];
+  finais.forEach((f,i)=>{
+    items.push({idx:i+1, label:f.id, tipo:f.tipo, m2:f.m2, imagem:f.imagem});
+  });
+
+  track.innerHTML=items.map(it=>`
+    <div class="carrossel-item ${it.idx===finalIdx?"active":""}" onclick="selFinal(${it.idx})" id="citem_${it.idx}">
+      ${it.imagem
+        ? `<img class="carrossel-thumb" src="${it.imagem}" alt="${it.label}">`
+        : `<div class="carrossel-thumb-empty"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>`
+      }
+      <div class="carrossel-info">
+        <div class="carrossel-final">${it.label}</div>
+        <div class="carrossel-tipo">${it.tipo}</div>
+        ${it.m2 ? `<div class="carrossel-m2">${it.m2} m²</div>` : ''}
+      </div>
+    </div>
+  `).join("");
+
+  // posicionar offset
+  track.style.transform=`translateX(-${carrosselOffset}px)`;
+  updateArrows(items.length);
+}
+
+function selFinal(idx){
+  finalIdx=idx;
+  renderPlanta();
+  // atualiza active no carrossel sem re-render completo
+  document.querySelectorAll(".carrossel-item").forEach(el=>el.classList.remove("active"));
+  const el=document.getElementById("citem_"+idx);
+  if(el){ el.classList.add("active"); scrollToCarrosselItem(el); }
+}
+
+function scrollToCarrosselItem(el){
+  const wrap=document.getElementById("carrosselWrap");
+  const wrapW=wrap.offsetWidth;
+  const itemLeft=el.offsetLeft;
+  const itemW=el.offsetWidth;
+  const track=document.getElementById("carrosselTrack");
+  const trackW=track.scrollWidth;
+  let target=itemLeft - (wrapW/2) + (itemW/2);
+  target=Math.max(0,Math.min(target,trackW-wrapW));
+  carrosselOffset=target;
+  track.style.transform=`translateX(-${carrosselOffset}px)`;
+}
+
+function scrollCarrossel(dir){
+  const wrap=document.getElementById("carrosselWrap");
+  const track=document.getElementById("carrosselTrack");
+  const step=98;
+  const maxOffset=Math.max(0,track.scrollWidth-wrap.offsetWidth);
+  carrosselOffset=Math.max(0,Math.min(carrosselOffset+dir*step,maxOffset));
+  track.style.transform=`translateX(-${carrosselOffset}px)`;
+  updateArrows();
+}
+
+function updateArrows(total){
+  const wrap=document.getElementById("carrosselWrap");
+  const track=document.getElementById("carrosselTrack");
+  const maxOffset=Math.max(0,track.scrollWidth-wrap.offsetWidth);
+  document.getElementById("arrLeft").disabled=carrosselOffset<=0;
+  document.getElementById("arrRight").disabled=carrosselOffset>=maxOffset;
+}
+
+// ═══════════════════════════════════════════════════════════
+// SIDEBAR DIREITA
+// ═══════════════════════════════════════════════════════════
+function renderAreas(){
+  const v=getVersao(); if(!v) return;
+  const a=v.areas||{};
+  const cards=[{val:a.tipo_a_m2,lbl:"Tipo A"},{val:a.tipo_b_m2,lbl:"Tipo B"},{val:a.tipo_c_m2,lbl:"Tipo C"}].filter(c=>c.val);
+  const grid=document.getElementById("areasGrid");
+  grid.className="areas-grid"+(cards.length===2?" cols2":"");
+  grid.innerHTML=cards.map(c=>`
+    <div class="area-card">
+      <div class="area-val">${c.val} <sup>m²</sup></div>
+      <div class="area-lbl">${c.lbl}</div>
+    </div>`).join("");
+}
+
+function renderPav(){
+  const v=getVersao(); if(!v) return;
+  const cp=v.config_pav||{};
+  const I={
+    unid:`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>`,
+    torre:`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+    var:`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+    fin:`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>`,
+  };
+  const items=[
+    cp.unidades_pav?{icon:I.unid,text:`${cp.unidades_pav} Unidades por Pavimento`}:null,
+    cp.torre?{icon:I.torre,text:cp.torre}:null,
+    cp.varanda?{icon:I.var,text:cp.varanda}:null,
+    cp.finais_diferentes?{icon:I.fin,text:`${cp.finais_diferentes} Finais Diferentes`}:null,
+  ].filter(Boolean);
+  document.getElementById("pavList").innerHTML=items.map(i=>
+    `<div class="pav-item"><div class="pav-icon">${i.icon}</div><span class="pav-text">${i.text}</span></div>`
+  ).join("");
+}
+
+function renderAplicacoes(){
+  const v=getVersao(); if(!v) return;
+  const cids=v.cidades||[];
+  document.getElementById("cidadesWrap").innerHTML=cids.length
+    ? cids.map(c=>`<span class="cidade-chip">${c}</span>`).join("")
+    : `<span style="font-size:11px;color:var(--text-400);font-style:italic;">Nenhuma cadastrada</span>`;
+  const projs=v.projetos||[];
+  document.getElementById("empWrap").innerHTML=projs.length
+    ? projs.map(p=>`<div class="emp-item"><span class="emp-dot"></span>${p}</div>`).join("")
+    : `<div style="font-size:11px;color:var(--text-400);font-style:italic;grid-column:1/-1;">Nenhum cadastrado</div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// ZOOM LUPA
+// ═══════════════════════════════════════════════════════════
+const ZOOM_SIZE=160, ZOOM_FACTOR=2.0;
+
+function toggleZoom(){
+  zoomAtivo=!zoomAtivo;
+  const btn=document.getElementById("btnZoom");
+  const lens=document.getElementById("zoomLens");
+  if(zoomAtivo){
+    btn.classList.add("active-zoom");
+    lens.style.width=ZOOM_SIZE+"px"; lens.style.height=ZOOM_SIZE+"px"; lens.style.display="block";
+    document.getElementById("plantaViewer").style.cursor="none";
+  } else {
+    btn.classList.remove("active-zoom");
+    lens.style.display="none";
+    document.getElementById("plantaViewer").style.cursor="default";
+  }
+}
+
+// Desativa zoom ao clicar em qualquer lugar da página
+document.addEventListener("click", function(e){
+  if(!zoomAtivo) return;
+  // não desativar se o clique foi no próprio botão de zoom (ele já faz toggle)
+  const btnZoom=document.getElementById("btnZoom");
+  if(btnZoom && btnZoom.contains(e.target)) return;
+  zoomAtivo=false;
+  document.getElementById("btnZoom").classList.remove("active-zoom");
+  document.getElementById("zoomLens").style.display="none";
+  document.getElementById("plantaViewer").style.cursor="default";
+}, true);
+
+function setupZoom(){
+  const viewer=document.getElementById("plantaViewer");
+  viewer.onmousemove=function(e){
+    if(!zoomAtivo) return;
+    const img=document.getElementById("plantaImg");
+    if(!img) return;
+    const lens=document.getElementById("zoomLens");
+
+    // Posição do cursor relativa ao viewer (onde a lupa se posiciona)
+    const viewerRect=viewer.getBoundingClientRect();
+    const lx=(e.clientX - viewerRect.left) - ZOOM_SIZE/2;
+    const ly=(e.clientY - viewerRect.top)  - ZOOM_SIZE/2;
+    lens.style.left=lx+"px";
+    lens.style.top=ly+"px";
+
+    // Posição do cursor relativa à imagem (para calcular o conteúdo ampliado)
+    const imgRect=img.getBoundingClientRect();
+    const px=e.clientX - imgRect.left;
+    const py=e.clientY - imgRect.top;
+    const bx=px*ZOOM_FACTOR - ZOOM_SIZE/2;
+    const by=py*ZOOM_FACTOR - ZOOM_SIZE/2;
+
+    lens.style.backgroundImage=`url('${img.src}')`;
+    lens.style.backgroundSize=`${imgRect.width*ZOOM_FACTOR}px ${imgRect.height*ZOOM_FACTOR}px`;
+    lens.style.backgroundPosition=`-${bx}px -${by}px`;
+    lens.style.backgroundRepeat="no-repeat";
+    lens.style.opacity="1";
+  };
+  viewer.onmouseleave=function(){
+    document.getElementById("zoomLens").style.opacity="0";
+  };
+  viewer.onmouseenter=function(){
+    if(zoomAtivo) document.getElementById("zoomLens").style.opacity="1";
+  };
+}
+
+// ═══════════════════════════════════════════════════════════
+// MODAIS
+// ═══════════════════════════════════════════════════════════
+function abrirModalImagem(){
+  const v=getVersao(); if(!v) return;
+  const img=getImagemAtual();
+  const label=finalIdx===0?"Planta Geral":(v.finais?.[finalIdx-1]?.id||"Final");
+  document.getElementById("modalImgKicker").textContent=`${linhaId} · ${tipoId} · ${label}`;
+  document.getElementById("modalImgTitle").textContent=`Planta Técnica — ${getLinha().nome}`;
+  document.getElementById("modalImgWrap").innerHTML=img
+    ? `<img src="${img}" alt="Planta ampliada">`
+    : `<div class="modal-empty"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity=".3"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><p style="margin-top:10px;font-size:12px;color:#9CA3AF;">Imagem não disponível</p></div>`;
+  document.getElementById("modalImg").classList.add("open");
+}
+
+function abrirPdfViewer(){
+  const v=getVersao(); if(!v) return;
+  const pdfUrl=v.pdf_url;
+  document.getElementById("modalPdfKicker").textContent=`${linhaId} · ${tipoId}`;
+  document.getElementById("modalPdfTitle").textContent=`PDF do Projeto — ${getLinha().nome}`;
+  const body=document.getElementById("modalPdfBody");
+  if(pdfUrl && pdfUrl!="#"){
+    body.innerHTML=`<iframe class="modal-pdf-iframe" src="${pdfUrl}"></iframe>`;
+  } else {
+    body.innerHTML=`<div class="modal-pdf-nourl">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity=".3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <p>Nenhum PDF cadastrado para esta tipologia.</p>
+      <p style="font-size:11px;opacity:.6;">Adicione o link PDF no painel Admin.</p>
+    </div>`;
+  }
+  document.getElementById("modalPdf").classList.add("open");
+}
+
+// Fechar modais
+document.getElementById("modalImg").onclick=e=>{ if(e.target===document.getElementById("modalImg")) document.getElementById("modalImg").classList.remove("open"); };
+document.getElementById("modalPdf").onclick=e=>{ if(e.target===document.getElementById("modalPdf")) document.getElementById("modalPdf").classList.remove("open"); };
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ document.getElementById("modalImg").classList.remove("open"); document.getElementById("modalPdf").classList.remove("open"); document.getElementById("loginModal")?.classList.remove("open"); iebFechar(); } });
+
+// ═══════════════════════════════════════════════════════════
+// RENDER ALL
+// ═══════════════════════════════════════════════════════════
+function renderConteudo(){
+  renderTipoInfo(); renderPlanta(); renderCarrossel();
+  renderAreas(); renderPav(); renderAplicacoes();
+}
+function renderAll(){ renderLinhas(); renderConteudo(); updateMeta(); }
+
+// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// ADMIN — LOGIN / MODO
+// ═══════════════════════════════════════════════════════════
+let modoAdmin = false;
+
+async function abrirLogin(){
+  const {data:{session}}=await supa.auth.getSession();
+  if(session){ ativarModoAdmin(); return; }
+  document.getElementById("loginModal").classList.add("open");
+  document.getElementById("emailInput").value="";
+  document.getElementById("senhaInput").value="";
+  document.getElementById("loginErro").textContent="";
+  setTimeout(()=>document.getElementById("emailInput").focus(),120);
+}
+function fecharLogin(){ document.getElementById("loginModal").classList.remove("open"); }
+
+async function verificarLogin(){
+  const email=document.getElementById("emailInput").value.trim();
+  const senha=document.getElementById("senhaInput").value;
+  document.getElementById("loginErro").textContent="";
+  const {error}=await supa.auth.signInWithPassword({email,password:senha});
+  if(error){
+    document.getElementById("loginErro").textContent="E-mail ou senha incorretos.";
+    document.getElementById("senhaInput").value="";
+    return;
+  }
+  fecharLogin();
+  ativarModoAdmin();
+}
+
+function ativarModoAdmin(){
+  modoAdmin=true;
+  document.body.classList.add("is-admin");
+  document.getElementById("adminModeBadge").classList.add("visible");
+  document.getElementById("btnAdminHdr").style.display="none";
+  renderLinhas();
+  renderTipoInfo(); // atualiza label "Editar PDF"
+  toast("Modo Admin ativado",true);
+}
+
+async function admSalvarESair(){
+  toast("Salvando...");
+  try{
+    for(const l of P.linhas){
+      await upsertLinha(l);
+      for(const v of l.versoes) await upsertTip(l.id,v);
+    }
+    salvarLocal();
+  }catch(e){ toast("Erro ao salvar: "+e.message); return; }
+  modoAdmin=false;
+  document.body.classList.remove("is-admin");
+  document.getElementById("adminModeBadge").classList.remove("visible");
+  document.getElementById("btnAdminHdr").style.display="";
+  iebFechar();
+  await supa.auth.signOut();
+  renderLinhas();
+  renderTipoInfo(); // restaura label "Visualizar PDF"
+  toast("Salvo e saído do Admin ✓",true);
+}
+
+async function uploadSB(file,path){
+  const bucket='plantas'; // fixo — configurado via Supabase dashboard
+  const {error:upErr}=await supa.storage.from(bucket).upload(path,file,{upsert:true});
+  if(upErr) throw upErr;
+  const {data:{publicUrl}}=supa.storage.from(bucket).getPublicUrl(path);
+  return publicUrl;
+}
+
+// ═══════════════════════════════════════════════════════════
+// INLINE EDIT OVERLAY
+// ═══════════════════════════════════════════════════════════
+function iebAbrir(titulo, html){
+  document.getElementById("iebTitle").textContent=titulo;
+  document.getElementById("iebContent").innerHTML=html;
+  document.getElementById("inlineEditOverlay").classList.add("open");
+}
+function iebFechar(){ document.getElementById("inlineEditOverlay").classList.remove("open"); }
+function iebFecharFora(e){ if(e.target===document.getElementById("inlineEditOverlay")) iebFechar(); }
+
+// Upload helper
+function iebBuildUpload(id, label, url, folder){
+  const hasUrl = url && url !== "#";
+  return `<div class="ieb-field full">
+    <label class="ieb-label">${label}</label>
+    <div class="ieb-upload" onclick="document.getElementById('${id}_f').click()">
+      <input type="file" id="${id}_f" accept="image/*,application/pdf" onchange="iebDoUpload(event,'${id}','${folder}')">
+      <img class="ieb-upload-prev" id="${id}_prev" ${hasUrl?`src="${url}" style="display:block"`:""}/>
+      <div class="ieb-upload-lbl" id="${id}_lbl">${hasUrl?"Clique para trocar":"<strong>Clique</strong> para fazer upload"}</div>
+      <div class="ieb-upload-prog" id="${id}_prog"><div class="ieb-upload-fill" id="${id}_fill"></div></div>
+      <div class="ieb-upload-status" id="${id}_status"></div>
+    </div>
+    <input type="hidden" id="${id}" value="${url||""}">
+  </div>`;
+}
+async function iebDoUpload(e, id, folder){
+  const file=e.target.files[0]; if(!file) return;
+  const prev=document.getElementById(id+"_prev");
+  const lbl=document.getElementById(id+"_lbl");
+  const prog=document.getElementById(id+"_prog");
+  const fill=document.getElementById(id+"_fill");
+  const status=document.getElementById(id+"_status");
+  const hidden=document.getElementById(id);
+  if(file.type.startsWith("image/")){ prev.src=URL.createObjectURL(file); prev.style.display="block"; }
+  lbl.innerHTML=file.name; prog.style.display=""; status.style.display=""; status.textContent="Enviando...";
+  let p=0; const iv=setInterval(()=>{ p=Math.min(p+10,80); fill.style.width=p+"%"; },200);
+  try{
+    const ext=file.name.split(".").pop();
+    const url=await uploadSB(file,`${folder}/${id}_${Date.now()}.${ext}`);
+    clearInterval(iv); fill.style.width="100%"; status.textContent="✓ Concluído";
+    hidden.value=url;
+    setTimeout(()=>{ prog.style.display="none"; status.style.display="none"; },2000);
+    toast("Upload concluído ✓",true);
+  }catch(err){ clearInterval(iv); prog.style.display="none"; status.textContent="Erro: "+err.message; toast("Erro: "+err.message); }
+}
+
+// Lista editável helper
+function iebBuildLista(id, items){
+  return `<div class="ieb-list" id="${id}_list">`+
+    items.map((v,i)=>`<div class="ieb-list-row"><input class="ieb-list-input" id="${id}_${i}" value="${v}"><button class="btn-ieb-rm" onclick="iebRmItem('${id}',${i})">✕</button></div>`).join("")+
+  `</div><button class="btn-ieb-add-row" onclick="iebAddItem('${id}')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Adicionar</button>`;
+}
+function iebRmItem(id, idx){
+  const list=document.getElementById(id+"_list");
+  list.querySelectorAll(".ieb-list-row")[idx]?.remove();
+  list.querySelectorAll(".ieb-list-input").forEach((el,i)=>el.id=`${id}_${i}`);
+  list.querySelectorAll(".btn-ieb-rm").forEach((el,i)=>el.setAttribute("onclick",`iebRmItem('${id}',${i})`));
+}
+function iebAddItem(id){
+  const list=document.getElementById(id+"_list");
+  const n=list.querySelectorAll(".ieb-list-row").length;
+  const d=document.createElement("div"); d.className="ieb-list-row";
+  d.innerHTML=`<input class="ieb-list-input" id="${id}_${n}" value=""><button class="btn-ieb-rm" onclick="iebRmItem('${id}',${n})">✕</button>`;
+  list.appendChild(d); d.querySelector("input").focus();
+}
+function iebReadLista(id){
+  return Array.from(document.querySelectorAll(`[id^="${id}_"]`))
+    .filter(el=>el.tagName==="INPUT" && /^[a-z_]+_\d+$/.test(el.id))
+    .map(el=>el.value.trim()).filter(Boolean);
+}
+
+// ═══════════════════════════════════════════════════════════
+// ADMIN — EDIÇÃO INLINE POR SEÇÃO
+// ═══════════════════════════════════════════════════════════
+function admEditarTipologia(){
+  if(!modoAdmin) return;
+  const v=getVersao(); if(!v) return;
+  const m=v.meta||{};
+  const cp=v.config_pav||{};
+  iebAbrir(`Editar Tipologia — ${linhaId} · ${tipoId}`, `
+    <div class="ieb-grid">
+      <div class="ieb-field">
+        <label class="ieb-label">ID (ex: T1, T2…)</label>
+        <input class="ieb-input" id="ie_id" value="${v.id}">
+      </div>
+      <div class="ieb-field">
+        <label class="ieb-label">Tipo (ex: 8/6, 4/4…)</label>
+        <input class="ieb-input" id="ie_tipo" placeholder="unidades/finais" value="${cp.unidades_pav&&cp.finais_pav?cp.unidades_pav+'/'+cp.finais_pav:''}">
+      </div>
+    </div>
+    <div class="ieb-section-hdr">Metadados</div>
+    <div class="ieb-grid ieb-grid-3">
+      <div class="ieb-field"><label class="ieb-label">Tipo de Planta</label><input class="ieb-input" id="ie_mplanta" value="${m.planta_tipo||"Planta padrão"}"></div>
+      <div class="ieb-field"><label class="ieb-label">Rótulo Versão</label><input class="ieb-input" id="ie_mversao" value="${m.versao_label||""}"></div>
+      <div class="ieb-field"><label class="ieb-label">Finais</label><input class="ieb-input" id="ie_mfinais" value="${m.finais||""}"></div>
+    </div>
+    <div class="ieb-actions">
+      <button class="btn-ieb-save" onclick="iebSalvarTipologia()">Salvar</button>
+      <button class="btn-ieb-cancel" onclick="iebFechar()">Cancelar</button>
+    </div>`);
+}
+function iebSalvarTipologia(){
+  const v=getVersao(); if(!v) return;
+  v.id=document.getElementById("ie_id").value.trim()||v.id;
+  // parse "8/6" → unidades_pav=8, finais_pav=6
+  const tipoStr=document.getElementById("ie_tipo").value.trim();
+  if(tipoStr){
+    const parts=tipoStr.split("/");
+    const u=parseInt(parts[0]); const f=parseInt(parts[1]||parts[0]);
+    if(!isNaN(u)) v.config_pav={...(v.config_pav||{}), unidades_pav:u, finais_pav:isNaN(f)?u:f};
+  }
+  v.meta={
+    planta_tipo:document.getElementById("ie_mplanta").value.trim(),
+    versao_label:document.getElementById("ie_mversao").value.trim(),
+    finais:document.getElementById("ie_mfinais").value.trim()
+  };
+  salvarLocal(); iebFechar(); renderTipoInfo(); renderLinhas(); toast("Tipologia salva ✓",true);
+}
+
+// Editar apenas o PDF da tipologia (botão separado)
+function admEditarPdf(){
+  if(!modoAdmin) return;
+  const v=getVersao(); if(!v) return;
+  const folder=`${linhaId}/${tipoId}`;
+  iebAbrir(`PDF da Tipologia — ${linhaId} · ${v.id}`, `
+    ${iebBuildUpload("ie_pdf","Arquivo PDF",v.pdf_url&&v.pdf_url!="#"?v.pdf_url:"",folder)}
+    ${v.pdf_url&&v.pdf_url!="#"?`<button style="margin-top:8px;padding:7px 14px;border-radius:var(--radius-xs);border:1.5px solid #FCA5A5;background:transparent;color:#DC2626;font-family:'Inter',sans-serif;font-size:11px;cursor:pointer;" onclick="iebRemoverPdf()">Remover PDF</button>`:''}
+    <div class="ieb-actions">
+      <button class="btn-ieb-save" onclick="iebSalvarPdf()">Salvar</button>
+      <button class="btn-ieb-cancel" onclick="iebFechar()">Cancelar</button>
+    </div>`);
+}
+function iebSalvarPdf(){
+  const v=getVersao(); if(!v) return;
+  const pdf=document.getElementById("ie_pdf").value.trim();
+  if(pdf) v.pdf_url=pdf;
+  salvarLocal(); iebFechar(); renderTipoInfo(); toast("PDF salvo ✓",true);
+}
+function iebRemoverPdf(){
+  const v=getVersao(); if(!v) return;
+  if(!confirm("Remover o PDF desta tipologia?")) return;
+  v.pdf_url="#";
+  salvarLocal(); iebFechar(); renderTipoInfo(); toast("PDF removido.");
+}
+
+function admEditarFicha(){
+  if(!modoAdmin) return;
+  const v=getVersao(); if(!v) return;
+  const a=v.areas||{};
+  iebAbrir("Editar Ficha Técnica — Áreas Privativas", `
+    <div class="ieb-grid ieb-grid-3">
+      <div class="ieb-field"><label class="ieb-label">Tipo A (m²)</label><input class="ieb-input" id="ie_ta" type="number" step="0.1" value="${a.tipo_a_m2||""}"></div>
+      <div class="ieb-field"><label class="ieb-label">Tipo B (m²)</label><input class="ieb-input" id="ie_tb" type="number" step="0.1" value="${a.tipo_b_m2||""}"></div>
+      <div class="ieb-field"><label class="ieb-label">Tipo C (m²) — opcional</label><input class="ieb-input" id="ie_tc" type="number" step="0.1" value="${a.tipo_c_m2||""}"></div>
+    </div>
+    <div class="ieb-actions">
+      <button class="btn-ieb-save" onclick="iebSalvarFicha()">Salvar</button>
+      <button class="btn-ieb-cancel" onclick="iebFechar()">Cancelar</button>
+    </div>`);
+}
+function iebSalvarFicha(){
+  const v=getVersao(); if(!v) return;
+  const pf=s=>{ const n=parseFloat(s); return isNaN(n)?null:n; };
+  v.areas={tipo_a_m2:pf(document.getElementById("ie_ta").value),tipo_b_m2:pf(document.getElementById("ie_tb").value),tipo_c_m2:pf(document.getElementById("ie_tc").value)||null};
+  salvarLocal(); iebFechar(); renderAreas(); toast("Áreas salvas ✓",true);
+}
+
+function admEditarPavimento(){
+  if(!modoAdmin) return;
+  const v=getVersao(); if(!v) return;
+  const cp=v.config_pav||{}; const ft=v.ficha_tecnica||{};
+  iebAbrir("Editar Configuração do Pavimento", `
+    <div class="ieb-grid">
+      <div class="ieb-field"><label class="ieb-label">Unidades por Pav.</label><input class="ieb-input" id="ie_unid" type="number" value="${cp.unidades_pav||0}"></div>
+      <div class="ieb-field"><label class="ieb-label">Finais por Pav.</label><input class="ieb-input" id="ie_finais" type="number" value="${cp.finais_pav||0}"></div>
+      <div class="ieb-field"><label class="ieb-label">Finais Diferentes</label><input class="ieb-input" id="ie_fdif" type="number" value="${cp.finais_diferentes||0}"></div>
+      <div class="ieb-field"><label class="ieb-label">Dormitórios</label><input class="ieb-input" id="ie_dorm" type="number" value="${ft.dormitorios_qtd||0}"></div>
+      <div class="ieb-field full"><label class="ieb-label">Torre</label><input class="ieb-input" id="ie_torre" value="${cp.torre||""}"></div>
+      <div class="ieb-field full"><label class="ieb-label">Varanda</label><input class="ieb-input" id="ie_var" value="${cp.varanda||""}"></div>
+      <div class="ieb-field full"><label class="ieb-label">Pavimentos</label><input class="ieb-input" id="ie_pav" value="${ft.pavimentos||""}"></div>
+    </div>
+    <div class="ieb-actions">
+      <button class="btn-ieb-save" onclick="iebSalvarPavimento()">Salvar</button>
+      <button class="btn-ieb-cancel" onclick="iebFechar()">Cancelar</button>
+    </div>`);
+}
+function iebSalvarPavimento(){
+  const v=getVersao(); if(!v) return;
+  const pi=s=>{ const n=parseInt(s); return isNaN(n)?0:n; };
+  v.config_pav={unidades_pav:pi(document.getElementById("ie_unid").value),finais_pav:pi(document.getElementById("ie_finais").value),finais_diferentes:pi(document.getElementById("ie_fdif").value),torre:document.getElementById("ie_torre").value.trim(),varanda:document.getElementById("ie_var").value.trim()};
+  v.ficha_tecnica={...(v.ficha_tecnica||{}),dormitorios_qtd:pi(document.getElementById("ie_dorm").value),pavimentos:document.getElementById("ie_pav").value.trim()};
+  salvarLocal(); iebFechar(); renderTipoInfo(); renderPav(); toast("Configuração salva ✓",true);
+}
+
+function admEditarAplicacoes(){
+  if(!modoAdmin) return;
+  const v=getVersao(); if(!v) return;
+  iebAbrir("Editar Aplicações", `
+    <div class="ieb-section-hdr" style="border-top:none;padding-top:0;">Cidades Aplicáveis</div>
+    ${iebBuildLista("ie_cid", v.cidades||[])}
+    <div class="ieb-section-hdr">Empreendimentos Utilizados</div>
+    ${iebBuildLista("ie_emp", v.projetos||[])}
+    <div class="ieb-actions">
+      <button class="btn-ieb-save" onclick="iebSalvarAplicacoes()">Salvar</button>
+      <button class="btn-ieb-cancel" onclick="iebFechar()">Cancelar</button>
+    </div>`);
+}
+function iebSalvarAplicacoes(){
+  const v=getVersao(); if(!v) return;
+  v.cidades=iebReadLista("ie_cid");
+  v.projetos=iebReadLista("ie_emp");
+  salvarLocal(); iebFechar(); renderAplicacoes(); toast("Aplicações salvas ✓",true);
+}
+
+// Editar final no carrossel
+function admEditarFinal(idx){
+  if(!modoAdmin) return;
+  const v=getVersao(); if(!v) return;
+  if(idx===0){ admEditarTipologia(); return; } // planta geral = editar tipologia
+  const f=v.finais?.[idx-1]; if(!f) return;
+  const folder=`${linhaId}/${tipoId}`;
+  iebAbrir(`Editar ${f.id}`, `
+    <div class="ieb-grid ieb-grid-3">
+      <div class="ieb-field"><label class="ieb-label">ID do Final</label><input class="ieb-input" id="ie_fid" value="${f.id}"></div>
+      <div class="ieb-field"><label class="ieb-label">Tipo</label><input class="ieb-input" id="ie_ftipo" value="${f.tipo||""}"></div>
+      <div class="ieb-field"><label class="ieb-label">m²</label><input class="ieb-input" id="ie_fm2" type="number" step="0.1" value="${f.m2||""}"></div>
+    </div>
+    <div class="ieb-section-hdr">Imagem deste Final</div>
+    ${iebBuildUpload(`ie_fimg_${idx}`,"Imagem do final",f.imagem,folder)}
+    <div class="ieb-section-hdr">Downloads específicos</div>
+    <div class="ieb-grid">
+      ${iebBuildUpload(`ie_fpdf_${idx}`,"PDF específico",f.pdf_url&&f.pdf_url!="#"?f.pdf_url:"",folder)}
+      ${iebBuildUpload(`ie_fdwg_${idx}`,"DWG específico",f.dwg_url&&f.dwg_url!="#"?f.dwg_url:"",folder)}
+    </div>
+    <div class="ieb-actions">
+      <button class="btn-ieb-save" onclick="iebSalvarFinal(${idx})">Salvar</button>
+      <button class="btn-ieb-cancel" onclick="iebFechar()">Cancelar</button>
+      <button style="padding:11px 18px;border-radius:var(--radius-sm);border:1.5px solid #FCA5A5;background:transparent;color:#DC2626;font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;" onclick="admExcluirFinal(${idx})">Excluir Final</button>
+    </div>`);
+}
+function iebSalvarFinal(idx){
+  const v=getVersao(); if(!v) return;
+  const f=v.finais?.[idx-1]; if(!f) return;
+  const pf=s=>{ const n=parseFloat(s); return isNaN(n)?null:n; };
+  f.id=document.getElementById("ie_fid").value.trim()||f.id;
+  f.tipo=document.getElementById("ie_ftipo").value.trim();
+  f.m2=pf(document.getElementById("ie_fm2").value)||f.m2;
+  const img=document.getElementById(`ie_fimg_${idx}`).value.trim(); if(img) f.imagem=img;
+  const pdf=document.getElementById(`ie_fpdf_${idx}`).value.trim(); if(pdf) f.pdf_url=pdf;
+  const dwg=document.getElementById(`ie_fdwg_${idx}`).value.trim(); if(dwg) f.dwg_url=dwg;
+  salvarLocal(); iebFechar(); renderCarrossel(); renderPlanta(); toast("Final salvo ✓",true);
+}
+function admExcluirFinal(idx){
+  if(!confirm(`Excluir este final?`)) return;
+  const v=getVersao(); if(!v) return;
+  v.finais.splice(idx-1,1); finalIdx=0;
+  salvarLocal(); iebFechar(); renderCarrossel(); renderPlanta(); toast("Final excluído.");
+}
+
+// Adicionar final novo
+function admAdicionarFinal(){
+  const v=getVersao(); if(!v) return;
+  v.finais=v.finais||[];
+  const n=v.finais.length+1;
+  v.finais.push({id:`Final ${String(n).padStart(2,"0")}`,tipo:"Tipo A",m2:0,imagem:"",pdf_url:"#",dwg_url:"#"});
+  salvarLocal(); renderCarrossel(); admEditarFinal(n);
+}
+
+// Sidebar admin: nova linha / renomear / excluir / nova tipologia
+function admNovaLinha(){
+  const nome=prompt("Nome do novo produto (ex: Master):"); if(!nome?.trim()) return;
+  const id=nome.trim().replace(/\s+/g,"_");
+  if(P.linhas.find(l=>l.id===id)){ alert("Já existe um produto com esse nome."); return; }
+  P.linhas.push({id,nome:nome.trim(),descricao:"",versoes:[]});
+  salvarLocal(); updateMeta(); renderLinhas(); toast(`Produto '${nome.trim()}' criado ✓`,true);
+}
+function admRenomearLinha(lid){
+  const l=P.linhas.find(x=>x.id===lid); if(!l) return;
+  const novo=prompt("Novo nome:",l.nome); if(!novo?.trim()) return;
+  l.nome=novo.trim(); salvarLocal(); renderLinhas(); toast("Produto renomeado ✓",true);
+}
+function admExcluirLinha(lid){
+  if(!confirm(`Excluir o produto "${lid}" e todas as suas tipologias?`)) return;
+  P.linhas=P.linhas.filter(l=>l.id!==lid);
+  if(linhaId===lid){ linhaId=P.linhas[0]?.id||""; tipoId=P.linhas[0]?.versoes[0]?.id||""; renderConteudo(); }
+  salvarLocal(); updateMeta(); renderLinhas(); toast("Produto excluído.");
+}
+function admNovaTipologia(lid){
+  const l=P.linhas.find(x=>x.id===lid); if(!l) return;
+  const n=l.versoes.length+1; const id="T"+n;
+  l.versoes.push({id,nome:id,imagem:"",finais:[],areas:{tipo_a_m2:0,tipo_b_m2:0,tipo_c_m2:null},config_pav:{unidades_pav:0,finais_pav:0,finais_diferentes:0,torre:"",varanda:""},ficha_tecnica:{dormitorios_qtd:0,pavimentos:""},meta:{planta_tipo:"Planta padrão",versao_label:`Versão ${String(n).padStart(2,"0")}`,finais:""},cidades:[],projetos:[],pdf_url:"#",dwg_url:"#"});
+  salvarLocal(); updateMeta(); renderLinhas();
+  selLinha(lid); selTipo(id); admEditarTipologia(); toast(`Tipologia ${id} criada ✓`,true);
+}
+function admExcluirTipologia(lid,tid){
+  if(!confirm(`Excluir a tipologia ${tid}?`)) return;
+  const l=P.linhas.find(x=>x.id===lid); if(!l) return;
+  l.versoes=l.versoes.filter(v=>v.id!==tid);
+  if(linhaId===lid&&tipoId===tid){ tipoId=l.versoes[0]?.id||""; renderConteudo(); }
+  salvarLocal(); updateMeta(); renderLinhas(); toast("Tipologia excluída.");
+}
+
+// Compatibilidade: função upsertLinha e upsertTip (do Code)
+async function upsertLinha(l){
+  const {error}=await supa.from('linhas').upsert({id:l.id,nome:l.nome,descricao:l.descricao||''});
+  if(error) throw error;
+}
+async function upsertTip(linhaId,v){
+  const {error}=await supa.from('tipologias').upsert({id:v.id,linha_id:linhaId,nome:v.nome,imagem:v.imagem||'',finais:v.finais||[],areas:v.areas,config_pav:v.config_pav,ficha_tecnica:v.ficha_tecnica,meta:v.meta,cidades:v.cidades,projetos:v.projetos,pdf_url:v.pdf_url,dwg_url:v.dwg_url});
+  if(error) throw error;
+}
+
+
+// INIT
+(async function(){
+  // abre a primeira linha expandida por padrão
+  if(P.linhas[0]) linhasExpandidas.add(P.linhas[0].id);
+  renderAll();
+  try{
+    const dados=await carregarDadosSupa();
+    P=dados; salvarLocal();
+    linhaId=P.linhas.find(l=>l.id===linhaId)?linhaId:(P.linhas[0]?.id||'');
+    const curL=P.linhas.find(l=>l.id===linhaId);
+    tipoId=curL?.versoes.find(v=>v.id===tipoId)?tipoId:(curL?.versoes[0]?.id||'');
+    // garante que a linha ativa está expandida após reload do Supabase
+    if(linhaId) linhasExpandidas.add(linhaId);
+    renderAll();
+  } catch(e){
+    console.warn('Supabase indisponível, usando localStorage:',e.message);
+  }
+  // verificar sessão admin ativa
+  const {data:{session}}=await supa.auth.getSession();
+  if(session) ativarModoAdmin();
+})();
+</script>
+</body>
+</html>
