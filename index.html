@@ -709,7 +709,7 @@ async function carregarDadosSupa(){
       id:l.id, nome:l.nome, descricao:l.descricao||'',
       versoes: tips.filter(t=>t.linha_id===l.id).map(t=>({
         id:t.id, nome:t.nome, imagem:t.imagem||'',
-        finais:t.finais||[], areas:t.areas||{}, config_pav:t.config_pav||{},
+        finais:t.finais||[], areas:t.areas||{}, areas_tipos:t.areas_tipos||[], config_pav:t.config_pav||{},
         ficha_tecnica:t.ficha_tecnica||{}, meta:t.meta||{},
         cidades:t.cidades||[], projetos:t.projetos||[],
         pdf_url:t.pdf_url||'#', dwg_url:t.dwg_url||'#',
@@ -2213,7 +2213,7 @@ async function upsertLinha(l){
   if(error) throw error;
 }
 async function upsertTip(linhaId,v){
-  const {error}=await supa.from('tipologias').upsert({id:v.id,linha_id:linhaId,nome:v.nome,imagem:v.imagem||'',finais:v.finais||[],areas:v.areas,config_pav:v.config_pav,ficha_tecnica:v.ficha_tecnica,meta:v.meta,cidades:v.cidades,projetos:v.projetos,pdf_url:v.pdf_url,dwg_url:v.dwg_url});
+  const {error}=await supa.from('tipologias').upsert({id:v.id,linha_id:linhaId,nome:v.nome,imagem:v.imagem||'',finais:v.finais||[],areas:v.areas,areas_tipos:v.areas_tipos||[],config_pav:v.config_pav,ficha_tecnica:v.ficha_tecnica,meta:v.meta,cidades:v.cidades,projetos:v.projetos,pdf_url:v.pdf_url,dwg_url:v.dwg_url});
   if(error) throw error;
 }
 
