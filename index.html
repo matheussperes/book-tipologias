@@ -1197,13 +1197,13 @@ function renderPav(){
   const cp=v.config_pav||{};
   const I={
     varanda:`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
-    esquadria_dormitório:`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/></svg>`,
+    esquadria:`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/></svg>`,
     bancadaCoz:`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><rect x="5" y="5" width="9" height="9" rx="1"/><path d="M9.5 14v3"/><circle cx="9.5" cy="18" r="0.7" fill="currentColor"/></svg>`,
     bancadaBan:`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1z"/><path d="M5 12V6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6"/></svg>`,
   };
   const items=[
     cp.tipo_varanda?{icon:I.varanda,label:"Varanda",text:cp.tipo_varanda}:null,
-    cp.tipo_esquadria?{icon:I.esquadria,label:"Esquadria",text:cp.tipo_esquadria}:null,
+    cp.tipo_esquadria?{icon:I.esquadria,label:"Esquadria Dormitório",text:cp.tipo_esquadria}:null,
     cp.tipo_bancada_cozinha?{icon:I.bancadaCoz,label:"Bancada Cozinha",text:cp.tipo_bancada_cozinha}:null,
     cp.tipo_bancada_banheiro?{icon:I.bancadaBan,label:"Bancada Banheiro",text:cp.tipo_bancada_banheiro}:null,
   ].filter(Boolean);
