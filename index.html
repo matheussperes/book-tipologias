@@ -223,7 +223,7 @@ select.ieb-input{appearance:none;-webkit-appearance:none;background-image:url("d
 .btn-planta-bottom.active-zoom{background:var(--green);border-color:var(--green);color:var(--white);}
 
 /* Lupa zoom — quadrada com cantos arredondados */
-.zoom-lens{position:absolute;border-radius:10px;border:2.5px solid var(--green);pointer-events:none;overflow:hidden;z-index:50;display:none;box-shadow:0 4px 20px rgba(0,0,0,.25);}
+.zoom-lens{position:fixed;border-radius:10px;border:2.5px solid var(--green);pointer-events:none;overflow:hidden;z-index:9999;display:none;box-shadow:0 4px 20px rgba(0,0,0,.25);}
 
 /* ══ CARROSSEL DE FINAIS ══════════════════════════════════ */
 .carrossel-wrap{position:absolute;bottom:0;left:0;width:50%;background:rgba(255,255,255,0);border-top:none;padding:8px 10px;display:flex;align-items:center;gap:6px;z-index:10;}
@@ -1282,10 +1282,9 @@ function setupZoom(){
     if(!img) return;
     const lens=document.getElementById("zoomLens");
 
-    // Posição do cursor relativa ao viewer (onde a lupa se posiciona)
-    const viewerRect=viewer.getBoundingClientRect();
-    const lx=(e.clientX - viewerRect.left) - ZOOM_SIZE/2;
-    const ly=(e.clientY - viewerRect.top)  - ZOOM_SIZE/2;
+    // Posição do cursor relativa ao viewport (position:fixed)
+    const lx=e.clientX - ZOOM_SIZE/2;
+    const ly=e.clientY - ZOOM_SIZE/2;
     lens.style.left=lx+"px";
     lens.style.top=ly+"px";
 
