@@ -51,8 +51,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-900);f
 /* ══ ADMIN MODE — badge no header ═══════════════════════════ */
 .admin-mode-bar{display:none;align-items:center;gap:10px;padding:5px 16px;background:var(--green-pale);border:1px solid #B6D9C4;border-radius:var(--radius-xs);font-size:11px;font-weight:600;color:var(--green);}
 .admin-mode-bar.visible{display:flex;}
-.btn-save-exit{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:var(--radius-xs);border:none;background:var(--green);color:var(--white);font-family:'Inter',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all var(--t);white-space:nowrap;}
-.btn-save-exit:hover{background:var(--green-mid);}
+.btn-save-exit{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:var(--radius-xs);border:none;background:#DC2626;color:var(--white);font-family:'Inter',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all var(--t);white-space:nowrap;}
+.btn-save-exit:hover{background:#B91C1C;}
 
 /* Cards da sidebar direita clicáveis no admin */
 body.is-admin .rs-section{cursor:pointer;transition:background var(--t);}
@@ -423,7 +423,6 @@ select.ieb-input{appearance:none;-webkit-appearance:none;background-image:url("d
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
       Modo Administrador
       <button class="btn-save-exit" onclick="admSalvarESair()">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         Sair
       </button>
     </div>
@@ -1183,7 +1182,7 @@ function renderAreas(){
   }
   grid.innerHTML=tipos.map(t=>`
     <div class="area-card">
-      <div class="area-val">${t.m2} <sup>m²</sup></div>
+      <div class="area-val">${parseFloat(t.m2||0).toFixed(2)} <sup>m²</sup></div>
       <div class="area-lbl">${t.nome}</div>
       <div class="area-badges">
         ${t.setor?`<span class="area-badge setor">${t.setor}</span>`:''}
