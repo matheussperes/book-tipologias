@@ -705,7 +705,7 @@ async function carregarDadosSupa(){
   if(e2) throw e2;
   return {
     linhas: linhas.map(l=>({
-      id:l.id, nome:l.nome, descricao:l.descricao||'',
+      id:l.id, nome:l.nome, descricao:l.descricao||'', icone:l.icone||'grid',
       versoes: tips.filter(t=>t.linha_id===l.id).map(t=>({
         id:t.id, nome:t.nome, imagem:t.imagem||'',
         finais:t.finais||[], areas:t.areas||{}, areas_tipos:t.areas_tipos||[], config_pav:t.config_pav||{},
@@ -830,6 +830,7 @@ const ICONES_CATALOGO = {
 const iconePorLinha = {
   Compact:'grid', Slim:'slim', Plus:'plus', Urbana:'home',
 };
+P.linhas.forEach(l => { if(l.icone) iconePorLinha[l.id] = l.icone; });
 
 function getIconeLinha(lid, size=14){
   const key = iconePorLinha[lid]||'grid';
@@ -1244,7 +1245,7 @@ function toggleEmpreendimentos(){
 // ═══════════════════════════════════════════════════════════
 // ZOOM LUPA
 // ═══════════════════════════════════════════════════════════
-const ZOOM_SIZE=160, ZOOM_FACTOR=2.0;
+const ZOOM_SIZE=160, ZOOM_FACTOR=1.5;
 
 function toggleZoom(){
   zoomAtivo=!zoomAtivo;
@@ -2148,6 +2149,7 @@ async function iebSalvarLinha(lid){
     l=P.linhas.find(x=>x.id===lid); if(!l) return;
     l.nome=nome;
     iconePorLinha[lid]=icone;
+    l.icone=icone;
   } else {
     // criar novo
     const id=nome.replace(/\s+/g,"_").replace(/[^a-zA-Z0-9_]/g,"");
@@ -2155,6 +2157,7 @@ async function iebSalvarLinha(lid){
     l={id,nome,descricao:"",versoes:[]};
     P.linhas.push(l);
     iconePorLinha[id]=icone;
+    l.icone=icone;
   }
   salvarLocal();
   const ok=await sbSalvar(async()=>{ await upsertLinha(l); });
@@ -2208,7 +2211,7 @@ async function admExcluirTipologia(lid,tid){
 
 // Compatibilidade: função upsertLinha e upsertTip (do Code)
 async function upsertLinha(l){
-  const {error}=await supa.from('linhas').upsert({id:l.id,nome:l.nome,descricao:l.descricao||''});
+  const {error}=await supa.from('linhas').upsert({id:l.id,nome:l.nome,descricao:l.descricao||'',icone:l.icone||'grid'});
   if(error) throw error;
 }
 async function upsertTip(linhaId,v){
@@ -2400,6 +2403,7 @@ async function slideshowSalvar(){
       carregarSlideshowSupa()
     ]);
     P=dados; salvarLocal();
+    P.linhas.forEach(l => { if(l.icone) iconePorLinha[l.id] = l.icone; });
     renderLinhas(); updateMeta();
   } catch(e){
     console.warn('Supabase indisponível, usando localStorage:',e.message);
